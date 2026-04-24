@@ -712,7 +712,7 @@
         <div class="pcard featured sr">
           <div class="ptop">
             <span class="pbadge">Destacado</span>
-            <a href="https://portfolio-victoria-final.vercel.app" target="_blank" class="plink">↗</a>
+            <a href="https://portfolio-victoria-eight.vercel.app" target="_blank" class="plink">↗</a>
           </div>
           <h3>Portfolio IA Interactivo</h3>
           <p>Portfolio personal construido con ayuda de IA, con asistente integrado que responde preguntas sobre mi perfil profesional en tiempo real. Un ejemplo de lo que se puede construir combinando visión clara + herramientas de IA.</p>
@@ -810,9 +810,9 @@
           <span class="cico">💻</span>
           <div><h4>GitHub</h4><p>github.com/vickysape</p></div>
         </a>
-        <a href="https://portfolio-victoria-final.vercel.app" target="_blank" class="clink sr">
+        <a href="https://portfolio-victoria-eight.vercel.app" target="_blank" class="clink sr">
           <span class="cico">🌐</span>
-          <div><h4>Portfolio live</h4><p>portfolio-victoria-final.vercel.app</p></div>
+          <div><h4>Portfolio live</h4><p>portfolio-victoria-eight.vercel.app</p></div>
         </a>
       </div>
     </div>
@@ -1018,6 +1018,352 @@
       resize();
       animate(0);
     })();
+  </script>
+
+  <!-- ═══════════ CHAT IA FLOTANTE ═══════════ -->
+  <style>
+    #chat-btn {
+      position: fixed; bottom: 28px; right: 28px; z-index: 999;
+      width: 58px; height: 58px; border-radius: 50%;
+      background: var(--accent); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 28px rgba(0,229,184,0.38);
+      transition: transform 0.2s, box-shadow 0.2s;
+      font-size: 24px;
+    }
+    #chat-btn:hover { transform: scale(1.08); box-shadow: 0 10px 36px rgba(0,229,184,0.5); }
+    #chat-btn .chat-notif {
+      position: absolute; top: -2px; right: -2px;
+      width: 14px; height: 14px; background: #ff4757;
+      border-radius: 50%; border: 2px solid var(--bg);
+      animation: pulse-notif 2s ease-in-out infinite;
+    }
+    @keyframes pulse-notif { 0%,100%{transform:scale(1)} 50%{transform:scale(1.2)} }
+
+    #chat-panel {
+      position: fixed; bottom: 98px; right: 28px; z-index: 998;
+      width: 360px; max-height: 520px;
+      background: var(--bg-2);
+      border: 1px solid rgba(0,229,184,0.2);
+      border-radius: 20px;
+      display: flex; flex-direction: column;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.7);
+      transform: scale(0.92) translateY(12px);
+      opacity: 0; pointer-events: none;
+      transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), opacity 0.2s;
+      overflow: hidden;
+    }
+    #chat-panel.open {
+      transform: scale(1) translateY(0);
+      opacity: 1; pointer-events: all;
+    }
+    .chat-header {
+      padding: 16px 18px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 12px;
+      flex-shrink: 0;
+    }
+    .chat-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .chat-header-info h4 {
+      font-family: var(--font-display); font-size: 14px; font-weight: 700;
+      color: var(--text); margin-bottom: 1px;
+    }
+    .chat-header-info p {
+      font-family: var(--font-mono); font-size: 10px; color: var(--accent);
+    }
+    .chat-close {
+      margin-left: auto; background: none; border: none;
+      color: var(--text-3); cursor: pointer; font-size: 18px;
+      padding: 4px; transition: color 0.2s;
+    }
+    .chat-close:hover { color: var(--text); }
+
+    .chat-messages {
+      flex: 1; overflow-y: auto; padding: 16px;
+      display: flex; flex-direction: column; gap: 12px;
+      scrollbar-width: thin; scrollbar-color: var(--surface-2) transparent;
+    }
+    .msg {
+      max-width: 88%; display: flex; flex-direction: column; gap: 3px;
+    }
+    .msg.bot { align-self: flex-start; }
+    .msg.user { align-self: flex-end; }
+    .msg-bubble {
+      padding: 10px 14px; border-radius: 14px;
+      font-size: 13.5px; line-height: 1.6;
+    }
+    .msg.bot .msg-bubble {
+      background: var(--surface); color: var(--text-2);
+      border-bottom-left-radius: 4px;
+    }
+    .msg.user .msg-bubble {
+      background: var(--accent); color: var(--bg);
+      font-weight: 500; border-bottom-right-radius: 4px;
+    }
+    .msg-time {
+      font-family: var(--font-mono); font-size: 10px; color: var(--text-3);
+      padding: 0 4px;
+    }
+    .msg.user .msg-time { text-align: right; }
+
+    .chat-suggestions {
+      padding: 0 16px 10px;
+      display: flex; flex-wrap: wrap; gap: 7px;
+    }
+    .sug-btn {
+      font-family: var(--font-mono); font-size: 11px;
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--text-2); padding: 5px 11px; border-radius: 100px;
+      cursor: pointer; transition: border-color 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+    .sug-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    .chat-input-row {
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      display: flex; gap: 10px; align-items: flex-end;
+      flex-shrink: 0;
+    }
+    #chat-input {
+      flex: 1; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; color: var(--text);
+      font-family: var(--font-display); font-size: 13px;
+      padding: 10px 14px; resize: none; outline: none;
+      transition: border-color 0.2s; max-height: 90px; line-height: 1.5;
+    }
+    #chat-input:focus { border-color: rgba(0,229,184,0.35); }
+    #chat-input::placeholder { color: var(--text-3); }
+    #chat-send {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--accent); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+      transition: background 0.2s, transform 0.15s;
+    }
+    #chat-send:hover { transform: scale(1.06); }
+    #chat-send:disabled { background: var(--surface-2); cursor: not-allowed; transform: none; }
+
+    .typing-dots {
+      display: flex; gap: 5px; padding: 12px 16px; align-items: center;
+    }
+    .typing-dots span {
+      width: 7px; height: 7px; background: var(--text-3);
+      border-radius: 50%; animation: dot-bounce 1.2s ease-in-out infinite;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes dot-bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-7px)} }
+
+    @media (max-width: 480px) {
+      #chat-panel { width: calc(100vw - 32px); right: 16px; bottom: 86px; }
+      #chat-btn { right: 16px; bottom: 16px; }
+    }
+  </style>
+
+  <!-- Botón flotante -->
+  <button id="chat-btn" aria-label="Abrir asistente IA">
+    <span id="chat-btn-icon">🤖</span>
+    <span class="chat-notif" id="chat-notif"></span>
+  </button>
+
+  <!-- Panel del chat -->
+  <div id="chat-panel">
+    <div class="chat-header">
+      <div class="chat-avatar">✨</div>
+      <div class="chat-header-info">
+        <h4>Asistente de Victoria</h4>
+        <p>● Online — pregúntame lo que quieras</p>
+      </div>
+      <button class="chat-close" id="chat-close">✕</button>
+    </div>
+
+    <div class="chat-messages" id="chat-messages">
+      <div class="msg bot">
+        <div class="msg-bubble">¡Hola! 👋 Soy el asistente de <strong>Maria Victoria Sapelli</strong>. Puedo contarte sobre su experiencia, proyectos, formación o cómo contactarla. ¿Qué te gustaría saber?</div>
+        <span class="msg-time">ahora</span>
+      </div>
+    </div>
+
+    <div class="chat-suggestions" id="chat-suggestions">
+      <button class="sug-btn" onclick="sendSuggestion('¿Qué experiencia tiene?')">¿Qué experiencia tiene?</button>
+      <button class="sug-btn" onclick="sendSuggestion('¿Sabe programar?')">¿Sabe programar?</button>
+      <button class="sug-btn" onclick="sendSuggestion('¿Cuáles son sus proyectos?')">Sus proyectos</button>
+      <button class="sug-btn" onclick="sendSuggestion('¿Cómo la contacto?')">¿Cómo la contacto?</button>
+    </div>
+
+    <div class="chat-input-row">
+      <textarea id="chat-input" placeholder="Escribe tu pregunta..." rows="1"></textarea>
+      <button id="chat-send">➤</button>
+    </div>
+  </div>
+
+  <script>
+    // ── Toggle chat ──
+    const chatBtn = document.getElementById('chat-btn');
+    const chatPanel = document.getElementById('chat-panel');
+    const chatClose = document.getElementById('chat-close');
+    const chatNotif = document.getElementById('chat-notif');
+
+    chatBtn.addEventListener('click', () => {
+      chatPanel.classList.toggle('open');
+      chatNotif.style.display = 'none';
+    });
+    chatClose.addEventListener('click', () => chatPanel.classList.remove('open'));
+
+    // ── Auto-resize textarea ──
+    const chatInput = document.getElementById('chat-input');
+    chatInput.addEventListener('input', () => {
+      chatInput.style.height = 'auto';
+      chatInput.style.height = Math.min(chatInput.scrollHeight, 90) + 'px';
+    });
+    chatInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+    });
+    document.getElementById('chat-send').addEventListener('click', sendMessage);
+
+    // ── Historial de conversación ──
+    const history = [];
+
+    // ── Perfil completo de Victoria (system prompt) ──
+    const SYSTEM = `Eres el asistente personal de Maria Victoria Sapelli en su portfolio profesional. Responde siempre en el mismo idioma que el usuario (español o inglés). Sé amable, conciso y honesto. No inventes información.
+
+PERFIL DE VICTORIA:
+- Nombre: Maria Victoria Sapelli
+- Ubicación: Málaga, España. Disponible para trabajo remoto.
+- Email: vickysape@hotmail.com
+- LinkedIn: linkedin.com/in/sapelli-maria-victoria
+- GitHub: github.com/vickysape
+- Portfolio: portfolio-victoria-eight.vercel.app
+
+FORMACIÓN:
+- FP Grado Superior DAM (Desarrollo de Aplicaciones Multiplataforma) en UNIVERSAE, 2024 – actualidad
+- Formación complementaria en Ciberseguridad (cursos, no es profesional del sector)
+
+CERTIFICACIONES:
+- Microsoft SC-900: Security, Compliance and Identity Fundamentals – julio 2025 (verificable: verify.certiport.com código wMEba-Fa8K)
+- MF0487 Auditoría de Seguridad Informática – Mainjobs Internacional, España. 60h teleformación, 15/05/2025 al 04/06/2025, Nº Registro 1700
+- Gestión Productiva para PYMEs – LATU, Uruguay
+
+EXPERIENCIA LABORAL:
+1. Prácticas en Automatización e IA – Grupo Oro, Málaga (2025 – actualidad): prácticas del FP DAM, automatización de procesos con IA, desarrollo de soluciones digitales
+2. Asesora Comercial en Telecomunicaciones – Premium Numbers, España (2024–2025): asesoramiento técnico-comercial, gestión de clientes, CRM
+3. Directora Comercial – Crypto Trade CVCC LTDA, Brasil (2020–2024): supervisión de back office de plataforma cripto, cumplimiento KYC/GDPR, gestión de equipos, atención VIP, responsable del proyecto de desarrollo de una app
+
+NIVEL DE PROGRAMACIÓN (MUY IMPORTANTE – sé honesto):
+Victoria es estudiante de DAM, NO es programadora profesional. No tiene experiencia sólida en código. Se apoya en herramientas de IA (como Claude) para generar y entender código — a esto se le llama "vibe coding". Su valor diferencial NO es el código en sí, sino su visión de negocio, su capacidad de usar IA para construir cosas reales, y su experiencia comercial internacional.
+
+HABILIDADES REALES:
+- Gestión de plataformas digitales
+- Cumplimiento KYC/GDPR (experiencia real, 4 años)
+- Criptomonedas y activos digitales
+- Atención a clientes VIP
+- CRM y herramientas digitales
+- Ofimática avanzada
+- Construcción con IA (vibe coding, prompting avanzado, Claude API)
+- Automatización de procesos con IA
+- Nociones básicas de Git, HTML/CSS, PostgreSQL (en formación)
+- Ciberseguridad: cursos completados, NO experta
+
+IDIOMAS:
+- Español: nativo
+- Portugués: avanzado
+- Italiano: intermedio
+- Inglés: básico
+
+PROYECTOS:
+1. Portfolio IA Interactivo – portfolio-victoria-eight.vercel.app – Construido con ayuda de IA (HTML/CSS/JS + Claude API + Vercel). Tiene chat integrado (este mismo).
+2. TAE Token – Token criptográfico utilitario, listado en ICO Holder: icoholder.com/es/crypto-tae-1004661. Ticker $TAE, ERC-20, red EVM compatible. Proyecto de diseño de tokenomics y casos de uso.
+3. HYROX Training App – En desarrollo. App de rendimiento deportivo con seguimiento de entrenamientos, rankings y IA personalizada. La construye porque ella misma es atleta HYROX competidora en Málaga.
+
+DATO PERSONAL DESTACADO:
+Victoria es atleta HYROX competidora activa en Málaga. Aplica la misma disciplina del deporte a su trabajo: objetivos claros, mejora continua, constancia.
+
+DISPONIBILIDAD: Busca oportunidades en desarrollo, automatización con IA, o roles que combinen visión de negocio con tecnología. Abierta a remoto.
+
+INSTRUCCIONES DE RESPUESTA:
+- Si preguntan si sabe programar: sé honesto, está en formación y usa IA como herramienta
+- Si preguntan por contacto: da email y LinkedIn
+- Respuestas cortas y directas. Máximo 3-4 frases salvo que pidan más detalle.
+- No uses markdown complejo, solo texto plano con algún emoji si hace falta.`;
+
+    async function sendMessage() {
+      const input = chatInput.value.trim();
+      if (!input) return;
+      chatInput.value = '';
+      chatInput.style.height = 'auto';
+      appendMessage('user', input);
+      history.push({ role: 'user', content: input });
+      document.getElementById('chat-suggestions').style.display = 'none';
+      await getBotReply();
+    }
+
+    function sendSuggestion(text) {
+      chatInput.value = text;
+      sendMessage();
+    }
+
+    function appendMessage(role, text) {
+      const msgs = document.getElementById('chat-messages');
+      const now = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+      const div = document.createElement('div');
+      div.className = 'msg ' + role;
+      div.innerHTML = `<div class="msg-bubble">${text}</div><span class="msg-time">${now}</span>`;
+      msgs.appendChild(div);
+      msgs.scrollTop = msgs.scrollHeight;
+      return div;
+    }
+
+    function showTyping() {
+      const msgs = document.getElementById('chat-messages');
+      const div = document.createElement('div');
+      div.className = 'msg bot'; div.id = 'typing-indicator';
+      div.innerHTML = `<div class="msg-bubble" style="padding:10px 16px"><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
+      msgs.appendChild(div);
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function removeTyping() {
+      const t = document.getElementById('typing-indicator');
+      if (t) t.remove();
+    }
+
+    async function getBotReply() {
+      const sendBtn = document.getElementById('chat-send');
+      sendBtn.disabled = true;
+      showTyping();
+
+      try {
+        const res = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'claude-sonnet-4-20250514',
+            max_tokens: 1000,
+            system: SYSTEM,
+            messages: history
+          })
+        });
+
+        const data = await res.json();
+        const reply = data.content?.[0]?.text || 'Lo siento, no pude obtener una respuesta. Prueba contactando directamente a Victoria en vickysape@hotmail.com';
+        removeTyping();
+        appendMessage('bot', reply);
+        history.push({ role: 'assistant', content: reply });
+
+      } catch (err) {
+        removeTyping();
+        appendMessage('bot', 'Hubo un problema de conexión. Puedes contactar a Victoria directamente en vickysape@hotmail.com 💌');
+      }
+
+      sendBtn.disabled = false;
+      chatInput.focus();
+    }
   </script>
 </body>
 </html>
