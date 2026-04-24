@@ -4,16 +4,533 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Victoria Sapelli — DAM & Ciberseguridad</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Cabinet+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
+
+    :root {
+      --bg: #080b12;
+      --bg-2: #0d1117;
+      --bg-3: #131920;
+      --surface: #161d27;
+      --surface-2: #1e2836;
+      --border: rgba(255,255,255,0.07);
+      --border-hover: rgba(255,255,255,0.15);
+      --text: #e8edf4;
+      --text-2: #8b97a8;
+      --text-3: #5a6473;
+      --accent: #00d4aa;
+      --accent-2: #0099ff;
+      --accent-glow: rgba(0,212,170,0.12);
+      --font-display: 'Syne', 'Arial Black', sans-serif;
+      --font-mono: 'DM Mono', 'Courier New', monospace;
+      --font-body: system-ui, -apple-system, sans-serif;
+      --radius: 12px;
+      --radius-lg: 20px;
+      --nav-h: 68px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* NAV */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      background: rgba(8,11,18,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--text-2);
+      transition: color 0.2s;
+      letter-spacing: 0.03em;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--accent) !important;
+      color: var(--bg) !important;
+      padding: 8px 20px;
+      border-radius: 100px;
+      font-weight: 600;
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--text); border-radius: 2px;
+    }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: var(--nav-h); left: 0; right: 0;
+      background: var(--bg-2);
+      border-bottom: 1px solid var(--border);
+      z-index: 99;
+      padding: 24px 32px;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.2s, transform 0.2s;
+      pointer-events: none;
+    }
+    .mobile-menu.open { opacity: 1; transform: translateY(0); pointer-events: all; }
+    .mobile-menu ul { display: flex; flex-direction: column; gap: 16px; }
+    .mobile-menu a { font-family: var(--font-mono); font-size: 14px; color: var(--text-2); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: var(--nav-h);
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%);
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .orb-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(0,212,170,0.1) 0%, transparent 70%);
+      top: 10%; right: -80px;
+      animation: float 8s ease-in-out infinite;
+    }
+    .orb-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(0,153,255,0.07) 0%, transparent 70%);
+      bottom: 10%; left: -60px;
+      animation: float 10s ease-in-out infinite reverse;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-25px); }
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,212,170,0.08);
+      border: 1px solid rgba(0,212,170,0.2);
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 8px 16px;
+      border-radius: 100px;
+      margin-bottom: 32px;
+      letter-spacing: 0.05em;
+      animation: fadeUp 0.8s ease both;
+    }
+    .badge-dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 8vw, 92px);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      animation: fadeUp 0.8s 0.15s ease both;
+    }
+    .hero-name span { display: block; }
+    .hero-name .grad {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-roles {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+    .role { font-family: var(--font-mono); font-size: 13px; color: var(--text-2); letter-spacing: 0.05em; }
+    .role-dot { color: var(--accent); font-size: 18px; }
+    .hero-desc {
+      max-width: 560px;
+      color: var(--text-2);
+      font-size: 17px;
+      line-height: 1.8;
+      margin-bottom: 40px;
+      animation: fadeUp 0.8s 0.45s ease both;
+    }
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 56px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.8s 0.6s ease both;
+    }
+    .btn-p {
+      background: var(--accent);
+      color: var(--bg);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 14px;
+      padding: 14px 28px;
+      border-radius: 100px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-p:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,212,170,0.28); }
+    .btn-s {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 14px;
+      padding: 14px 28px;
+      border-radius: 100px;
+      border: 1px solid var(--border-hover);
+      color: var(--text);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-s:hover { border-color: var(--accent); background: var(--accent-glow); }
+    .hero-stats {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      animation: fadeUp 0.8s 0.75s ease both;
+    }
+    .stat-num {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 34px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+    }
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-3);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .stat-div { width: 1px; height: 36px; background: var(--border); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* SECTIONS */
+    section { padding: 110px 0; }
+    section:nth-child(even) { background: var(--bg-2); }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+    .sec-tag {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 14px;
+    }
+    .sec-title {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 5vw, 58px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 56px;
+    }
+    .sec-title em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ABOUT */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .about-text p { color: var(--text-2); margin-bottom: 18px; font-size: 17px; line-height: 1.8; }
+    .about-text strong { color: var(--text); font-weight: 600; }
+    .langs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .lang-pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 6px 14px;
+      border-radius: 100px;
+    }
+    .info-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .icard {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .icard:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+    .icard-icon { font-size: 20px; flex-shrink: 0; }
+    .icard h4 { font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .icard p { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); }
+
+    /* SKILLS */
+    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .skill-cat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      transition: border-color 0.2s;
+    }
+    .skill-cat:hover { border-color: var(--border-hover); }
+    .skill-cat-title {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 5px 12px;
+      border-radius: 8px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .tag:hover { color: var(--text); border-color: var(--border-hover); }
+    .tag.green { border-color: rgba(0,212,170,0.2); background: rgba(0,212,170,0.04); color: var(--accent); }
+    .tag.blue { border-color: rgba(0,153,255,0.2); background: rgba(0,153,255,0.04); color: var(--accent-2); }
+
+    /* TIMELINE */
+    .timeline { display: flex; flex-direction: column; }
+    .tl-item { display: grid; grid-template-columns: 44px 1fr; gap: 20px; }
+    .tl-marker { display: flex; flex-direction: column; align-items: center; padding-top: 4px; }
+    .tl-dot {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--surface-2);
+      border: 2px solid var(--border-hover);
+      flex-shrink: 0; z-index: 1;
+    }
+    .tl-dot.active { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 4px rgba(0,212,170,0.12); }
+    .tl-line { width: 2px; flex: 1; min-height: 50px; background: linear-gradient(to bottom, var(--border-hover), transparent); margin-top: 8px; }
+    .tl-body {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      margin-bottom: 22px;
+      transition: border-color 0.2s;
+    }
+    .tl-body:hover { border-color: var(--border-hover); }
+    .tl-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 18px; flex-wrap: wrap; }
+    .tl-head h3 { font-family: var(--font-display); font-size: 19px; font-weight: 700; }
+    .tl-co { font-family: var(--font-mono); font-size: 13px; color: var(--accent); margin-top: 3px; }
+    .tl-date {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-3);
+      background: var(--surface-2);
+      padding: 4px 12px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .tl-list { display: flex; flex-direction: column; gap: 9px; }
+    .tl-list li { color: var(--text-2); font-size: 15px; padding-left: 16px; position: relative; }
+    .tl-list li::before {
+      content: '';
+      position: absolute; left: 0; top: 10px;
+      width: 5px; height: 5px;
+      border-radius: 50%; background: var(--accent);
+    }
+    .tl-list li strong { color: var(--text); }
+
+    /* PROJECTS */
+    .proj-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; margin-bottom: 56px; }
+    .pcard {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      display: flex; flex-direction: column; gap: 14px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .pcard:hover { border-color: var(--border-hover); transform: translateY(-3px); }
+    .pcard.featured { border-color: rgba(0,212,170,0.22); background: linear-gradient(135deg, var(--surface), rgba(0,212,170,0.03)); }
+    .ptop { display: flex; justify-content: space-between; align-items: center; }
+    .pbadge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 100px;
+      background: rgba(0,212,170,0.08);
+      color: var(--accent);
+      border: 1px solid rgba(0,212,170,0.2);
+    }
+    .pbadge.wip { background: rgba(255,170,50,0.08); color: #ffaa44; border-color: rgba(255,170,50,0.2); }
+    .pbadge.sec { background: rgba(0,153,255,0.08); color: var(--accent-2); border-color: rgba(0,153,255,0.2); }
+    .plink {
+      width: 30px; height: 30px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; color: var(--text-3);
+      transition: all 0.2s;
+    }
+    .plink:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+    .pcard h3 { font-family: var(--font-display); font-size: 17px; font-weight: 700; }
+    .pcard p { color: var(--text-2); font-size: 14px; line-height: 1.7; flex: 1; }
+    .ptech { display: flex; flex-wrap: wrap; gap: 7px; }
+    .ptech span {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-3);
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+
+    /* CERTS */
+    .certs-sep { border-top: 1px solid var(--border); padding-top: 56px; }
+    .certs-title { font-family: var(--font-display); font-size: 20px; font-weight: 700; margin-bottom: 28px; }
+    .certs-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .cert {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      display: flex; gap: 14px; align-items: flex-start;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .cert:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+    .cert-ico {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 800; font-size: 16px;
+      flex-shrink: 0; color: white;
+    }
+    .ms { background: linear-gradient(135deg,#0078d4,#00bcf2); }
+    .mj { background: linear-gradient(135deg,#ff6b35,#f7c59f); }
+    .lt { background: linear-gradient(135deg,#2ecc71,#27ae60); }
+    .cert h4 { font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+    .cert p { font-size: 12px; color: var(--text-2); margin-bottom: 4px; }
+    .cert small { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); }
+
+    /* CONTACT */
+    .contact-desc { color: var(--text-2); font-size: 17px; line-height: 1.8; margin-bottom: 44px; max-width: 700px; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 700px; }
+    .clink {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      display: flex; align-items: center; gap: 14px;
+      transition: border-color 0.2s, transform 0.2s, background 0.2s;
+    }
+    .clink:hover { border-color: var(--accent); background: var(--accent-glow); transform: translateY(-2px); }
+    .cico { font-size: 20px; }
+    .clink h4 { font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+    .clink p { font-family: var(--font-mono); font-size: 12px; color: var(--text-2); }
+
+    /* FOOTER */
+    footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 28px 40px; }
+    .foot { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .foot-name { font-family: var(--font-display); font-weight: 700; font-size: 14px; }
+    .foot-copy { font-family: var(--font-mono); font-size: 12px; color: var(--text-3); }
+
+    /* SCROLL REVEAL */
+    .sr { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .sr.vis { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .about-grid, .skills-grid, .proj-grid, .certs-grid, .contact-grid { grid-template-columns: 1fr; }
+      .info-cards { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: block; }
+      #navbar, footer { padding: 0 20px; }
+      .hero-content, .container { padding: 0 20px; }
+      .hero-content { padding-top: 60px; padding-bottom: 60px; }
+      section { padding: 80px 0; }
+      .hero-stats { gap: 16px; }
+      .info-cards { grid-template-columns: 1fr; }
+      .foot { flex-direction: column; gap: 8px; text-align: center; }
+      .tl-item { grid-template-columns: 30px 1fr; gap: 14px; }
+    }
+  </style>
 </head>
 <body>
-  <!-- Noise texture overlay -->
-  <div class="noise"></div>
 
-  <!-- Navigation -->
+  <!-- NAV -->
   <nav id="navbar">
     <div class="nav-logo">MVS</div>
     <ul class="nav-links">
@@ -23,12 +540,10 @@
       <li><a href="#proyectos">Proyectos</a></li>
       <li><a href="#contacto" class="nav-cta">Contacto</a></li>
     </ul>
-    <button class="hamburger" id="hamburger" aria-label="Menú">
+    <button class="hamburger" id="hamburger">
       <span></span><span></span><span></span>
     </button>
   </nav>
-
-  <!-- Mobile menu -->
   <div class="mobile-menu" id="mobileMenu">
     <ul>
       <li><a href="#sobre-mi" onclick="closeMobile()">Sobre mí</a></li>
@@ -39,311 +554,247 @@
     </ul>
   </div>
 
-  <!-- Hero -->
+  <!-- HERO -->
   <section id="hero">
-    <div class="hero-bg-grid"></div>
-    <div class="hero-orb hero-orb-1"></div>
-    <div class="hero-orb hero-orb-2"></div>
-
+    <div class="hero-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
     <div class="hero-content">
-      <div class="hero-badge reveal">
+      <div class="hero-badge">
         <span class="badge-dot"></span>
         Disponible para nuevas oportunidades
       </div>
-      <h1 class="hero-name reveal delay-1">
-        <span class="name-line">Maria</span>
-        <span class="name-line accent-line">Victoria</span>
-        <span class="name-line">Sapelli</span>
+      <h1 class="hero-name">
+        <span>Maria</span>
+        <span class="grad">Victoria</span>
+        <span>Sapelli</span>
       </h1>
-      <p class="hero-role reveal delay-2">
-        <span class="role-tag">DAM</span>
-        <span class="role-sep">·</span>
-        <span class="role-tag">Ciberseguridad</span>
-        <span class="role-sep">·</span>
-        <span class="role-tag">IA & Automatización</span>
-      </p>
-      <p class="hero-desc reveal delay-3">
-        Desarrolladora en formación con visión de negocio. Combino experiencia comercial internacional con competencias técnicas en desarrollo multiplataforma y seguridad informática.
-      </p>
-      <div class="hero-actions reveal delay-4">
-        <a href="#proyectos" class="btn-primary">Ver proyectos</a>
-        <a href="#contacto" class="btn-secondary">Contactar</a>
+      <div class="hero-roles">
+        <span class="role">DAM</span>
+        <span class="role-dot">·</span>
+        <span class="role">Ciberseguridad</span>
+        <span class="role-dot">·</span>
+        <span class="role">IA & Automatización</span>
       </div>
-      <div class="hero-stats reveal delay-5">
+      <p class="hero-desc">Desarrolladora en formación con visión de negocio. Combino experiencia comercial internacional con competencias técnicas en desarrollo multiplataforma y seguridad informática.</p>
+      <div class="hero-btns">
+        <a href="#proyectos" class="btn-p">Ver proyectos</a>
+        <a href="#contacto" class="btn-s">Contactar</a>
+      </div>
+      <div class="hero-stats">
         <div class="stat">
           <span class="stat-num">4+</span>
-          <span class="stat-label">Años de experiencia</span>
+          <span class="stat-label">Años experiencia</span>
         </div>
-        <div class="stat-divider"></div>
+        <div class="stat-div"></div>
         <div class="stat">
           <span class="stat-num">3</span>
           <span class="stat-label">Certificaciones</span>
         </div>
-        <div class="stat-divider"></div>
+        <div class="stat-div"></div>
         <div class="stat">
           <span class="stat-num">4</span>
           <span class="stat-label">Idiomas</span>
         </div>
       </div>
     </div>
-
-    <div class="hero-scroll">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
   </section>
 
-  <!-- Sobre mí -->
+  <!-- SOBRE MÍ -->
   <section id="sobre-mi">
     <div class="container">
-      <div class="section-header">
-        <span class="section-tag">01 — Sobre mí</span>
-        <h2 class="section-title">Tecnología con<br/><em>visión de negocio</em></h2>
-      </div>
+      <span class="sec-tag">01 — Sobre mí</span>
+      <h2 class="sec-title">Tecnología con<br/><em>visión de negocio</em></h2>
       <div class="about-grid">
         <div class="about-text">
           <p>Soy estudiante de <strong>Desarrollo de Aplicaciones Multiplataforma (DAM)</strong> en UNIVERSAE, con formación complementaria en Ciberseguridad. Mi trayectoria es poco convencional: vengo del mundo comercial internacional donde lideré equipos, implementé sistemas de cumplimiento KYC/GDPR y coordiné el desarrollo de una app desde cero.</p>
           <p>Esa combinación de visión estratégica y capacidad técnica es mi mayor diferencial. No solo sé programar — entiendo por qué y para quién.</p>
-          <div class="about-langs">
+          <div class="langs">
             <span class="lang-pill">🇪🇸 Español — Nativo</span>
             <span class="lang-pill">🇧🇷 Portugués — Avanzado</span>
             <span class="lang-pill">🇮🇹 Italiano — Intermedio</span>
             <span class="lang-pill">🇬🇧 Inglés — Básico</span>
           </div>
         </div>
-        <div class="about-cards">
-          <div class="info-card">
-            <div class="info-card-icon">🎓</div>
-            <div>
-              <h4>FP Grado Superior DAM</h4>
-              <p>UNIVERSAE · 2024 – actualidad</p>
-            </div>
+        <div class="info-cards">
+          <div class="icard sr">
+            <div class="icard-icon">🎓</div>
+            <div><h4>FP Grado Superior DAM</h4><p>UNIVERSAE · 2024 – actualidad</p></div>
           </div>
-          <div class="info-card">
-            <div class="info-card-icon">📍</div>
-            <div>
-              <h4>Málaga, España</h4>
-              <p>Disponible para remoto</p>
-            </div>
+          <div class="icard sr">
+            <div class="icard-icon">📍</div>
+            <div><h4>Málaga, España</h4><p>Disponible para remoto</p></div>
           </div>
-          <div class="info-card">
-            <div class="info-card-icon">🔐</div>
-            <div>
-              <h4>Microsoft SC-900</h4>
-              <p>Security, Compliance & Identity</p>
-            </div>
+          <div class="icard sr">
+            <div class="icard-icon">🔐</div>
+            <div><h4>Microsoft SC-900</h4><p>Security, Compliance & Identity</p></div>
           </div>
-          <div class="info-card">
-            <div class="info-card-icon">🛡️</div>
-            <div>
-              <h4>Auditoría de Seguridad</h4>
-              <p>MF0487 · Mainjobs España</p>
-            </div>
+          <div class="icard sr">
+            <div class="icard-icon">🛡️</div>
+            <div><h4>Auditoría de Seguridad</h4><p>MF0487 · Mainjobs España</p></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Habilidades -->
+  <!-- HABILIDADES -->
   <section id="habilidades">
     <div class="container">
-      <div class="section-header">
-        <span class="section-tag">02 — Habilidades</span>
-        <h2 class="section-title">Stack &<br/><em>Competencias</em></h2>
-      </div>
+      <span class="sec-tag">02 — Habilidades</span>
+      <h2 class="sec-title">Stack &<br/><em>Competencias</em></h2>
       <div class="skills-grid">
-        <div class="skill-category">
-          <h3 class="skill-cat-title">
-            <span class="skill-cat-icon">⚙️</span> Desarrollo
-          </h3>
-          <div class="skill-tags">
-            <span class="skill-tag">Desarrollo Multiplataforma</span>
-            <span class="skill-tag">Apps Móviles</span>
-            <span class="skill-tag">Backend</span>
-            <span class="skill-tag">APIs REST</span>
-            <span class="skill-tag">PostgreSQL</span>
-            <span class="skill-tag">Git / GitHub</span>
+        <div class="skill-cat sr">
+          <h3 class="skill-cat-title">⚙️ Desarrollo</h3>
+          <div class="tags">
+            <span class="tag">Desarrollo Multiplataforma</span>
+            <span class="tag">Apps Móviles</span>
+            <span class="tag">Backend</span>
+            <span class="tag">APIs REST</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Git / GitHub</span>
           </div>
         </div>
-        <div class="skill-category">
-          <h3 class="skill-cat-title">
-            <span class="skill-cat-icon">🔐</span> Ciberseguridad
-          </h3>
-          <div class="skill-tags">
-            <span class="skill-tag highlighted">Auditoría de Seguridad</span>
-            <span class="skill-tag highlighted">KYC / GDPR</span>
-            <span class="skill-tag highlighted">Microsoft SC-900</span>
-            <span class="skill-tag highlighted">Protección de datos</span>
-            <span class="skill-tag highlighted">Compliance</span>
+        <div class="skill-cat sr">
+          <h3 class="skill-cat-title">🔐 Ciberseguridad</h3>
+          <div class="tags">
+            <span class="tag green">Auditoría de Seguridad</span>
+            <span class="tag green">KYC / GDPR</span>
+            <span class="tag green">Microsoft SC-900</span>
+            <span class="tag green">Protección de datos</span>
+            <span class="tag green">Compliance</span>
           </div>
         </div>
-        <div class="skill-category">
-          <h3 class="skill-cat-title">
-            <span class="skill-cat-icon">🤖</span> IA & Automatización
-          </h3>
-          <div class="skill-tags">
-            <span class="skill-tag accent">Bots conversacionales</span>
-            <span class="skill-tag accent">Automatización de procesos</span>
-            <span class="skill-tag accent">Integración de IA</span>
-            <span class="skill-tag accent">Gestión de plataformas digitales</span>
+        <div class="skill-cat sr">
+          <h3 class="skill-cat-title">🤖 IA & Automatización</h3>
+          <div class="tags">
+            <span class="tag blue">Bots conversacionales</span>
+            <span class="tag blue">Automatización de procesos</span>
+            <span class="tag blue">Integración de IA</span>
+            <span class="tag blue">Plataformas digitales</span>
           </div>
         </div>
-        <div class="skill-category">
-          <h3 class="skill-cat-title">
-            <span class="skill-cat-icon">💼</span> Gestión & Negocio
-          </h3>
-          <div class="skill-tags">
-            <span class="skill-tag">CRM</span>
-            <span class="skill-tag">Gestión de equipos</span>
-            <span class="skill-tag">Ofimática avanzada</span>
-            <span class="skill-tag">Criptomonedas</span>
-            <span class="skill-tag">Activos digitales</span>
-            <span class="skill-tag">Atención VIP</span>
+        <div class="skill-cat sr">
+          <h3 class="skill-cat-title">💼 Gestión & Negocio</h3>
+          <div class="tags">
+            <span class="tag">CRM</span>
+            <span class="tag">Gestión de equipos</span>
+            <span class="tag">Ofimática avanzada</span>
+            <span class="tag">Criptomonedas</span>
+            <span class="tag">Activos digitales</span>
+            <span class="tag">Atención VIP</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Experiencia -->
+  <!-- EXPERIENCIA -->
   <section id="experiencia">
     <div class="container">
-      <div class="section-header">
-        <span class="section-tag">03 — Experiencia</span>
-        <h2 class="section-title">Trayectoria<br/><em>profesional</em></h2>
-      </div>
+      <span class="sec-tag">03 — Experiencia</span>
+      <h2 class="sec-title">Trayectoria<br/><em>profesional</em></h2>
       <div class="timeline">
-
-        <div class="timeline-item">
-          <div class="timeline-marker">
-            <div class="marker-dot active"></div>
-            <div class="marker-line"></div>
+        <div class="tl-item sr">
+          <div class="tl-marker">
+            <div class="tl-dot active"></div>
+            <div class="tl-line"></div>
           </div>
-          <div class="timeline-content">
-            <div class="timeline-header">
+          <div class="tl-body">
+            <div class="tl-head">
               <div>
                 <h3>Asesor Comercial en Telecomunicaciones</h3>
-                <p class="timeline-company">Premium Numbers — España</p>
+                <p class="tl-co">Premium Numbers — España</p>
               </div>
-              <span class="timeline-date">2024 – 2025</span>
+              <span class="tl-date">2024 – 2025</span>
             </div>
-            <ul class="timeline-list">
+            <ul class="tl-list">
               <li>Asesoramiento técnico-comercial en soluciones de telecomunicaciones</li>
               <li>Gestión de cartera de clientes y fidelización</li>
               <li>Uso de herramientas CRM y plataformas digitales para seguimiento y reporting</li>
             </ul>
           </div>
         </div>
-
-        <div class="timeline-item">
-          <div class="timeline-marker">
-            <div class="marker-dot"></div>
-            <div class="marker-line"></div>
+        <div class="tl-item sr">
+          <div class="tl-marker">
+            <div class="tl-dot"></div>
+            <div class="tl-line"></div>
           </div>
-          <div class="timeline-content">
-            <div class="timeline-header">
+          <div class="tl-body">
+            <div class="tl-head">
               <div>
                 <h3>Directora Comercial</h3>
-                <p class="timeline-company">Crypto Trade CVCC LTDA — Brasil</p>
+                <p class="tl-co">Crypto Trade CVCC LTDA — Brasil</p>
               </div>
-              <span class="timeline-date">2020 – 2024</span>
+              <span class="tl-date">2020 – 2024</span>
             </div>
-            <ul class="timeline-list">
+            <ul class="tl-list">
               <li>Supervisión del back office de plataforma digital de activos cripto</li>
               <li>Implementación de medidas de protección de datos y cumplimiento KYC/GDPR</li>
               <li>Coordinación de equipos y atención a clientes VIP</li>
               <li>Monitoreo de operaciones y gestión de riesgos</li>
-              <li><strong>Responsable del proyecto de desarrollo de la App y colaboración con equipo técnico</strong></li>
+              <li><strong>Responsable del proyecto de desarrollo de App y colaboración con equipo técnico</strong></li>
             </ul>
           </div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- Proyectos -->
+  <!-- PROYECTOS -->
   <section id="proyectos">
     <div class="container">
-      <div class="section-header">
-        <span class="section-tag">04 — Proyectos</span>
-        <h2 class="section-title">Lo que<br/><em>estoy construyendo</em></h2>
-      </div>
-      <div class="projects-grid">
-
-        <div class="project-card featured">
-          <div class="project-top">
-            <span class="project-badge">Destacado</span>
-            <div class="project-links">
-              <a href="#" class="project-link" title="Ver proyecto">↗</a>
-            </div>
+      <span class="sec-tag">04 — Proyectos</span>
+      <h2 class="sec-title">Lo que<br/><em>estoy construyendo</em></h2>
+      <div class="proj-grid">
+        <div class="pcard featured sr">
+          <div class="ptop">
+            <span class="pbadge">Destacado</span>
+            <a href="https://portfolio-victoria-final.vercel.app" target="_blank" class="plink">↗</a>
           </div>
           <h3>Portfolio IA Interactivo</h3>
-          <p>Portfolio personal con asistente de IA integrado. El asistente responde preguntas sobre mi perfil profesional en tiempo real usando la API de Claude.</p>
-          <div class="project-tech">
-            <span>HTML/CSS/JS</span>
-            <span>Claude API</span>
-            <span>Vercel</span>
-          </div>
+          <p>Portfolio personal con asistente de IA integrado que responde preguntas sobre mi perfil profesional en tiempo real.</p>
+          <div class="ptech"><span>HTML/CSS/JS</span><span>Claude API</span><span>Vercel</span></div>
         </div>
-
-        <div class="project-card">
-          <div class="project-top">
-            <span class="project-badge wip">En desarrollo</span>
-            <div class="project-links">
-              <a href="#" class="project-link" title="Ver proyecto">↗</a>
-            </div>
-          </div>
+        <div class="pcard sr">
+          <div class="ptop"><span class="pbadge wip">En desarrollo</span></div>
           <h3>App DAM — Proyecto Final</h3>
           <p>Aplicación multiplataforma desarrollada como proyecto de FP. Arquitectura backend con APIs REST y base de datos PostgreSQL.</p>
-          <div class="project-tech">
-            <span>Android/iOS</span>
-            <span>PostgreSQL</span>
-            <span>REST API</span>
-          </div>
+          <div class="ptech"><span>Android/iOS</span><span>PostgreSQL</span><span>REST API</span></div>
         </div>
-
-        <div class="project-card">
-          <div class="project-top">
-            <span class="project-badge security">Ciberseguridad</span>
-          </div>
-          <h3>Auditoría de Seguridad Informática</h3>
-          <p>Formación práctica en auditoría de sistemas. Análisis de vulnerabilidades, evaluación de riesgos y cumplimiento normativo. Certificado MF0487.</p>
-          <div class="project-tech">
-            <span>MF0487</span>
-            <span>GDPR</span>
-            <span>KYC</span>
-          </div>
+        <div class="pcard sr">
+          <div class="ptop"><span class="pbadge sec">Ciberseguridad</span></div>
+          <h3>Auditoría de Seguridad</h3>
+          <p>Formación práctica en auditoría de sistemas. Análisis de vulnerabilidades, evaluación de riesgos y cumplimiento normativo.</p>
+          <div class="ptech"><span>MF0487</span><span>GDPR</span><span>KYC</span></div>
         </div>
-
       </div>
 
-      <div class="certs-section">
+      <div class="certs-sep">
         <h3 class="certs-title">Certificaciones</h3>
         <div class="certs-grid">
-          <div class="cert-card">
-            <div class="cert-logo microsoft">M</div>
+          <div class="cert sr">
+            <div class="cert-ico ms">M</div>
             <div>
               <h4>Microsoft SC-900</h4>
               <p>Security, Compliance & Identity Fundamentals</p>
-              <span class="cert-date">Julio 2025 · Verificable en Certiport</span>
+              <small>Julio 2025 · Verificable en Certiport</small>
             </div>
           </div>
-          <div class="cert-card">
-            <div class="cert-logo mainjobs">A</div>
+          <div class="cert sr">
+            <div class="cert-ico mj">A</div>
             <div>
               <h4>Auditoría de Seguridad Informática</h4>
-              <p>MF0487 · Mainjobs Internacional — España</p>
-              <span class="cert-date">Junio 2025 · 60h Teleformación</span>
+              <p>MF0487 · Mainjobs España</p>
+              <small>Junio 2025 · 60h Teleformación</small>
             </div>
           </div>
-          <div class="cert-card">
-            <div class="cert-logo latu">G</div>
+          <div class="cert sr">
+            <div class="cert-ico lt">G</div>
             <div>
               <h4>Gestión Productiva para PYMEs</h4>
               <p>LATU — Uruguay</p>
-              <span class="cert-date">Formación continua</span>
+              <small>Formación continua</small>
             </div>
           </div>
         </div>
@@ -351,57 +802,83 @@
     </div>
   </section>
 
-  <!-- Contacto -->
+  <!-- CONTACTO -->
   <section id="contacto">
     <div class="container">
-      <div class="section-header">
-        <span class="section-tag">05 — Contacto</span>
-        <h2 class="section-title">Hablemos<br/><em>¿empezamos?</em></h2>
-      </div>
-      <div class="contact-wrapper">
-        <p class="contact-desc">Estoy buscando oportunidades en desarrollo, ciberseguridad o automatización con IA. Si tienes un proyecto interesante o una posición que encaje con mi perfil, me encantaría escucharte.</p>
-        <div class="contact-links">
-          <a href="mailto:vickysape@hotmail.com" class="contact-card">
-            <span class="contact-icon">✉️</span>
-            <div>
-              <h4>Email</h4>
-              <p>vickysape@hotmail.com</p>
-            </div>
-          </a>
-          <a href="tel:608144752" class="contact-card">
-            <span class="contact-icon">📱</span>
-            <div>
-              <h4>Teléfono</h4>
-              <p>608 144 752</p>
-            </div>
-          </a>
-          <a href="https://linkedin.com/in/sapelli-maria-victoria" target="_blank" rel="noopener" class="contact-card">
-            <span class="contact-icon">💼</span>
-            <div>
-              <h4>LinkedIn</h4>
-              <p>sapelli-maria-victoria</p>
-            </div>
-          </a>
-          <a href="https://github.com/" target="_blank" rel="noopener" class="contact-card">
-            <span class="contact-icon">💻</span>
-            <div>
-              <h4>GitHub</h4>
-              <p>Ver mis repositorios</p>
-            </div>
-          </a>
-        </div>
+      <span class="sec-tag">05 — Contacto</span>
+      <h2 class="sec-title">Hablemos<br/><em>¿empezamos?</em></h2>
+      <p class="contact-desc">Estoy buscando oportunidades en desarrollo, ciberseguridad o automatización con IA. Si tienes un proyecto interesante o una posición que encaje con mi perfil, me encantaría escucharte.</p>
+      <div class="contact-grid">
+        <a href="mailto:vickysape@hotmail.com" class="clink sr">
+          <span class="cico">✉️</span>
+          <div><h4>Email</h4><p>vickysape@hotmail.com</p></div>
+        </a>
+        <a href="tel:608144752" class="clink sr">
+          <span class="cico">📱</span>
+          <div><h4>Teléfono</h4><p>608 144 752</p></div>
+        </a>
+        <a href="https://linkedin.com/in/sapelli-maria-victoria" target="_blank" class="clink sr">
+          <span class="cico">💼</span>
+          <div><h4>LinkedIn</h4><p>sapelli-maria-victoria</p></div>
+        </a>
+        <a href="https://github.com/vickysape" target="_blank" class="clink sr">
+          <span class="cico">💻</span>
+          <div><h4>GitHub</h4><p>github.com/vickysape</p></div>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- FOOTER -->
   <footer>
-    <div class="footer-inner">
-      <span class="footer-name">Maria Victoria Sapelli</span>
-      <span class="footer-copy">© 2025 · Hecho con código y café ☕</span>
+    <div class="foot">
+      <span class="foot-name">Maria Victoria Sapelli</span>
+      <span class="foot-copy">© 2025 · Hecho con código y café ☕</span>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    // Mobile menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    function closeMobile() { mobileMenu.classList.remove('open'); }
+    document.addEventListener('click', e => {
+      if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target))
+        mobileMenu.classList.remove('open');
+    });
+
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.style.background = window.scrollY > 60
+        ? 'rgba(8,11,18,0.97)'
+        : 'rgba(8,11,18,0.85)';
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('vis'), i * 40);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.sr').forEach(el => observer.observe(el));
+
+    // Active nav
+    const sections = document.querySelectorAll('section[id]');
+    const navAs = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let cur = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) cur = s.id; });
+      navAs.forEach(a => {
+        a.style.color = '';
+        if (a.getAttribute('href') === '#' + cur && !a.classList.contains('nav-cta'))
+          a.style.color = 'var(--accent)';
+      });
+    });
+  </script>
 </body>
 </html>
