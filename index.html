@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Victoria Sapelli — DAM & Ciberseguridad</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
+    
 
     :root {
       --bg: #080b12;
@@ -15,14 +15,14 @@
       --surface-2: #1e2836;
       --border: rgba(255,255,255,0.07);
       --border-hover: rgba(255,255,255,0.15);
-      --text: #e8edf4;
-      --text-2: #8b97a8;
-      --text-3: #5a6473;
+      --text: #f0f4f8;
+      --text-2: #b8c4d0;
+      --text-3: #7a8898;
       --accent: #00d4aa;
       --accent-2: #0099ff;
-      --accent-glow: rgba(0,212,170,0.12);
-      --font-display: 'Syne', 'Arial Black', sans-serif;
-      --font-mono: 'DM Mono', 'Courier New', monospace;
+      --accent-glow: rgba(0,212,170,0.10);
+      --font-display: -apple-system, 'Segoe UI', system-ui, sans-serif;
+      --font-mono: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
       --font-body: system-ui, -apple-system, sans-serif;
       --radius: 12px;
       --radius-lg: 20px;
@@ -191,10 +191,7 @@
     }
     .hero-name span { display: block; }
     .hero-name .grad {
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: var(--accent);
     }
     .hero-roles {
       display: flex;
@@ -294,10 +291,7 @@
     }
     .sec-title em {
       font-style: normal;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: var(--accent);
     }
 
     /* ABOUT */
@@ -703,6 +697,27 @@
           <div class="tl-body">
             <div class="tl-head">
               <div>
+                <h3>Prácticas en Automatización e IA</h3>
+                <p class="tl-co">Grupo Oro — España</p>
+              </div>
+              <span class="tl-date">2025 – actualidad</span>
+            </div>
+            <ul class="tl-list">
+              <li>Prácticas de empresa en el marco del FP Grado Superior DAM</li>
+              <li>Automatización de procesos internos con herramientas de IA</li>
+              <li>Desarrollo y mantenimiento de soluciones digitales</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tl-item sr">
+          <div class="tl-marker">
+            <div class="tl-dot"></div>
+            <div class="tl-line"></div>
+          </div>
+          <div class="tl-body">
+            <div class="tl-head">
+              <div>
                 <h3>Asesor Comercial en Telecomunicaciones</h3>
                 <p class="tl-co">Premium Numbers — España</p>
               </div>
@@ -757,10 +772,12 @@
           <div class="ptech"><span>HTML/CSS/JS</span><span>Claude API</span><span>Vercel</span></div>
         </div>
         <div class="pcard sr">
-          <div class="ptop"><span class="pbadge wip">En desarrollo</span></div>
-          <h3>App DAM — Proyecto Final</h3>
-          <p>Aplicación multiplataforma desarrollada como proyecto de FP. Arquitectura backend con APIs REST y base de datos PostgreSQL.</p>
-          <div class="ptech"><span>Android/iOS</span><span>PostgreSQL</span><span>REST API</span></div>
+          <div class="ptop">
+            <span class="pbadge wip">En desarrollo</span>
+          </div>
+          <h3>HYROX Training App</h3>
+          <p>Aplicación enfocada en el rendimiento deportivo, con sistema de seguimiento de entrenamientos, rankings y comunidad. Incorpora IA orientada a la personalización del entrenamiento.</p>
+          <div class="ptech"><span>JavaScript</span><span>Next.js</span><span>Node.js</span><span>PostgreSQL</span><span>IA</span></div>
         </div>
         <div class="pcard sr">
           <div class="ptop"><span class="pbadge sec">Ciberseguridad</span></div>
