@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Victoria Sapelli — DAM & Ciberseguridad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Cabinet+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Noise texture overlay -->
+  <div class="noise"></div>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="nav-logo">MVS</div>
+    <ul class="nav-links">
+      <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#habilidades">Skills</a></li>
+      <li><a href="#experiencia">Experiencia</a></li>
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="#contacto" class="nav-cta">Contacto</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="#sobre-mi" onclick="closeMobile()">Sobre mí</a></li>
+      <li><a href="#habilidades" onclick="closeMobile()">Skills</a></li>
+      <li><a href="#experiencia" onclick="closeMobile()">Experiencia</a></li>
+      <li><a href="#proyectos" onclick="closeMobile()">Proyectos</a></li>
+      <li><a href="#contacto" onclick="closeMobile()">Contacto</a></li>
+    </ul>
+  </div>
+
+  <!-- Hero -->
+  <section id="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge reveal">
+        <span class="badge-dot"></span>
+        Disponible para nuevas oportunidades
+      </div>
+      <h1 class="hero-name reveal delay-1">
+        <span class="name-line">Maria</span>
+        <span class="name-line accent-line">Victoria</span>
+        <span class="name-line">Sapelli</span>
+      </h1>
+      <p class="hero-role reveal delay-2">
+        <span class="role-tag">DAM</span>
+        <span class="role-sep">·</span>
+        <span class="role-tag">Ciberseguridad</span>
+        <span class="role-sep">·</span>
+        <span class="role-tag">IA & Automatización</span>
+      </p>
+      <p class="hero-desc reveal delay-3">
+        Desarrolladora en formación con visión de negocio. Combino experiencia comercial internacional con competencias técnicas en desarrollo multiplataforma y seguridad informática.
+      </p>
+      <div class="hero-actions reveal delay-4">
+        <a href="#proyectos" class="btn-primary">Ver proyectos</a>
+        <a href="#contacto" class="btn-secondary">Contactar</a>
+      </div>
+      <div class="hero-stats reveal delay-5">
+        <div class="stat">
+          <span class="stat-num">4+</span>
+          <span class="stat-label">Años de experiencia</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">3</span>
+          <span class="stat-label">Certificaciones</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">4</span>
+          <span class="stat-label">Idiomas</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Sobre mí -->
+  <section id="sobre-mi">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">01 — Sobre mí</span>
+        <h2 class="section-title">Tecnología con<br/><em>visión de negocio</em></h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>Soy estudiante de <strong>Desarrollo de Aplicaciones Multiplataforma (DAM)</strong> en UNIVERSAE, con formación complementaria en Ciberseguridad. Mi trayectoria es poco convencional: vengo del mundo comercial internacional donde lideré equipos, implementé sistemas de cumplimiento KYC/GDPR y coordiné el desarrollo de una app desde cero.</p>
+          <p>Esa combinación de visión estratégica y capacidad técnica es mi mayor diferencial. No solo sé programar — entiendo por qué y para quién.</p>
+          <div class="about-langs">
+            <span class="lang-pill">🇪🇸 Español — Nativo</span>
+            <span class="lang-pill">🇧🇷 Portugués — Avanzado</span>
+            <span class="lang-pill">🇮🇹 Italiano — Intermedio</span>
+            <span class="lang-pill">🇬🇧 Inglés — Básico</span>
+          </div>
+        </div>
+        <div class="about-cards">
+          <div class="info-card">
+            <div class="info-card-icon">🎓</div>
+            <div>
+              <h4>FP Grado Superior DAM</h4>
+              <p>UNIVERSAE · 2024 – actualidad</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon">📍</div>
+            <div>
+              <h4>Málaga, España</h4>
+              <p>Disponible para remoto</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon">🔐</div>
+            <div>
+              <h4>Microsoft SC-900</h4>
+              <p>Security, Compliance & Identity</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon">🛡️</div>
+            <div>
+              <h4>Auditoría de Seguridad</h4>
+              <p>MF0487 · Mainjobs España</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Habilidades -->
+  <section id="habilidades">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">02 — Habilidades</span>
+        <h2 class="section-title">Stack &<br/><em>Competencias</em></h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-category">
+          <h3 class="skill-cat-title">
+            <span class="skill-cat-icon">⚙️</span> Desarrollo
+          </h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Desarrollo Multiplataforma</span>
+            <span class="skill-tag">Apps Móviles</span>
+            <span class="skill-tag">Backend</span>
+            <span class="skill-tag">APIs REST</span>
+            <span class="skill-tag">PostgreSQL</span>
+            <span class="skill-tag">Git / GitHub</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3 class="skill-cat-title">
+            <span class="skill-cat-icon">🔐</span> Ciberseguridad
+          </h3>
+          <div class="skill-tags">
+            <span class="skill-tag highlighted">Auditoría de Seguridad</span>
+            <span class="skill-tag highlighted">KYC / GDPR</span>
+            <span class="skill-tag highlighted">Microsoft SC-900</span>
+            <span class="skill-tag highlighted">Protección de datos</span>
+            <span class="skill-tag highlighted">Compliance</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3 class="skill-cat-title">
+            <span class="skill-cat-icon">🤖</span> IA & Automatización
+          </h3>
+          <div class="skill-tags">
+            <span class="skill-tag accent">Bots conversacionales</span>
+            <span class="skill-tag accent">Automatización de procesos</span>
+            <span class="skill-tag accent">Integración de IA</span>
+            <span class="skill-tag accent">Gestión de plataformas digitales</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3 class="skill-cat-title">
+            <span class="skill-cat-icon">💼</span> Gestión & Negocio
+          </h3>
+          <div class="skill-tags">
+            <span class="skill-tag">CRM</span>
+            <span class="skill-tag">Gestión de equipos</span>
+            <span class="skill-tag">Ofimática avanzada</span>
+            <span class="skill-tag">Criptomonedas</span>
+            <span class="skill-tag">Activos digitales</span>
+            <span class="skill-tag">Atención VIP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experiencia -->
+  <section id="experiencia">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">03 — Experiencia</span>
+        <h2 class="section-title">Trayectoria<br/><em>profesional</em></h2>
+      </div>
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="timeline-marker">
+            <div class="marker-dot active"></div>
+            <div class="marker-line"></div>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <div>
+                <h3>Asesor Comercial en Telecomunicaciones</h3>
+                <p class="timeline-company">Premium Numbers — España</p>
+              </div>
+              <span class="timeline-date">2024 – 2025</span>
+            </div>
+            <ul class="timeline-list">
+              <li>Asesoramiento técnico-comercial en soluciones de telecomunicaciones</li>
+              <li>Gestión de cartera de clientes y fidelización</li>
+              <li>Uso de herramientas CRM y plataformas digitales para seguimiento y reporting</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">
+            <div class="marker-dot"></div>
+            <div class="marker-line"></div>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <div>
+                <h3>Directora Comercial</h3>
+                <p class="timeline-company">Crypto Trade CVCC LTDA — Brasil</p>
+              </div>
+              <span class="timeline-date">2020 – 2024</span>
+            </div>
+            <ul class="timeline-list">
+              <li>Supervisión del back office de plataforma digital de activos cripto</li>
+              <li>Implementación de medidas de protección de datos y cumplimiento KYC/GDPR</li>
+              <li>Coordinación de equipos y atención a clientes VIP</li>
+              <li>Monitoreo de operaciones y gestión de riesgos</li>
+              <li><strong>Responsable del proyecto de desarrollo de la App y colaboración con equipo técnico</strong></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Proyectos -->
+  <section id="proyectos">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">04 — Proyectos</span>
+        <h2 class="section-title">Lo que<br/><em>estoy construyendo</em></h2>
+      </div>
+      <div class="projects-grid">
+
+        <div class="project-card featured">
+          <div class="project-top">
+            <span class="project-badge">Destacado</span>
+            <div class="project-links">
+              <a href="#" class="project-link" title="Ver proyecto">↗</a>
+            </div>
+          </div>
+          <h3>Portfolio IA Interactivo</h3>
+          <p>Portfolio personal con asistente de IA integrado. El asistente responde preguntas sobre mi perfil profesional en tiempo real usando la API de Claude.</p>
+          <div class="project-tech">
+            <span>HTML/CSS/JS</span>
+            <span>Claude API</span>
+            <span>Vercel</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-top">
+            <span class="project-badge wip">En desarrollo</span>
+            <div class="project-links">
+              <a href="#" class="project-link" title="Ver proyecto">↗</a>
+            </div>
+          </div>
+          <h3>App DAM — Proyecto Final</h3>
+          <p>Aplicación multiplataforma desarrollada como proyecto de FP. Arquitectura backend con APIs REST y base de datos PostgreSQL.</p>
+          <div class="project-tech">
+            <span>Android/iOS</span>
+            <span>PostgreSQL</span>
+            <span>REST API</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-top">
+            <span class="project-badge security">Ciberseguridad</span>
+          </div>
+          <h3>Auditoría de Seguridad Informática</h3>
+          <p>Formación práctica en auditoría de sistemas. Análisis de vulnerabilidades, evaluación de riesgos y cumplimiento normativo. Certificado MF0487.</p>
+          <div class="project-tech">
+            <span>MF0487</span>
+            <span>GDPR</span>
+            <span>KYC</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="certs-section">
+        <h3 class="certs-title">Certificaciones</h3>
+        <div class="certs-grid">
+          <div class="cert-card">
+            <div class="cert-logo microsoft">M</div>
+            <div>
+              <h4>Microsoft SC-900</h4>
+              <p>Security, Compliance & Identity Fundamentals</p>
+              <span class="cert-date">Julio 2025 · Verificable en Certiport</span>
+            </div>
+          </div>
+          <div class="cert-card">
+            <div class="cert-logo mainjobs">A</div>
+            <div>
+              <h4>Auditoría de Seguridad Informática</h4>
+              <p>MF0487 · Mainjobs Internacional — España</p>
+              <span class="cert-date">Junio 2025 · 60h Teleformación</span>
+            </div>
+          </div>
+          <div class="cert-card">
+            <div class="cert-logo latu">G</div>
+            <div>
+              <h4>Gestión Productiva para PYMEs</h4>
+              <p>LATU — Uruguay</p>
+              <span class="cert-date">Formación continua</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contacto">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">05 — Contacto</span>
+        <h2 class="section-title">Hablemos<br/><em>¿empezamos?</em></h2>
+      </div>
+      <div class="contact-wrapper">
+        <p class="contact-desc">Estoy buscando oportunidades en desarrollo, ciberseguridad o automatización con IA. Si tienes un proyecto interesante o una posición que encaje con mi perfil, me encantaría escucharte.</p>
+        <div class="contact-links">
+          <a href="mailto:vickysape@hotmail.com" class="contact-card">
+            <span class="contact-icon">✉️</span>
+            <div>
+              <h4>Email</h4>
+              <p>vickysape@hotmail.com</p>
+            </div>
+          </a>
+          <a href="tel:608144752" class="contact-card">
+            <span class="contact-icon">📱</span>
+            <div>
+              <h4>Teléfono</h4>
+              <p>608 144 752</p>
+            </div>
+          </a>
+          <a href="https://linkedin.com/in/sapelli-maria-victoria" target="_blank" rel="noopener" class="contact-card">
+            <span class="contact-icon">💼</span>
+            <div>
+              <h4>LinkedIn</h4>
+              <p>sapelli-maria-victoria</p>
+            </div>
+          </a>
+          <a href="https://github.com/" target="_blank" rel="noopener" class="contact-card">
+            <span class="contact-icon">💻</span>
+            <div>
+              <h4>GitHub</h4>
+              <p>Ver mis repositorios</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-name">Maria Victoria Sapelli</span>
+      <span class="footer-copy">© 2025 · Hecho con código y café ☕</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
