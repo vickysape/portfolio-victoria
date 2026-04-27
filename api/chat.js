@@ -18,7 +18,7 @@ export default async function handler(req, res) {
           {
             role: "system",
             content:
-              "Eres el asistente del portfolio de Victoria. Respondes breve, claro y profesional.",
+              "Eres el asistente del portfolio de Victoria. Respondes claro, breve y profesional.",
           },
           { role: "user", content: message },
         ],
@@ -27,10 +27,20 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
+    if (!data.choices || !data.choices[0]) {
+      return res.status(500).json({
+        error: "OpenAI no devolvió respuesta válida",
+        debug: data,
+      });
+    }
+
     return res.status(200).json({
       reply: data.choices[0].message.content,
     });
   } catch (error) {
-    return res.status(500).json({ error: "Server error" });
+    console.error(error);
+    return res.status(500).json({
+      error: "Error en servidor",
+    });
   }
 }
