@@ -44,7 +44,6 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, observerOptions);
 
-// Elements to animate on scroll
 const animatedElements = document.querySelectorAll(
   '.info-card, .skill-category, .timeline-content, .project-card, .cert-card, .contact-card, .about-text p, .section-header'
 );
@@ -56,7 +55,6 @@ animatedElements.forEach((el, i) => {
   observer.observe(el);
 });
 
-// Apply class that triggers CSS transition
 const styleSheet = document.createElement('style');
 styleSheet.textContent = `.in-view { opacity: 1 !important; transform: translateY(0) !important; }`;
 document.head.appendChild(styleSheet);
@@ -84,9 +82,59 @@ window.addEventListener('scroll', () => {
   });
 });
 
-// ===== SMOOTH CLOSE MOBILE ON OUTSIDE CLICK =====
 document.addEventListener('click', (e) => {
   if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
     mobileMenu.classList.remove('open');
   }
+});
+
+
+// ============================================
+//               💬 CHAT IA
+// ============================================
+
+async function sendMessage(message) {
+  try {
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message }),
+    });
+
+    const data = await res.json();
+    return data.reply;
+  } catch (error) {
+    console.error("Error chat:", error);
+    return "Error conectando con el asistente.";
+  }
+}
+
+// conectar UI del chat
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.getElementById("chatInput");
+  const button = document.getElementById("sendBtn");
+  const box = document.getElementById("chatBox");
+
+  if (!input || !button || !box) return;
+
+  button.addEventListener("click", async () => {
+    const message = input.value.trim();
+    if (!message) return;
+
+    // mensaje usuario
+    box.innerHTML += `<div class="msg user">${message}</div>`;
+    input.value = "";
+
+    // loader
+    const loading = document.createElement("div");
+    loading.className = "msg bot";
+    loading.textContent = "Escribiendo...";
+    box.appendChild(loading);
+
+    const reply = await sendMessage(message);
+
+    loading.textContent = reply;
+  });
 });
