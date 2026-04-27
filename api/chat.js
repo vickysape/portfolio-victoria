@@ -18,7 +18,7 @@ export default async function handler(req, res) {
           {
             role: "system",
             content:
-              "Eres el asistente del portfolio de Victoria. Respondes corto, claro y profesional.",
+              "Eres el asistente del portfolio de Victoria. Respondes breve, claro y profesional.",
           },
           { role: "user", content: message },
         ],
@@ -27,10 +27,10 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    res.status(200).json({
+    return res.status(200).json({
       reply: data.choices[0].message.content,
     });
   } catch (error) {
-    res.status(500).json({ error: "Error en el servidor" });
+    return res.status(500).json({ error: "Server error" });
   }
 }
