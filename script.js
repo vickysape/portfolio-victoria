@@ -136,5 +136,49 @@ document.addEventListener("DOMContentLoaded", () => {
     const reply = await sendMessage(message);
 
     loading.textContent = reply;
-  });
-});
+
+    async function loadGitHubRepos() {
+  try {
+    const res = await fetch("https://api.github.com/users/vickysape/repos");
+    const repos = await res.json();
+
+    const container = document.getElementById("repos");
+
+    if (!container) return;
+
+    // limpiar por si acaso
+    container.innerHTML = "";
+
+    // ordenar por estrellas (más pro primero)
+    repos
+      .sort((a, b) => b.stargazers_count - a.stargazers_count)
+      .slice(0, 6) // solo los 6 mejores
+      .forEach(repo => {
+        const card = document.createElement("div");
+        card.className = "pcard";
+
+        card.innerHTML = `
+          <div class="ptop">
+            <span class="pbadge">${repo.language || "Code"}</span>
+            <a class="plink" href="${repo.html_url}" target="_blank">↗</a>
+          </div>
+
+          <h3>${repo.name}</h3>
+          <p>${repo.description || "Sin descripción disponible"}</p>
+
+          <div class="ptech">
+            <span>⭐ ${repo.stargazers_count}</span>
+            <span>🍴 ${repo.forks_count}</span>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+
+  } catch (error) {
+    console.error("Error cargando repos de GitHub:", error);
+  }
+}
+
+// ejecutar al cargar la página
+document.addEventListener("DOMContentLoaded", loadGitHubRepos);
