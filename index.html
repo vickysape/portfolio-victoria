@@ -1363,34 +1363,43 @@ INSTRUCCIONES DE RESPUESTA:
       if (t) t.remove();
     }
 
-   async function getBotReply() {
-  const sendBtn = document.getElementById('chat-send');
-  const input = document.getElementById('chat-input');
-  const message = input.value;
-  if (!message) return;
-  
-  sendBtn.disabled = true;
-  showTyping();
+       async function getBotReply() {
+      const sendBtn = document.getElementById('chat-send');
+      const chatInput = document.getElementById('chat-input');
+      const message = chatInput.value.trim();
+      
+      if (!message) return;
 
-  try {
-    const res = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: message })
-    });
+      sendBtn.disabled = true;
+      showTyping();
 
-    const data = await res.json();
-    const reply = data.reply || 'Lo siento, hubo un problema con la respuesta.';
-    
-    removeTyping();
-    appendMessage('bot', reply);
-    history.push({ role: 'assistant', content: reply });
-  } catch (err) {
-    removeTyping();
-    appendMessage('bot', 'Hubo un problema de conexión. Puedes contactar a Victoria directamente en vickysape@hotmail.com 💌');
-  } finally {
-    sendBtn.disabled = false;
-    input.value = '';
-    input.focus();
-  }
-}
+      try {
+        // Llamamos a tu propia API en Vercel
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            message: message, 
+            history: history 
+          })
+        });
+
+        const data = await res.json();
+        const reply = data.reply || 'Lo siento, no pude obtener una respuesta.';
+        
+        removeTyping();
+        appendMessage('bot', reply);
+        
+        // Guardamos en el historial para que el bot tenga memoria
+        history.push({ role: 'user', content: message });
+        history.push({ role: 'assistant', content: reply });
+
+      } catch (err) {
+        removeTyping();
+        appendMessage('bot', 'Hubo un problema de conexión. Puedes contactar a Victoria directamente en vickysape@hotmail.com 💌');
+      } finally {
+        sendBtn.disabled = false;
+        chatInput.value = '';
+      }
+    }
+
