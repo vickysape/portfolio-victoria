@@ -1,5 +1,5 @@
-export default function handler(req, res) {
+module.exports = (req, res) => {
   res.status(200).json({
-    reply: "🔥 Ya tienes backend funcionando"
+    reply: "🔥 Backend funcionando correctamente"
   });
-}
+};
