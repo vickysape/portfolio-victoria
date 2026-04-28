@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Victoria Sapelli — DAM & Ciberseguridad</title>
   <style>
-    /* ... (Mantenemos todo tu CSS igual) ... */
     @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap');
+
     :root {
       --bg: #060910; --bg-2: #0a0e17; --bg-3: #0f1520; --surface: #131c2a;
       --surface-2: #1a2538; --border: rgba(255,255,255,0.06);
@@ -18,16 +18,86 @@
       --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
       --radius: 14px; --radius-lg: 22px; --nav-h: 70px;
     }
-    /* (He omitido el resto del CSS para no alargar el mensaje, pero mantenlo todo) */
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-display); line-height: 1.7; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* --- NAV --- */
+    #navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 44px; background: rgba(6,9,16,0.88); backdrop-filter: blur(24px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-weight: 700; font-size: 18px; color: var(--accent); letter-spacing: 0.12em; }
+    .nav-links { display: flex; gap: 34px; }
+    .nav-links a { font-family: var(--font-mono); font-size: 12px; color: var(--text-2); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta { background: var(--accent) !important; color: var(--bg) !important; padding: 8px 22px; border-radius: 100px; font-weight: 600; }
+
+    /* --- HERO --- */
+    #hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; padding-top: var(--nav-h); }
+    #heroCanvas { position: absolute; inset: 0; z-index: 0; opacity: 0.55; pointer-events: none; }
+    .hero-content { position: relative; z-index: 2; max-width: 1100px; margin: 0 auto; padding: 80px 44px; }
+    .hero-name { font-size: clamp(48px, 8vw, 96px); font-weight: 700; line-height: 1.0; margin-bottom: 24px; }
+    .grad { color: var(--accent); }
+    .hero-desc { max-width: 560px; color: var(--text-2); margin-bottom: 44px; }
+
+    /* --- CHAT SECTION --- */
+    .chat-section { background: var(--surface); border-radius: var(--radius-lg); padding: 24px; margin: 40px 0; border: 1px solid var(--border); }
+    .chat-box { height: 300px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--border); }
+    .msg { max-width: 80%; padding: 10px 16px; border-radius: 18px; font-size: 14px; }
+    .msg.user { align-self: flex-end; background: var(--accent); color: var(--bg); }
+    .msg.bot { align-self: flex-start; background: var(--bg-3); color: var(--text); }
+    .chat-input-container { display: flex; gap: 12px; }
+    #chatInput { flex: 1; background: var(--bg-2); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 12px; outline: none; }
+    #sendBtn { background: var(--accent); color: var(--bg); border: none; padding: 0 24px; border-radius: 12px; font-weight: 700; cursor: pointer; }
+
+    /* --- REPOS GRID --- */
+    .repos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 30px; }
+    .repo-card { background: var(--surface); border: 1px solid var(--border); padding: 24px; border-radius: var(--radius); transition: transform 0.2s; }
+    .repo-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+
+    /* ... Otros estilos necesarios para que no se vea vacío ... */
+    section { padding: 100px 44px; max-width: 1100px; margin: 0 auto; }
+    .sec-title { font-size: 48px; margin-bottom: 40px; }
+    .sr { opacity: 1; } /* Aseguramos que se vea mientras carga */
   </style>
 </head>
 <body>
-  <!-- ... (Mantenemos todo tu HTML igual hasta el final) ... -->
+  <nav id="navbar">
+    <div class="nav-logo">MVS</div>
+    <ul class="nav-links">
+      <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#habilidades">Skills</a></li>
+      <li><a href="#experiencia">Experiencia</a></li>
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="#contacto" class="nav-cta">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <section id="hero">
+    <canvas id="heroCanvas"></canvas>
+    <div class="hero-content">
+      <h1 class="hero-name">Maria <span class="grad">Victoria</span> Sapelli</h1>
+      <p class="hero-desc">Estudiante de DAM con visión de negocio y experiencia comercial internacional. Me apoyo en IA para construir soluciones digitales.</p>
+      <a href="#proyectos" style="display:inline-block; background:var(--accent); color:var(--bg); padding: 14px 30px; border-radius: 100px; font-weight:700;">Ver proyectos</a>
+    </div>
+  </section>
+
+  <section id="contacto">
+    <h2 class="sec-title">Hablemos</h2>
+    <div class="chat-section">
+      <div id="chatBox" class="chat-box">
+        <div class="msg bot">¡Hola! Soy el asistente de Victoria. ¿En qué puedo ayudarte?</div>
+      </div>
+      <div class="chat-input-container">
+        <input id="chatInput" type="text" placeholder="Pregúntame sobre mi experiencia..." />
+        <button id="sendBtn">Enviar</button>
+      </div>
+    </div>
+  </section>
 
   <script>
-    // ... (Tus funciones de menu, canvas y scroll se quedan igual) ...
-
-    // --- LÓGICA DEL CHAT CORREGIDA ---
+    // --- LÓGICA DEL CHAT ---
     const chatInput = document.getElementById('chatInput');
     const sendBtn = document.getElementById('sendBtn');
     const chatBox = document.getElementById('chatBox');
@@ -37,37 +107,35 @@
       const message = chatInput.value.trim();
       if (!message) return;
 
-      // Desactivar botón y mostrar que está "escribiendo"
       sendBtn.disabled = true;
       appendMessage('user', message);
       chatInput.value = '';
-      showTyping();
+      
+      const typing = document.createElement('div');
+      typing.className = 'msg bot';
+      typing.id = 'typing';
+      typing.innerText = '...';
+      chatBox.appendChild(typing);
+      chatBox.scrollTop = chatBox.scrollHeight;
 
       try {
-        // LLAMADA A TU PROPIA API (BACKEND SEGURO)
         const res = await fetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            message: message,
-            history: history 
-          })
+          body: JSON.stringify({ message: message, history: history })
         });
 
         const data = await res.json();
-        removeTyping();
+        document.getElementById('typing').remove();
 
         if (data.reply) {
           appendMessage('bot', data.reply);
           history.push({ role: 'user', content: message });
           history.push({ role: 'assistant', content: data.reply });
-        } else {
-          throw new Error('Sin respuesta');
         }
-
       } catch (err) {
-        removeTyping();
-        appendMessage('bot', 'Hubo un problema de conexión. Puedes contactar a Victoria directamente en vickysape@hotmail.com 💌');
+        if(document.getElementById('typing')) document.getElementById('typing').remove();
+        appendMessage('bot', 'Hubo un problema. Contacta a Victoria en vickysape@hotmail.com 💌');
       } finally {
         sendBtn.disabled = false;
         chatInput.focus();
@@ -77,29 +145,25 @@
     function appendMessage(role, text) {
       const msgDiv = document.createElement('div');
       msgDiv.className = `msg ${role}`;
-      msgDiv.innerHTML = `<div class="msg-bubble">${text}</div>`;
+      msgDiv.innerText = text;
       chatBox.appendChild(msgDiv);
       chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    function showTyping() {
-      const typingDiv = document.createElement('div');
-      typingDiv.id = 'typing';
-      typingDiv.className = 'msg bot';
-      typingDiv.innerHTML = '<div class="msg-bubble">...</div>';
-      chatBox.appendChild(typingDiv);
-      chatBox.scrollTop = chatBox.scrollHeight;
-    }
-
-    function removeTyping() {
-      const typing = document.getElementById('typing');
-      if (typing) typing.remove();
-    }
-
     sendBtn.addEventListener('click', getBotReply);
-    chatInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') getBotReply();
-    });
+    chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') getBotReply(); });
+
+    // --- CANVAS BACKGROUND ---
+    const canvas = document.getElementById('heroCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    ctx.fillStyle = '#00e5b8';
+    for(let i=0; i<50; i++) {
+      ctx.beginPath();
+      ctx.arc(Math.random()*canvas.width, Math.random()*canvas.height, 2, 0, Math.PI*2);
+      ctx.fill();
+    }
   </script>
 </body>
 </html>
