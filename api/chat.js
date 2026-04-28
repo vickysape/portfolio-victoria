@@ -1,49 +1,30 @@
+import Anthropic from '@anthropic-ai/sdk';
+
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
+});
+
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Only POST allowed" });
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    const { message } = req.body;
+    const { message, history, system } = req.body;
 
-    if (!message) {
-      return res.status(400).json({ error: "Message is required" });
-    }
-
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "x-api-key": process.env.ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01",
-        "content-type": "application/json"
-      },
-      body: JSON.stringify({
-        model: "claude-3-5-sonnet-20241022",
-        max_tokens: 300,
-        messages: [
-          {
-            role: "user",
-            content: message
-          }
-        ]
-      })
+    const response = await anthropic.messages.create({
+      model: "claude-3-5-sonnet-20240620", // El modelo más potente
+      max_tokens: 1024,
+      system: system || "Eres un asistente amable.", // Usa el perfil que enviamos
+      messages: [
+        ...history, // Incluye el historial anterior
+        { role: "user", content: message } // El mensaje nuevo
+      ],
     });
 
-    const data = await response.json();
-
-    // DEBUG útil
-    console.log("Claude response:", data);
-
-    const reply =
-      data?.content?.[0]?.text ||
-      "No he podido generar respuesta.";
-
-    return res.status(200).json({ reply });
-
+    res.status(200).json({ reply: response.content[0].text });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      reply: "Error interno del servidor"
-    });
+    console.error('Error de Claude:', error);
+    res.status(500).json({ reply: 'Lo siento, ha habido un error interno.' });
   }
 }
