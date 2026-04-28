@@ -16,6 +16,7 @@ function closeMobile() {
 
 // ===== NAVBAR SCROLL EFFECT =====
 const navbar = document.getElementById('navbar');
+
 window.addEventListener('scroll', () => {
   if (window.scrollY > 60) {
     navbar.style.background = 'rgba(8, 11, 18, 0.95)';
@@ -24,7 +25,7 @@ window.addEventListener('scroll', () => {
   }
 });
 
-// ===== ACCENT LINE TEXT CLONE =====
+// ===== ACCENT LINE TEXT =====
 document.querySelectorAll('.accent-line').forEach(el => {
   el.setAttribute('data-text', el.textContent);
 });
@@ -65,6 +66,7 @@ const navLinks = document.querySelectorAll('.nav-links a, .mobile-menu a');
 
 window.addEventListener('scroll', () => {
   let current = '';
+
   sections.forEach(section => {
     const sectionTop = section.offsetTop - 100;
     if (window.scrollY >= sectionTop) {
@@ -82,6 +84,7 @@ window.addEventListener('scroll', () => {
   });
 });
 
+// cerrar menú móvil al click fuera
 document.addEventListener('click', (e) => {
   if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
     mobileMenu.classList.remove('open');
@@ -90,7 +93,7 @@ document.addEventListener('click', (e) => {
 
 
 // ============================================
-//               💬 CHAT IA
+//               💬 CHAT IA (CLAUDE)
 // ============================================
 
 async function sendMessage(message) {
@@ -98,9 +101,9 @@ async function sendMessage(message) {
     const res = await fetch("/api/chat", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({ message }),
+      body: JSON.stringify({ message })
     });
 
     const data = await res.json();
@@ -111,7 +114,11 @@ async function sendMessage(message) {
   }
 }
 
-// conectar UI del chat
+
+// ============================================
+//           💬 CHAT UI LOGIC
+// ============================================
+
 document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("chatInput");
   const button = document.getElementById("sendBtn");
@@ -136,23 +143,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const reply = await sendMessage(message);
 
     loading.textContent = reply;
+  });
+});
 
-    async function loadGitHubRepos() {
+
+// ============================================
+//           📦 GITHUB REPOS
+// ============================================
+
+async function loadGitHubRepos() {
   try {
     const res = await fetch("https://api.github.com/users/vickysape/repos");
     const repos = await res.json();
 
     const container = document.getElementById("repos");
-
     if (!container) return;
 
-    // limpiar por si acaso
     container.innerHTML = "";
 
-    // ordenar por estrellas (más pro primero)
     repos
       .sort((a, b) => b.stargazers_count - a.stargazers_count)
-      .slice(0, 6) // solo los 6 mejores
+      .slice(0, 6)
       .forEach(repo => {
         const card = document.createElement("div");
         card.className = "pcard";
@@ -176,9 +187,12 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
   } catch (error) {
-    console.error("Error cargando repos de GitHub:", error);
+    console.error("Error cargando repos:", error);
   }
 }
 
-// ejecutar al cargar la página
-document.addEventListener("DOMContentLoaded", loadGitHubRepos);
+
+// ejecutar al cargar página
+document.addEventListener("DOMContentLoaded", () => {
+  loadGitHubRepos();
+});
