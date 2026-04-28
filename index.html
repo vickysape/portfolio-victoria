@@ -1233,34 +1233,8 @@
     </div>
   </div>
 
-  <script>
-    // ── Toggle chat ──
-    const chatBtn = document.getElementById('chat-btn');
-    const chatPanel = document.getElementById('chat-panel');
-    const chatClose = document.getElementById('chat-close');
-    const chatNotif = document.getElementById('chat-notif');
-
-    chatBtn.addEventListener('click', () => {
-      chatPanel.classList.toggle('open');
-      chatNotif.style.display = 'none';
-    });
-    chatClose.addEventListener('click', () => chatPanel.classList.remove('open'));
-
-    // ── Auto-resize textarea ──
-    const chatInput = document.getElementById('chat-input');
-    chatInput.addEventListener('input', () => {
-      chatInput.style.height = 'auto';
-      chatInput.style.height = Math.min(chatInput.scrollHeight, 90) + 'px';
-    });
-    chatInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
-    });
-    document.getElementById('chat-send').addEventListener('click', sendMessage);
-
-    // ── Historial de conversación ──
-    const history = [];
-
-    // ── Perfil completo de Victoria (system prompt) ──
+ <script>
+    // ── 1. PERFIL COMPLETO DE VICTORIA (Mantenemos toda tu información intacta) ──
     const SYSTEM = `Eres el asistente personal de Maria Victoria Sapelli en su portfolio profesional. Responde siempre en el mismo idioma que el usuario (español o inglés). Sé amable, conciso y honesto. No inventes información.
 
 PERFIL DE VICTORIA:
@@ -1322,35 +1296,88 @@ INSTRUCCIONES DE RESPUESTA:
 - Respuestas cortas y directas. Máximo 3-4 frases salvo que pidan más detalle.
 - No uses markdown complejo, solo texto plano con algún emoji si hace falta.`;
 
+    // ── 2. LÓGICA DE CONEXIÓN Y EVENTOS (Lo único que hemos arreglado) ──
+    const chatBtn = document.getElementById('chat-btn');
+    const chatPanel = document.getElementById('chat-panel');
+    const chatClose = document.getElementById('chat-close');
+    const chatNotif = document.getElementById('chat-notif');
+    const chatInput = document.getElementById('chat-input');
+    const chatSendBtn = document.getElementById('chat-send');
+    const chatMessages = document.getElementById('chat-messages');
+
+    let history = [];
+
+    // Función para abrir/cerrar
+    if (chatBtn) {
+      chatBtn.onclick = () => {
+        chatPanel.classList.toggle('open');
+        if (chatNotif) chatNotif.style.display = 'none';
+      };
+    }
+    if (chatClose) chatClose.onclick = () => chatPanel.classList.remove('open');
+
+    // Manejo de envío de mensajes
     async function sendMessage() {
-      const input = chatInput.value.trim();
-      if (!input) return;
+      const message = chatInput.value.trim();
+      if (!message) return;
+
+      appendMessage('user', message);
       chatInput.value = '';
       chatInput.style.height = 'auto';
-      appendMessage('user', input);
-      history.push({ role: 'user', content: input });
-      document.getElementById('chat-suggestions').style.display = 'none';
-      await getBotReply();
+      
+      const suggestions = document.getElementById('chat-suggestions');
+      if (suggestions) suggestions.style.display = 'none';
+
+      await getBotReply(message);
     }
 
-    function sendSuggestion(text) {
-      chatInput.value = text;
-      sendMessage();
+    if (chatSendBtn) chatSendBtn.onclick = sendMessage;
+    if (chatInput) {
+      chatInput.onkeypress = (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } };
     }
 
+    // Comunicación con el backend de Vercel
+    async function getBotReply(messageText) {
+      showTyping();
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            message: messageText, 
+            history: history,
+            system: SYSTEM 
+          })
+        });
+
+        const data = await res.json();
+        removeTyping();
+        
+        const reply = data.reply || 'Lo siento, no pude obtener una respuesta.';
+        appendMessage('bot', reply);
+        
+        history.push({ role: 'user', content: messageText }, { role: 'assistant', content: reply });
+      } catch (err) {
+        removeTyping();
+        appendMessage('bot', 'Error de conexión. Escríbeme a vickysape@hotmail.com 💌');
+      }
+    }
+
+    // ── 3. FUNCIONES VISUALES (Mantenemos tu formato original) ──
     function appendMessage(role, text) {
       const msgs = document.getElementById('chat-messages');
+      if (!msgs) return;
       const now = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
       const div = document.createElement('div');
       div.className = 'msg ' + role;
       div.innerHTML = `<div class="msg-bubble">${text}</div><span class="msg-time">${now}</span>`;
       msgs.appendChild(div);
       msgs.scrollTop = msgs.scrollHeight;
-      return div;
     }
 
     function showTyping() {
       const msgs = document.getElementById('chat-messages');
+      if (!msgs) return;
       const div = document.createElement('div');
       div.className = 'msg bot'; div.id = 'typing-indicator';
       div.innerHTML = `<div class="msg-bubble" style="padding:10px 16px"><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
@@ -1363,43 +1390,10 @@ INSTRUCCIONES DE RESPUESTA:
       if (t) t.remove();
     }
 
-       async function getBotReply() {
-      const sendBtn = document.getElementById('chat-send');
-      const chatInput = document.getElementById('chat-input');
-      const message = chatInput.value.trim();
-      
-      if (!message) return;
-
-      sendBtn.disabled = true;
-      showTyping();
-
-      try {
-        // Llamamos a tu propia API en Vercel
-        const res = await fetch('/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            message: message, 
-            history: history 
-          })
-        });
-
-        const data = await res.json();
-        const reply = data.reply || 'Lo siento, no pude obtener una respuesta.';
-        
-        removeTyping();
-        appendMessage('bot', reply);
-        
-        // Guardamos en el historial para que el bot tenga memoria
-        history.push({ role: 'user', content: message });
-        history.push({ role: 'assistant', content: reply });
-
-      } catch (err) {
-        removeTyping();
-        appendMessage('bot', 'Hubo un problema de conexión. Puedes contactar a Victoria directamente en vickysape@hotmail.com 💌');
-      } finally {
-        sendBtn.disabled = false;
-        chatInput.value = '';
-      }
+    function sendSuggestion(text) {
+      chatInput.value = text;
+      sendMessage();
     }
-
+</script>
+</body>
+</html>
