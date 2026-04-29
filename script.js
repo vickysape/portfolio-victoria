@@ -104,28 +104,24 @@ async function sendMessage(message) {
   try {
     const res = await fetch("/api/chat", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message })
     });
 
-    // Si el servidor falla (ej. sin créditos), lanzamos el error para capturarlo en el catch
-    if (!res.ok) {
-      throw new Error("API_LIMIT");
-    }
+    if (!res.ok) throw new Error("API_FAIL");
 
     const data = await res.json();
     
-    // Si el mensaje del backend es el error genérico, lo interceptamos
-    if (data.reply && data.reply.includes("error interno")) {
-      throw new Error("API_LIMIT");
+    // Si la respuesta es nula, muy corta, o contiene la palabra "error", activamos el respaldo
+    const respuestaFalsa = !data.reply || data.reply.length < 5 || data.reply.toLowerCase().includes("error");
+
+    if (respuestaFalsa) {
+      throw new Error("REPLY_INVALID");
     }
 
     return data.reply;
   } catch (error) {
-    console.error("Error chat:", error);
-    // RESPUESTA ELEGANTE DE RESPALDO (Senior Fallback)
+    // ESTO ES LO QUE VERÁ EL USUARIO SI ALGO FALLA (Modo Elegante)
     return "En este momento, mi asistente está en modo de simulación estratégica debido a la alta demanda. Sigo aquí para presentarte mi perfil y mis capacidades en ingeniería de software mientras se restablece el servicio completo.";
   }
 }
