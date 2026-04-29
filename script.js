@@ -237,7 +237,40 @@ const loadInstaFeed = () => {
         });
     }, 1500); // Simulamos el tiempo de espera de la API
 };
+// VERSIÓN REFORZADA PARA INSTAGRAM FEED
+function initInstagram() {
+    const grid = document.getElementById('insta-grid');
+    if (!grid) return;
+    
+    console.log("Cargando sección de Instagram...");
 
-// Ejecutamos la carga al iniciar
-document.addEventListener('DOMContentLoaded', loadInstaFeed);
+    const mockData = [
+        { id: 1, type: 'REEL', caption: 'Estrategias de IA para 2026', likes: '1.2k' },
+        { id: 2, type: 'POST', caption: 'Detrás de cámaras: Aura Engine', likes: '850' },
+        { id: 3, type: 'REEL', caption: 'Cómo humanizar tu marca con IA', likes: '2.4k' }
+    ];
+
+    grid.innerHTML = ''; 
+    mockData.forEach(item => {
+        grid.innerHTML += `
+            <div class="insta-card">
+                <div style="width:100%; height:100%; background: linear-gradient(45deg, #0a0a0a, #1a1a1a); display:flex; align-items:center; justify-content:center; border-radius:15px;">
+                    <span style="color:rgba(0, 245, 212, 0.2); font-weight:bold; font-size:12px;">AURA ENGINE MEDIA</span>
+                </div>
+                <div class="insta-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; background: linear-gradient(transparent, rgba(0,0,0,0.9));">
+                    <span class="pbadge" style="background:#00f5d4; color:black; font-size:10px; padding:2px 6px; border-radius:4px; font-weight:bold; text-transform:uppercase;">${item.type}</span>
+                    <p style="margin-top:10px; color:white; font-size:12px; font-family:sans-serif;">${item.caption}</p>
+                    <small style="opacity:0.8; color:#00f5d4; font-family:sans-serif;">❤️ ${item.likes}</small>
+                </div>
+            </div>
+        `;
+    });
+}
+
+// Estos 3 comandos aseguran que se ejecute sí o sí
+document.addEventListener('DOMContentLoaded', initInstagram);
+window.addEventListener('load', initInstagram);
+setTimeout(initInstagram, 2500); 
+
+
 
