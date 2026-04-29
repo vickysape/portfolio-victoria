@@ -1356,18 +1356,40 @@ INSTRUCCIONES DE RESPUESTA:
     }
 
     // Comunicación con el backend de Vercel
-    async function getBotReply(messageText) {
-      showTyping();
-      try {
-        const res = await fetch('/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            message: messageText, 
-            history: history,
-            system: SYSTEM 
-          })
-        });
+   async function getBotReply(messageText) {
+  showTyping();
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        message: messageText, 
+        history: history,
+        system: SYSTEM 
+      })
+    });
+
+    const data = await res.json();
+    removeTyping();
+    
+    // FILTRO ANTI-ERROR: Si la respuesta dice "error", activamos el modo elegante.
+    const esError = !data.reply || data.reply.toLowerCase().includes("error");
+
+    if (esError) {
+      const fallback = "En este momento, mi asistente está en modo de simulación estratégica debido a la alta demanda. Sigo aquí para presentarte mi perfil y mis capacidades en ingeniería de software mientras se restablece el servicio completo.";
+      appendMessage('bot', fallback);
+      history.push({ role: 'user', content: messageText }, { role: 'assistant', content: fallback });
+    } else {
+      appendMessage('bot', data.reply);
+      history.push({ role: 'user', content: messageText }, { role: 'assistant', content: data.reply });
+    }
+
+  } catch (err) {
+    removeTyping();
+    appendMessage('bot', 'En este momento estoy optimizando mis respuestas. Puedes contactarme directamente en vickysape@hotmail.com 💌');
+  }
+}
+
 
         const data = await res.json();
         removeTyping();
