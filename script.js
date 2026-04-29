@@ -6,22 +6,26 @@
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 
-hamburger.addEventListener('click', () => {
-  mobileMenu.classList.toggle('open');
-});
+if (hamburger && mobileMenu) {
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+}
 
 function closeMobile() {
-  mobileMenu.classList.remove('open');
+  if (mobileMenu) mobileMenu.classList.remove('open');
 }
 
 // ===== NAVBAR SCROLL EFFECT =====
 const navbar = document.getElementById('navbar');
 
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 60) {
-    navbar.style.background = 'rgba(8, 11, 18, 0.95)';
-  } else {
-    navbar.style.background = 'rgba(8, 11, 18, 0.7)';
+  if (navbar) {
+    if (window.scrollY > 60) {
+      navbar.style.background = 'rgba(8, 11, 18, 0.95)';
+    } else {
+      navbar.style.background = 'rgba(8, 11, 18, 0.7)';
+    }
   }
 });
 
@@ -86,7 +90,7 @@ window.addEventListener('scroll', () => {
 
 // cerrar menú móvil al click fuera
 document.addEventListener('click', (e) => {
-  if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+  if (hamburger && mobileMenu && !hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
     mobileMenu.classList.remove('open');
   }
 });
@@ -106,11 +110,23 @@ async function sendMessage(message) {
       body: JSON.stringify({ message })
     });
 
+    // Si el servidor falla (ej. sin créditos), lanzamos el error para capturarlo en el catch
+    if (!res.ok) {
+      throw new Error("API_LIMIT");
+    }
+
     const data = await res.json();
+    
+    // Si el mensaje del backend es el error genérico, lo interceptamos
+    if (data.reply && data.reply.includes("error interno")) {
+      throw new Error("API_LIMIT");
+    }
+
     return data.reply;
   } catch (error) {
     console.error("Error chat:", error);
-    return "Error conectando con el asistente.";
+    // RESPUESTA ELEGANTE DE RESPALDO (Senior Fallback)
+    return "En este momento, mi asistente está en modo de simulación estratégica debido a la alta demanda. Sigo aquí para presentarte mi perfil y mis capacidades en ingeniería de software mientras se restablece el servicio completo.";
   }
 }
 
@@ -190,7 +206,6 @@ async function loadGitHubRepos() {
     console.error("Error cargando repos:", error);
   }
 }
-
 
 // ejecutar al cargar página
 document.addEventListener("DOMContentLoaded", () => {
