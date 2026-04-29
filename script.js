@@ -207,3 +207,37 @@ async function loadGitHubRepos() {
 document.addEventListener("DOMContentLoaded", () => {
   loadGitHubRepos();
 });
+// SIMULACIÓN DE INTEGRACIÓN CON INSTAGRAM GRAPH API
+const loadInstaFeed = () => {
+    const grid = document.getElementById('insta-grid');
+    if (!grid) return;
+    
+    // Estos datos simulan lo que nos devolvería la API de Meta
+    const mockData = [
+        { id: 1, type: 'REEL', caption: 'Estrategias de IA para 2026', likes: '1.2k' },
+        { id: 2, type: 'POST', caption: 'Detrás de cámaras: Aura Engine', likes: '850' },
+        { id: 3, type: 'REEL', caption: 'Cómo humanizar tu marca con IA', likes: '2.4k' }
+    ];
+
+    setTimeout(() => {
+        grid.innerHTML = ''; // Limpiamos el cargando
+        mockData.forEach(item => {
+            grid.innerHTML += `
+                <div class="insta-card">
+                    <div style="width:100%; height:100%; background: linear-gradient(45deg, #121212, #1a1a1a); display:flex; align-items:center; justify-content:center;">
+                        <span style="color:rgba(255,255,255,0.1); font-weight:bold;">[ INSTAGRAM MEDIA ]</span>
+                    </div>
+                    <div class="insta-overlay">
+                        <span class="pbadge" style="background:var(--accent-cyan); color:black; font-size:10px;">${item.type}</span>
+                        <p style="margin-top:10px; color:white;">${item.caption}</p>
+                        <small style="opacity:0.6; color:white;">❤️ ${item.likes}</small>
+                    </div>
+                </div>
+            `;
+        });
+    }, 1500); // Simulamos el tiempo de espera de la API
+};
+
+// Ejecutamos la carga al iniciar
+document.addEventListener('DOMContentLoaded', loadInstaFeed);
+
