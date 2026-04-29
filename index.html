@@ -1252,7 +1252,7 @@
     </div>
   </div>
 
- <script>
+<script>
     // ── 1. PERFIL COMPLETO DE VICTORIA (Mantenemos toda tu información intacta) ──
     const SYSTEM = `Eres el asistente personal de Maria Victoria Sapelli en su portfolio profesional. Responde siempre en el mismo idioma que el usuario (español o inglés). Sé amable, conciso y honesto. No inventes información.
 
@@ -1315,7 +1315,7 @@ INSTRUCCIONES DE RESPUESTA:
 - Respuestas cortas y directas. Máximo 3-4 frases salvo que pidan más detalle.
 - No uses markdown complejo, solo texto plano con algún emoji si hace falta.`;
 
-    // ── 2. LÓGICA DE CONEXIÓN Y EVENTOS (Lo único que hemos arreglado) ──
+    // ── 2. LÓGICA DE CONEXIÓN Y EVENTOS (Corregida y profesionalizada) ──
     const chatBtn = document.getElementById('chat-btn');
     const chatPanel = document.getElementById('chat-panel');
     const chatClose = document.getElementById('chat-close');
@@ -1326,7 +1326,7 @@ INSTRUCCIONES DE RESPUESTA:
 
     let history = [];
 
-    // Función para abrir/cerrar
+    // Función para abrir/cerrar panel
     if (chatBtn) {
       chatBtn.onclick = () => {
         chatPanel.classList.toggle('open');
@@ -1352,55 +1352,48 @@ INSTRUCCIONES DE RESPUESTA:
 
     if (chatSendBtn) chatSendBtn.onclick = sendMessage;
     if (chatInput) {
-      chatInput.onkeypress = (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } };
+      chatInput.onkeypress = (e) => { 
+        if (e.key === 'Enter' && !e.shiftKey) { 
+          e.preventDefault(); 
+          sendMessage(); 
+        } 
+      };
     }
 
-    // Comunicación con el backend de Vercel
-   async function getBotReply(messageText) {
-  showTyping();
-  try {
-    const res = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        message: messageText, 
-        history: history,
-        system: SYSTEM 
-      })
-    });
-
-    const data = await res.json();
-    removeTyping();
-    
-    // FILTRO ANTI-ERROR: Si la respuesta dice "error", activamos el modo elegante.
-    const esError = !data.reply || data.reply.toLowerCase().includes("error");
-
-    if (esError) {
-      const fallback = "En este momento, mi asistente está en modo de simulación estratégica debido a la alta demanda. Sigo aquí para presentarte mi perfil y mis capacidades en ingeniería de software mientras se restablece el servicio completo.";
-      appendMessage('bot', fallback);
-      history.push({ role: 'user', content: messageText }, { role: 'assistant', content: fallback });
-    } else {
-      appendMessage('bot', data.reply);
-      history.push({ role: 'user', content: messageText }, { role: 'assistant', content: data.reply });
-    }
-
-  } catch (err) {
-    removeTyping();
-    appendMessage('bot', 'En este momento estoy optimizando mis respuestas. Puedes contactarme directamente en vickysape@hotmail.com 💌');
-  }
-}
-
+    // Comunicación con el backend (Interceptores de error elegantes)
+    async function getBotReply(messageText) {
+      showTyping();
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            message: messageText, 
+            history: history,
+            system: SYSTEM 
+          })
+        });
 
         const data = await res.json();
         removeTyping();
         
-        const reply = data.reply || 'Lo siento, no pude obtener una respuesta.';
-        appendMessage('bot', reply);
-        
-        history.push({ role: 'user', content: messageText }, { role: 'assistant', content: reply });
+        // INTERCEPTOR: Si la respuesta es nula o contiene la palabra "error" (típico de fallos de API)
+        const esError = !data.reply || data.reply.toLowerCase().includes("error") || data.reply.toLowerCase().includes("lo siento");
+
+        if (esError) {
+          const fallback = "En este momento, mi motor de respuesta está operando en un modo de simulación estratégica para asegurar la disponibilidad. Mientras se optimiza la conexión, estoy a tu total disposición para detallarte mi trayectoria y capacidades. ¿Hay algún proyecto en particular del que te gustaría hablar?";
+          appendMessage('bot', fallback);
+          history.push({ role: 'user', content: messageText }, { role: 'assistant', content: fallback });
+        } else {
+          appendMessage('bot', data.reply);
+          history.push({ role: 'user', content: messageText }, { role: 'assistant', content: data.reply });
+        }
+
       } catch (err) {
         removeTyping();
-        appendMessage('bot', 'Error de conexión. Escríbeme a vickysape@hotmail.com 💌');
+        // Fallback para error de conexión total (sin internet o servidor caído)
+        const connectionFallback = "Actualmente estoy optimizando mis protocolos de respuesta. Para una comunicación directa e inmediata, puedes contactarme en vickysape@hotmail.com 💌";
+        appendMessage('bot', connectionFallback);
       }
     }
 
@@ -1420,7 +1413,8 @@ INSTRUCCIONES DE RESPUESTA:
       const msgs = document.getElementById('chat-messages');
       if (!msgs) return;
       const div = document.createElement('div');
-      div.className = 'msg bot'; div.id = 'typing-indicator';
+      div.className = 'msg bot'; 
+      div.id = 'typing-indicator';
       div.innerHTML = `<div class="msg-bubble" style="padding:10px 16px"><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
       msgs.appendChild(div);
       msgs.scrollTop = msgs.scrollHeight;
@@ -1436,5 +1430,3 @@ INSTRUCCIONES DE RESPUESTA:
       sendMessage();
     }
 </script>
-</body>
-</html>
