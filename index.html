@@ -1444,3 +1444,27 @@ INSTRUCCIONES DE RESPUESTA:
       sendMessage();
     }
 </script>
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const grid = document.getElementById('insta-grid');
+    if (!grid) return;
+    const mockData = [
+        { type: 'REEL', title: 'IA y Automatización 2026', likes: '1.8k' },
+        { type: 'REEL', title: 'Aura Orchestrator Demo', likes: '2.4k' },
+        { type: 'POST', title: 'Estrategia de Contenidos', likes: '1.2k' }
+    ];
+    grid.innerHTML = ''; 
+    mockData.forEach(item => {
+        grid.innerHTML += `
+            <div style="background: rgba(255,255,255,0.03); border-radius: 15px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 10px;">
+                <div style="height: 180px; background: linear-gradient(45deg, #00e5b8, #3d8ef0); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; font-size: 1.1rem; box-shadow: 0 8px 15px rgba(0,0,0,0.3);">
+                    ${item.type}
+                </div>
+                <h4 style="margin: 15px 0 5px 0; color: #fff; font-family: 'Space Grotesk', sans-serif;">${item.title}</h4>
+                <span style="color: #00e5b8; font-size: 0.9rem; font-weight: bold;">❤️ ${item.likes}</span>
+            </div>
+        `;
+    });
+});
+</script>
+</body> <!-- ESTE ES EL FINAL DEL ARCHIVO -->
