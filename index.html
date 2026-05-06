@@ -39,6 +39,8 @@
       line-height: 1.7;
       overflow-x: hidden;
     }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
 
     /* ── NAV ── */
     #navbar {
@@ -51,11 +53,11 @@
       border-bottom: 1px solid var(--border);
     }
     .nav-logo { font-weight: 700; font-size: 18px; letter-spacing: 0.12em; color: var(--accent); }
-    .nav-links { display: flex; align-items: center; gap: 34px; list-style: none; }
-    .nav-links a { font-family: var(--font-mono); font-size: 12px; color: var(--text-2); transition: 0.2s; text-decoration: none; }
+    .nav-links { display: flex; align-items: center; gap: 34px; }
+    .nav-links a { font-family: var(--font-mono); font-size: 12px; color: var(--text-2); transition: color 0.2s; }
     .nav-links a:hover { color: var(--text); }
     .nav-cta { background: var(--accent) !important; color: var(--bg) !important; padding: 8px 22px; border-radius: 100px; font-weight: 600; }
-
+    
     /* ── HERO REDISEÑADO ── */
     #hero {
       min-height: 100vh;
@@ -75,70 +77,87 @@
       width: 100%; max-width: 1100px; margin: 0 auto; padding: 40px 44px;
       display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center;
     }
-    .hero-name {
-      font-size: clamp(48px, 6vw, 84px);
-      font-weight: 700; line-height: 1.0; letter-spacing: -0.03em; margin-bottom: 20px;
-    }
+    .hero-content { text-align: left; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 9px; background: rgba(0,229,184,0.07); border: 1px solid rgba(0,229,184,0.22); color: var(--accent); font-family: var(--font-mono); font-size: 11px; padding: 8px 18px; border-radius: 100px; margin-bottom: 24px; }
+    .hero-name { font-size: clamp(48px, 6vw, 84px); font-weight: 700; line-height: 1.0; letter-spacing: -0.03em; margin-bottom: 20px; }
     .hero-name .grad { color: var(--accent); }
     .hero-roles { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; flex-wrap: wrap; }
     .hero-desc { max-width: 500px; color: var(--text-2); font-size: 17px; margin-bottom: 40px; }
-    .hero-btns { display: flex; gap: 16px; margin-bottom: 40px; }
     
-    .btn-p { background: var(--accent); color: var(--bg); padding: 12px 28px; border-radius: 100px; font-weight: 600; text-decoration: none; transition: 0.2s; }
-    .btn-s { border: 1px solid var(--border); padding: 12px 28px; border-radius: 100px; text-decoration: none; transition: 0.2s; }
-    .btn-p:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,229,184,0.2); }
-
-    /* ESTILOS STATS */
-    .hero-stats { display: flex; gap: 30px; align-items: center; }
+    /* ESTILOS DE STATS */
+    .hero-stats { display: flex; gap: 30px; margin-top: 20px; align-items: center; }
     .stat { display: flex; flex-direction: column; }
     .stat-num { font-family: var(--font-mono); font-size: 24px; font-weight: 700; color: var(--accent); }
     .stat-label { font-family: var(--font-mono); font-size: 10px; color: var(--text-3); text-transform: uppercase; }
     .stat-div { width: 1px; height: 30px; background: var(--border); }
 
     .hero-visual { display: flex; justify-content: center; }
-    .hero-photo-wrap { position: relative; }
-    .hero-photo {
-      width: clamp(220px, 25vw, 320px); height: clamp(220px, 25vw, 320px);
-      border-radius: 50%; border: 3px solid rgba(0,229,184,0.35);
-      object-fit: cover; box-shadow: 0 24px 64px rgba(0,0,0,0.6);
-    }
+    .hero-photo { width: clamp(220px, 25vw, 320px); height: clamp(220px, 25vw, 320px); border-radius: 50%; border: 3px solid rgba(0,229,184,0.35); object-fit: cover; box-shadow: 0 24px 64px rgba(0,0,0,0.6); }
 
-    /* ── INSTAGRAM SECTION ── */
+    /* ── SECTIONS ── */
+    section { padding: 115px 0; }
+    section:nth-child(even) { background: var(--bg-2); }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 44px; }
+    .sec-tag { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 16px; }
+    .sec-title { font-size: clamp(36px, 5vw, 60px); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 60px; }
+    .sec-title em { font-style: normal; color: var(--accent); }
+
+    /* ── ABOUT & SKILLS ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    .about-text p { color: var(--text-2); margin-bottom: 18px; font-size: 17px; }
+    .lang-pill { background: var(--surface); border: 1px solid var(--border); color: var(--text-2); font-family: var(--font-mono); font-size: 12px; padding: 6px 14px; border-radius: 100px; margin-right: 8px; margin-bottom: 8px; display: inline-block; }
+    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .skill-cat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 30px; }
+    .tag { background: var(--bg-3); border: 1px solid var(--border); color: var(--text-2); font-family: var(--font-mono); font-size: 11px; padding: 5px 12px; border-radius: 8px; margin: 0 5px 5px 0; display: inline-block; }
+    .tag.green { color: var(--accent); border-color: rgba(0,229,184,0.2); }
+
+    /* ── TIMELINE ── */
+    .tl-item { display: grid; grid-template-columns: 46px 1fr; gap: 20px; margin-bottom: 30px; }
+    .tl-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--surface-2); border: 2px solid var(--border-hover); }
+    .tl-dot.active { background: var(--accent); border-color: var(--accent); }
+    .tl-body { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 30px; }
+
+    /* ── PROJECTS ── */
+    .proj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .pcard { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; transition: 0.3s; }
+    .pcard:hover { border-color: var(--accent); transform: translateY(-5px); }
+
+    /* ── INSTAGRAM ── */
     .insta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; }
-    .insta-item { aspect-ratio: 9/16; border-radius: var(--radius-lg); background-size: cover; background-position: center; border: 1px solid var(--border); transition: 0.3s; cursor: pointer; }
-    .insta-item:hover { transform: scale(1.02); border-color: var(--accent); }
-    .btn-insta { display: inline-block; margin-top: 30px; color: var(--accent); border: 1px solid var(--accent); padding: 10px 24px; border-radius: 100px; font-size: 13px; transition: 0.3s; text-decoration: none; }
-    .btn-insta:hover { background: var(--accent); color: var(--bg); }
+    .insta-item { aspect-ratio: 9/16; border-radius: var(--radius-lg); border: 1px solid var(--border); background-size: cover; background-position: center; }
 
-    /* ── CHAT FLOTANTE ── */
-    #chat-btn { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 58px; height: 58px; border-radius: 50%; background: var(--accent); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 6px 28px rgba(0,229,184,0.3); }
-    #chat-panel { position: fixed; bottom: 98px; right: 28px; z-index: 998; width: 350px; height: 480px; background: var(--bg-2); border: 1px solid rgba(0,229,184,0.2); border-radius: 20px; display: none; flex-direction: column; overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,0.7); }
+    /* ── CHAT ── */
+    #chat-btn { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 58px; height: 58px; border-radius: 50%; background: var(--accent); border: none; font-size: 24px; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    #chat-panel { position: fixed; bottom: 100px; right: 28px; width: 350px; height: 480px; background: var(--bg-2); border: 1px solid var(--border); border-radius: 20px; display: none; flex-direction: column; z-index: 1000; box-shadow: 0 20px 50px rgba(0,0,0,0.5); overflow: hidden; }
     #chat-panel.open { display: flex; }
-    .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
-    .msg { padding: 10px 14px; border-radius: 14px; font-size: 13.5px; line-height: 1.5; max-width: 85%; }
-    .msg.bot { background: var(--surface); color: var(--text-2); align-self: flex-start; border-bottom-left-radius: 4px; }
-    .msg.user { background: var(--accent); color: var(--bg); align-self: flex-end; border-bottom-right-radius: 4px; font-weight: 500; }
+    .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+    .msg { padding: 10px 14px; border-radius: 14px; font-size: 13.5px; }
+    .msg.bot { background: var(--surface); align-self: flex-start; }
+    .msg.user { background: var(--accent); color: var(--bg); align-self: flex-end; }
+
+    /* ── SCROLL REVEAL ── */
+    .sr { opacity: 0; transform: translateY(20px); transition: 0.6s ease-out; }
+    .sr.vis { opacity: 1; transform: translateY(0); }
 
     @media (max-width: 900px) {
-      .hero-container { grid-template-columns: 1fr; text-align: center; }
-      .hero-roles, .hero-btns, .hero-stats { justify-content: center; }
-      .insta-grid { grid-template-columns: 1fr; }
+      .hero-container, .about-grid, .skills-grid, .proj-grid, .insta-grid { grid-template-columns: 1fr; }
+      .hero-content { text-align: center; }
+      .hero-stats { justify-content: center; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
   <nav id="navbar">
     <div class="nav-logo">MVS</div>
     <ul class="nav-links">
       <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#experiencia">Experiencia</a></li>
       <li><a href="#proyectos">Proyectos</a></li>
       <li><a href="#contacto" class="nav-cta">Contacto</a></li>
     </ul>
   </nav>
 
-  <!-- HERO -->
   <section id="hero">
     <canvas id="heroCanvas"></canvas>
     <div class="hero-vignette"></div>
@@ -146,14 +165,8 @@
       <div class="hero-content">
         <div class="hero-badge">Disponible para nuevas oportunidades</div>
         <h1 class="hero-name">Maria <span class="grad">Victoria</span> Sapelli</h1>
-        <div class="hero-roles">
-          <span>Estudiante DAM</span> • <span>IA & Automatización</span> • <span>HYBRYX</span>
-        </div>
-        <p class="hero-desc">Construyendo soluciones digitales con visión de negocio y herramientas de Inteligencia Artificial.</p>
-        <div class="hero-btns">
-          <a href="#proyectos" class="btn-p">Ver proyectos</a>
-          <a href="#contacto" class="btn-s">Contactar</a>
-        </div>
+        <div class="hero-roles"><span>Estudiante DAM</span> • <span>IA & Automatización</span> • <span>HYBRYX</span></div>
+        <p class="hero-desc">Estudiante de DAM con visión de negocio. Me apoyo en herramientas de IA para construir soluciones digitales con sentido.</p>
         <div class="hero-stats">
           <div class="stat"><span class="stat-num">4+</span><span class="stat-label">Años Exp.</span></div>
           <div class="stat-div"></div>
@@ -163,107 +176,107 @@
         </div>
       </div>
       <div class="hero-visual">
-        <div class="hero-photo-wrap">
-          <!-- Guarda tu foto en assets/foto.jpg -->
-          <img src="assets/perfil.jpg" alt="Victoria Sapelli" class="hero-photo" onerror="this.src='https://via.placeholder.com/320'">
+        <img <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAUEBAYFBQUGBgYHCQ4JCQgICRINDQoOFRIWFhUSFBQXGiEcFxgfGRQUHScdHyIjJSUlFhwpLCgkKyEkJST/2wBDAQYGBgkICREJCREkGBQYJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQ alt="Victoria" class="hero-photo">
+      </div>
+    </div>
+  </section>
+
+  <section id="sobre-mi">
+    <div class="container">
+      <span class="sec-tag">01 — Sobre mí</span>
+      <h2 class="sec-title">Tecnología con <em>visión de negocio</em></h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>Soy estudiante de <strong>DAM</strong> con formación en Ciberseguridad. Mi trayectoria es comercial internacional, donde lideré equipos e implementé sistemas de cumplimiento KYC/GDPR.</p>
+          <p>Combino visión de negocio real con la capacidad de usar herramientas de IA para prototipar soluciones digitales de alto impacto.</p>
+          <div class="langs">
+            <span class="lang-pill">🇪🇸 Español</span><span class="lang-pill">🇧🇷 Portugués</span><span class="lang-pill">🇮🇹 Italiano</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- INSTAGRAM FEED -->
-  <section id="instagram-feed">
+  <section id="habilidades">
     <div class="container">
-      <h2 style="font-size: 32px; margin-bottom: 40px;">Últimos Reels & <span style="color:var(--accent)">Social</span></h2>
-      <div id="insta-grid" class="insta-grid">
-        <!-- Generado por JS -->
-      </div>
-      <div style="text-align: center; margin-top: 40px;">
-        <a href="https://instagram.com/victoria_sapelli" target="_blank" class="btn-insta">Seguir en Instagram</a>
+      <span class="sec-tag">02 — Habilidades</span>
+      <div class="skills-grid">
+        <div class="skill-cat sr">
+          <h3>⚙️ Desarrollo</h3>
+          <div class="tags"><span class="tag">DAM</span><span class="tag">APIs</span><span class="tag green">Git/GitHub</span></div>
+        </div>
+        <div class="skill-cat sr">
+          <h3>🤖 IA & Automatización</h3>
+          <div class="tags"><span class="tag">Prompting</span><span class="tag">Claude API</span><span class="tag">Vibe Coding</span></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- CHAT IA -->
+  <section id="proyectos">
+    <div class="container">
+      <span class="sec-tag">03 — Proyectos</span>
+      <div class="proj-grid">
+        <div class="pcard featured sr">
+          <h3>Aura Orchestrator</h3>
+          <p>Motor de orquestación de agentes IA para tareas complejas.</p>
+        </div>
+        <div class="pcard featured sr">
+          <h3>HYBRYX App</h3>
+          <p>App de rendimiento deportivo para la comunidad HYROX.</p>
+        </div>
+      </div>
+      <div id="insta-grid" class="insta-grid sr"></div>
+    </div>
+  </section>
+
   <button id="chat-btn">💬</button>
   <div id="chat-panel">
-    <div style="padding: 16px; background: var(--surface); display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border);">
-      <div style="width: 10px; height: 10px; background: var(--accent); border-radius: 50%;"></div>
-      <span style="font-weight: 700; font-size: 14px;">Asistente de Victoria</span>
-    </div>
+    <div class="chat-header"><span>Asistente IA</span></div>
     <div id="chatBox" class="chat-messages">
-      <div class="msg bot">¡Hola! Soy el asistente virtual de Victoria. ¿Te gustaría saber más sobre sus proyectos o cómo contactarla?</div>
+      <div class="msg bot">¡Hola! Soy el asistente de Victoria. ¿En qué puedo ayudarte?</div>
     </div>
-    <div style="padding: 15px; border-top: 1px solid var(--border); display: flex; gap: 10px;">
-      <input id="chatInput" type="text" placeholder="Escribe tu mensaje..." style="flex:1; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; color: white; padding: 8px 12px; outline: none;">
-      <button id="sendBtn" style="background: var(--accent); border: none; border-radius: 8px; padding: 8px 15px; cursor: pointer; color: var(--bg); font-weight: 600;">↑</button>
+    <div style="padding: 15px; display:flex; gap:10px;">
+      <input id="chatInput" type="text" placeholder="Escribe algo..." style="flex:1; background:var(--bg); border:1px solid var(--border); color:white; padding:8px;">
+      <button id="sendBtn" style="background:var(--accent); border:none; padding:8px 15px;">↑</button>
     </div>
   </div>
 
-  <!-- SCRIPTS -->
   <script>
-    // 1. Fondo Animado (Red Neuronal)
+    // ── Fondo Animado ──
     const canvas = document.getElementById('heroCanvas');
     const ctx = canvas.getContext('2d');
-    let nodes = [];
-    function init() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      nodes = Array.from({length: 50}, () => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5
-      }));
+    let dots = [];
+    function initCanvas() {
+      canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+      dots = Array.from({length: 40}, () => ({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx: (Math.random()-0.5)*0.5, vy: (Math.random()-0.5)*0.5 }));
     }
     function draw() {
-      ctx.clearRect(0,0,canvas.width, canvas.height);
-      ctx.fillStyle = '#00e5b8';
-      ctx.strokeStyle = 'rgba(0,229,184,0.1)';
-      nodes.forEach((n, i) => {
-        n.x += n.vx; n.y += n.vy;
-        if(n.x<0 || n.x>canvas.width) n.vx*=-1;
-        if(n.y<0 || n.y>canvas.height) n.vy*=-1;
-        ctx.beginPath(); ctx.arc(n.x, n.y, 2, 0, Math.PI*2); ctx.fill();
-        for(let j=i+1; j<nodes.length; j++) {
-          const d = Math.hypot(n.x-nodes[j].x, n.y-nodes[j].y);
-          if(d < 150) { ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(nodes[j].x, nodes[j].y); ctx.stroke(); }
-        }
+      ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle = '#00e5b8'; ctx.strokeStyle = 'rgba(0,229,184,0.1)';
+      dots.forEach((d,i) => {
+        d.x += d.vx; d.y += d.vy;
+        if(d.x<0 || d.x>canvas.width) d.vx*=-1; if(d.y<0 || d.y>canvas.height) d.vy*=-1;
+        ctx.beginPath(); ctx.arc(d.x,d.y,2,0,Math.PI*2); ctx.fill();
+        for(let j=i+1; j<dots.length; j++){ const dist = Math.hypot(d.x-dots[j].x, d.y-dots[j].y); if(dist<150){ ctx.beginPath(); ctx.moveTo(d.x,d.y); ctx.lineTo(dots[j].x,dots[j].y); ctx.stroke(); } }
       });
       requestAnimationFrame(draw);
     }
-    window.onresize = init; init(); draw();
+    window.onresize = initCanvas; initCanvas(); draw();
 
-    // 2. Simulación Instagram
+    // ── Instagram Feed ──
     const grid = document.getElementById('insta-grid');
-    const images = [
-      'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400',
-      'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=400',
-      'https://images.unsplash.com/photo-1594882645126-14020914d58d?w=400'
-    ];
-    grid.innerHTML = images.map(img => `<div class="insta-item" style="background-image:url(${img})"></div>`).join('');
+    const imgs = ['https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400','https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=400','https://images.unsplash.com/photo-1594882645126-14020914d58d?w=400'];
+    grid.innerHTML = imgs.map(img => `<div class="insta-item" style="background-image:url(${img})"></div>`).join('');
 
-    // 3. Lógica Chat
-    const chatBtn = document.getElementById('chat-btn');
-    const chatPanel = document.getElementById('chat-panel');
-    const sendBtn = document.getElementById('sendBtn');
-    const chatInput = document.getElementById('chatInput');
-    const chatBox = document.getElementById('chatBox');
+    // ── Chat ──
+    const cBtn = document.getElementById('chat-btn'); const cPanel = document.getElementById('chat-panel');
+    cBtn.onclick = () => cPanel.classList.toggle('open');
+    const sBtn = document.getElementById('sendBtn'); const cIn = document.getElementById('chatInput'); const cBox = document.getElementById('chatBox');
+    sBtn.onclick = () => { if(!cIn.value) return; const m = document.createElement('div'); m.className='msg user'; m.textContent=cIn.value; cBox.appendChild(m); cIn.value=''; setTimeout(() => { const b=document.createElement('div'); b.className='msg bot'; b.textContent="¡Gracias! Victoria te responderá pronto."; cBox.appendChild(b); cBox.scrollTop=cBox.scrollHeight; }, 1000); };
 
-    chatBtn.onclick = () => chatPanel.classList.toggle('open');
-    sendBtn.onclick = () => {
-      const val = chatInput.value.trim();
-      if(!val) return;
-      const uMsg = document.createElement('div');
-      uMsg.className = 'msg user'; uMsg.textContent = val;
-      chatBox.appendChild(uMsg); chatInput.value = '';
-      chatBox.scrollTop = chatBox.scrollHeight;
-      setTimeout(() => {
-        const bMsg = document.createElement('div');
-        bMsg.className = 'msg bot'; bMsg.textContent = "¡Gracias por escribir! Victoria revisará tu mensaje pronto.";
-        chatBox.appendChild(bMsg); chatBox.scrollTop = chatBox.scrollHeight;
-      }, 1000);
-    }
+    // ── Scroll Reveal ──
+    const obs = new IntersectionObserver(ents => { ents.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); }); }, {threshold: 0.1});
+    document.querySelectorAll('.sr').forEach(el => obs.observe(el));
   </script>
 </body>
 </html>
