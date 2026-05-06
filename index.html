@@ -286,8 +286,8 @@
     </div>
   </div>
 
-  <script>
-    // Neural Background
+    <script>
+    // Fondo Neural Dinámico
     const canvas = document.getElementById('heroCanvas');
     const ctx = canvas.getContext('2d');
     let W, H, nodes = [];
@@ -305,7 +305,7 @@
     }
     draw();
 
-    // Chat Logic Real
+    // Lógica del Chat con Fallback Profesional
     const trigger = document.getElementById('chat-trigger');
     const panel = document.getElementById('chat-panel');
     const msgs = document.getElementById('chat-msgs');
@@ -319,6 +319,7 @@
       const text = chatInput.value.trim();
       if(!text) return;
 
+      // Mensaje del usuario
       const userDiv = document.createElement('div');
       userDiv.style.cssText = 'background:var(--accent); color:var(--bg); padding:12px; border-radius:15px; font-size:14px; align-self:flex-end; margin-top:10px; max-width:90%;';
       userDiv.innerText = text;
@@ -326,8 +327,10 @@
       chatInput.value = '';
       msgs.scrollTop = msgs.scrollHeight;
 
+      // Indicador de carga
       const loading = document.createElement('div');
-      loading.innerText = 'Pensando...';
+      loading.style.cssText = 'background:var(--surface); padding:12px; border-radius:15px; font-size:14px; align-self:flex-start; margin-top:10px; color:var(--text-3);';
+      loading.innerText = 'Sincronizando con Aura...';
       msgs.appendChild(loading);
 
       try {
@@ -335,21 +338,6 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            message: text,
-            history: history,
-            system: "Eres el asistente de Victoria Sapelli. Victoria es AI Orchestrator. Sé profesional."
-          })
-        });
-        const data = await res.json();
-        msgs.removeChild(loading);
-        const botDiv = document.createElement('div');
-        botDiv.style.cssText = 'background:var(--surface); padding:12px; border-radius:15px; font-size:14px; align-self:flex-start; margin-top:10px; max-width:90%;';
-        botDiv.innerHTML = data.reply;
-        msgs.appendChild(botDiv);
-        history.push({role: "user", content: text}, {role: "assistant", content: data.reply});
-      } catch (e) { msgs.removeChild(loading); }
-      msgs.scrollTop = msgs.scrollHeight;
-    };
-  </script>
+
 </body>
 </html>
