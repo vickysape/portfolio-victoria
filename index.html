@@ -286,7 +286,7 @@
     </div>
   </div>
 
-    <script>
+      <script>
     // Fondo Neural Dinámico
     const canvas = document.getElementById('heroCanvas');
     const ctx = canvas.getContext('2d');
@@ -338,6 +338,33 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
+            message: text,
+            history: history,
+            system: "Eres el asistente de Victoria Sapelli. Victoria es AI Orchestrator y experta en guiar a la IA. Sé profesional y elegante."
+          })
+        });
 
+        if (!res.ok) throw new Error('API limit');
+
+        const data = await res.json();
+        msgs.removeChild(loading);
+        
+        const botDiv = document.createElement('div');
+        botDiv.style.cssText = 'background:var(--surface); padding:12px; border-radius:15px; font-size:14px; align-self:flex-start; margin-top:10px; max-width:90%;';
+        botDiv.innerHTML = data.reply;
+        msgs.appendChild(botDiv);
+        history.push({role: "user", content: text}, {role: "assistant", content: data.reply});
+
+      } catch (e) {
+        // RESPUESTA ELEGANTE EN CASO DE ERROR
+        msgs.removeChild(loading);
+        const botDiv = document.createElement('div');
+        botDiv.style.cssText = 'background:var(--surface); padding:12px; border-radius:15px; font-size:14px; align-self:flex-start; margin-top:10px; max-width:90%; border-left: 3px solid var(--accent-warn);';
+        botDiv.innerHTML = "En este momento estoy optimizando mis protocolos de respuesta para ofrecerte una mejor experiencia. Victoria ha sido notificada y estará encantada de atenderte personalmente a través de LinkedIn o Email.";
+        msgs.appendChild(botDiv);
+      }
+      msgs.scrollTop = msgs.scrollHeight;
+    };
+  </script>
 </body>
 </html>
