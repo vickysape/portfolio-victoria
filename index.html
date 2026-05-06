@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Victoria Sapelli — DAM & Ciberseguridad</title>
+  <title>Victoria Sapelli — AI Orchestrator & Business Architect</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap');
 
@@ -31,356 +31,229 @@
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-display);
-      font-size: 16px;
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-display); line-height: 1.7; overflow-x: hidden; }
     a { text-decoration: none; color: inherit; }
     ul { list-style: none; }
 
     /* ── NAV ── */
     #navbar {
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      height: var(--nav-h);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 44px;
-      background: rgba(6,9,16,0.88);
-      backdrop-filter: blur(24px);
+      height: var(--nav-h); display: flex; align-items: center; justify-content: space-between;
+      padding: 0 44px; background: rgba(6,9,16,0.88); backdrop-filter: blur(24px);
       border-bottom: 1px solid var(--border);
-      transition: background 0.3s;
     }
-    .nav-logo {
-      font-family: var(--font-display);
-      font-weight: 700; font-size: 18px;
-      letter-spacing: 0.12em; color: var(--accent);
-    }
+    .nav-logo { font-weight: 700; font-size: 18px; letter-spacing: 0.12em; color: var(--accent); }
     .nav-links { display: flex; align-items: center; gap: 34px; }
-    .nav-links a {
-      font-family: var(--font-mono); font-size: 12px;
-      color: var(--text-2); letter-spacing: 0.04em;
-      transition: color 0.2s;
-    }
+    .nav-links a { font-family: var(--font-mono); font-size: 12px; color: var(--text-2); transition: color 0.2s; }
     .nav-links a:hover { color: var(--text); }
-    .nav-cta {
-      background: var(--accent) !important; color: var(--bg) !important;
-      padding: 8px 22px; border-radius: 100px; font-weight: 600;
-    }
-    
-    /* ── MOBILE MENU ── */
-    .hamburger {
-      display: none; flex-direction: column; gap: 5px;
-      background: none; border: none; cursor: pointer;
-    }
-    .hamburger span { display: block; width: 24px; height: 2px; background: var(--text); border-radius: 2px; }
-    .mobile-menu {
-      display: none; position: fixed; top: var(--nav-h); left: 0; right: 0;
-      background: var(--bg-2); border-bottom: 1px solid var(--border);
-      z-index: 199; padding: 26px 32px;
-      opacity: 0; transform: translateY(-8px);
-      transition: opacity 0.2s, transform 0.2s; pointer-events: none;
-    }
-    .mobile-menu.open { opacity: 1; transform: translateY(0); pointer-events: all; }
-    .mobile-menu ul { display: flex; flex-direction: column; gap: 18px; }
-    .mobile-menu a { font-family: var(--font-mono); font-size: 14px; color: var(--text-2); }
-    
-    /* ── HERO ── */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-      padding-top: var(--nav-h);
-    }
-    #heroCanvas { position: absolute; inset: 0; z-index: 0; opacity: 0.55; pointer-events: none; }
-    .hero-vignette {
-      position: absolute; inset: 0; z-index: 1; pointer-events: none;
-      background: radial-gradient(ellipse 70% 80% at 50% 50%, transparent 30%, var(--bg) 100%);
-    }
-    .hero-container {
-      position: relative; z-index: 2;
-      width: 100%; max-width: 1100px; margin: 0 auto; padding: 40px 44px;
-      display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center;
-    }
-    .hero-content { z-index: 2; text-align: left; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 9px;
-      background: rgba(0,229,184,0.07); border: 1px solid rgba(0,229,184,0.22);
-      color: var(--accent); font-family: var(--font-mono); font-size: 11px;
-      padding: 8px 18px; border-radius: 100px; margin-bottom: 24px;
-    }
-    .hero-name {
-      font-family: var(--font-display); font-size: clamp(48px, 6vw, 84px);
-      font-weight: 700; line-height: 1.0; letter-spacing: -0.03em; margin-bottom: 20px;
-    }
-    .hero-name span { display: block; }
-    .hero-name .grad { color: var(--accent); }
-    .hero-roles { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; flex-wrap: wrap; }
-    .hero-desc { max-width: 500px; color: var(--text-2); font-size: 17px; margin-bottom: 40px; }
-    .hero-btns { display: flex; gap: 16px; margin-bottom: 40px; }
-    .btn-p { background: var(--accent); color: var(--bg); padding: 12px 28px; border-radius: 100px; font-weight: 600; transition: transform 0.2s; display: inline-block; cursor: pointer; }
-    .btn-s { border: 1px solid var(--border); padding: 12px 28px; border-radius: 100px; transition: background 0.2s; display: inline-block; cursor: pointer; }
-    .btn-p:hover { transform: translateY(-2px); }
-    .btn-s:hover { background: var(--border); }
+    .nav-cta { background: var(--accent) !important; color: var(--bg) !important; padding: 8px 22px; border-radius: 100px; font-weight: 600; }
 
-    .hero-stats { display: flex; gap: 40px; }
-    .stat { display: flex; flex-direction: column; }
-    .stat-num { font-size: 24px; font-weight: 700; color: var(--text); }
-    .stat-label { font-size: 12px; color: var(--text-3); font-family: var(--font-mono); text-transform: uppercase; }
-    .stat-div { width: 1px; background: var(--border); }
+    /* ── HERO ── */
+    #hero { min-height: 100vh; display: flex; align-items: center; position: relative; padding-top: var(--nav-h); overflow: hidden; }
+    #heroCanvas { position: absolute; inset: 0; z-index: 0; opacity: 0.45; }
+    .container { position: relative; z-index: 2; width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 44px; }
+    .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 9px; background: rgba(0,229,184,0.07); border: 1px solid rgba(0,229,184,0.22); color: var(--accent); font-family: var(--font-mono); font-size: 11px; padding: 8px 18px; border-radius: 100px; margin-bottom: 24px; }
+    .hero-name { font-size: clamp(40px, 5.5vw, 75px); font-weight: 700; line-height: 1.0; margin-bottom: 20px; letter-spacing: -0.03em; }
+    .hero-name span { color: var(--accent); display: block; }
+    .hero-desc { max-width: 550px; color: var(--text-2); font-size: 18px; margin-bottom: 40px; }
     
-    .hero-visual { display: flex; justify-content: center; position: relative; }
-    .hero-photo-wrap { position: relative; width: fit-content; margin: 0 auto; }
-    .hero-photo {
-      width: clamp(220px, 25vw, 320px); height: clamp(220px, 25vw, 320px);
-      border-radius: 50%; border: 3px solid rgba(0,229,184,0.35);
-      box-shadow: 0 0 0 8px rgba(0,229,184,0.06), 0 24px 64px rgba(0,0,0,0.6);
-      object-fit: cover; display: block;
-    }
-    .hero-photo-ring { position: absolute; inset: -12px; border-radius: 50%; border: 1px solid rgba(0,229,184,0.12); animation: spin-slow 18s linear infinite; }
-    @keyframes spin-slow { to { transform: rotate(360deg); } }
+    .hero-photo-wrap { position: relative; width: fit-content; }
+    .hero-photo { width: clamp(220px, 25vw, 320px); height: clamp(220px, 25vw, 320px); border-radius: 50%; border: 3px solid rgba(0,229,184,0.35); object-fit: cover; box-shadow: 0 24px 64px rgba(0,0,0,0.6); }
+    .hero-photo-ring { position: absolute; inset: -12px; border-radius: 50%; border: 1px solid rgba(0,229,184,0.12); animation: spin 20s linear infinite; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
     /* ── SECTIONS ── */
-    section { padding: 115px 0; }
+    section { padding: 120px 0; }
     section:nth-child(even) { background: var(--bg-2); }
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 44px; }
-    .sec-tag { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 16px; }
-    .sec-title { font-family: var(--font-display); font-size: clamp(36px, 5vw, 60px); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 60px; }
+    .sec-tag { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 0.12em; margin-bottom: 16px; display: block; text-transform: uppercase; }
+    .sec-title { font-size: clamp(32px, 5vw, 54px); font-weight: 700; margin-bottom: 60px; line-height: 1.1; }
     .sec-title em { font-style: normal; color: var(--accent); }
 
-    /* ── ABOUT ── */
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-    .about-text p { color: var(--text-2); margin-bottom: 18px; font-size: 17px; line-height: 1.85; }
-    .about-text strong { color: var(--text); font-weight: 600; }
-    .langs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
-    .lang-pill { background: var(--surface); border: 1px solid var(--border); color: var(--text-2); font-family: var(--font-mono); font-size: 12px; padding: 6px 14px; border-radius: 100px; }
-    .info-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .icard { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; display: flex; gap: 14px; align-items: flex-start; transition: border-color 0.2s, transform 0.2s; }
-    .icard:hover { border-color: var(--border-hover); transform: translateY(-2px); }
-    .icard-icon { font-size: 20px; flex-shrink: 0; }
-    .icard h4 { font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-    .icard p { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); }
-    .icard.linkedin-card { grid-column: 1/-1; background: linear-gradient(135deg, var(--surface), rgba(10,102,194,0.08)); border-color: rgba(10,102,194,0.25); }
-    .li-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
-    .li-tag { font-family: var(--font-mono); font-size: 10px; color: #5ba4f5; border: 1px solid rgba(91,164,245,0.25); background: rgba(91,164,245,0.06); padding: 3px 10px; border-radius: 100px; }
+    /* ── SOBRE MI & CARDS ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .info-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .icard { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; transition: all 0.3s; }
+    .icard:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .icard h4 { font-size: 14px; margin-bottom: 5px; color: var(--accent); }
+    .icard p { font-size: 12px; color: var(--text-2); font-family: var(--font-mono); }
+    .lang-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .pill { background: var(--bg-3); border: 1px solid var(--border); padding: 6px 14px; border-radius: 100px; font-size: 12px; color: var(--text-2); }
 
-    /* ── SKILLS ── */
-    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .skill-cat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 30px; transition: border-color 0.2s; }
-    .skill-cat:hover { border-color: var(--border-hover); }
-    .skill-cat-title { font-family: var(--font-display); font-size: 15px; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 9px; }
+    /* ── SKILLS GRID ── */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+    .skill-cat { background: var(--surface); border: 1px solid var(--border); padding: 30px; border-radius: var(--radius-lg); }
+    .skill-cat h3 { font-size: 16px; margin-bottom: 20px; color: var(--accent); display: flex; align-items: center; gap: 10px; }
     .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-    .tag { background: var(--bg-3); border: 1px solid var(--border); color: var(--text-2); font-family: var(--font-mono); font-size: 11px; padding: 5px 12px; border-radius: 8px; transition: color 0.2s, border-color 0.2s; }
-    .tag.green { border-color: rgba(0,229,184,0.2); background: rgba(0,229,184,0.04); color: var(--accent); }
-    .tag.blue { border-color: rgba(61,142,240,0.2); background: rgba(61,142,240,0.04); color: var(--accent-2); }
-    .tag.warn { border-color: rgba(245,166,35,0.2); background: rgba(245,166,35,0.04); color: var(--accent-warn); }
-    
-    /* ── TIMELINE ── */
-    .timeline { display: flex; flex-direction: column; }
-    .tl-item { display: grid; grid-template-columns: 46px 1fr; gap: 20px; }
-    .tl-marker { display: flex; flex-direction: column; align-items: center; padding-top: 5px; }
-    .tl-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--surface-2); border: 2px solid var(--border-hover); flex-shrink: 0; z-index: 1; }
-    .tl-dot.active { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 5px rgba(0,229,184,0.12); }
-    .tl-line { width: 2px; flex: 1; min-height: 50px; background: linear-gradient(to bottom, var(--border-hover), transparent); margin-top: 8px; }
-    .tl-body { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 30px; margin-bottom: 22px; transition: border-color 0.2s; }
-    .tl-body:hover { border-color: var(--border-hover); }
-    .tl-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
-    .tl-head h3 { font-family: var(--font-display); font-size: 19px; font-weight: 700; }
-    .tl-co { font-family: var(--font-mono); font-size: 13px; color: var(--accent); margin-top: 3px; }
-    .tl-date { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); background: var(--surface-2); padding: 4px 14px; border-radius: 100px; white-space: nowrap; }
-    .tl-list { display: flex; flex-direction: column; gap: 10px; }
-    .tl-list li { color: var(--text-2); font-size: 15px; padding-left: 18px; position: relative; }
-    .tl-list li::before { content: ''; position: absolute; left: 0; top: 10px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+    .tag { background: var(--bg-3); border: 1px solid var(--border); padding: 5px 12px; border-radius: 8px; font-size: 11px; font-family: var(--font-mono); color: var(--text-2); }
+
+    /* ── EXPERIENCE TIMELINE ── */
+    .timeline { display: flex; flex-direction: column; gap: 40px; position: relative; }
+    .tl-item { display: grid; grid-template-columns: 150px 1fr; gap: 40px; }
+    .tl-date { font-family: var(--font-mono); color: var(--accent); font-size: 14px; padding-top: 5px; }
+    .tl-content { background: var(--surface); border: 1px solid var(--border); padding: 35px; border-radius: var(--radius-lg); position: relative; }
+    .tl-content::before { content: ''; position: absolute; left: -20px; top: 20px; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 15px var(--accent); }
+    .tl-content h3 { font-size: 22px; margin-bottom: 8px; }
+    .tl-co { color: var(--accent-2); font-weight: 600; display: block; margin-bottom: 15px; }
 
     /* ── PROJECTS ── */
-    .proj-grid { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-      grid-auto-rows: 1fr; 
-      gap: 22px; 
-      margin-bottom: 60px; 
-    }
-    .pcard {
-      background: var(--surface); 
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg); 
-      padding: 28px;
-      display: flex; 
-      flex-direction: column; 
-      gap: 14px;
-      transition: border-color 0.2s, transform 0.2s;
-      height: 100%;
-    }
-    .pcard:hover { border-color: var(--border-hover); transform: translateY(-3px); }
-    .pcard.featured { border-color: rgba(0,229,184,0.22); background: linear-gradient(135deg, var(--surface), rgba(0,229,184,0.03)); }
-    .ptop { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
-    .pbadge { font-family: var(--font-mono); font-size: 10px; padding: 3px 10px; border-radius: 100px; background: rgba(0,229,184,0.08); color: var(--accent); border: 1px solid rgba(0,229,184,0.22); }
-    .pcard h3 { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--text); }
-    .pcard p { color: var(--text-2); font-size: 14px; line-height: 1.7; flex-grow: 1; margin-bottom: 15px; }
-    .ptech { display: flex; flex-wrap: wrap; gap: 7px; margin-top: auto; }
-    .ptech span { font-family: var(--font-mono); font-size: 10px; color: var(--text-3); background: var(--bg-3); border: 1px solid var(--border); padding: 3px 9px; border-radius: 6px; }
+    .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+    .pcard { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 35px; display: flex; flex-direction: column; transition: all 0.3s; height: 100%; }
+    .pcard:hover { border-color: var(--accent); transform: translateY(-5px); }
+    .pbadge { font-family: var(--font-mono); font-size: 10px; padding: 4px 12px; border-radius: 100px; background: rgba(0,229,184,0.1); color: var(--accent); border: 1px solid var(--border); width: fit-content; margin-bottom: 20px; }
+    .pcard h3 { font-size: 24px; margin-bottom: 15px; }
+    .pcard p { color: var(--text-2); margin-bottom: 25px; flex-grow: 1; font-size: 15px; }
 
-    /* ── INSTAGRAM REELS ── */
-    .insta-grid { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
-      gap: 15px; 
-      margin-top: 30px; 
-    }
-    .insta-card {
-      background: rgba(255,255,255,0.02);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 10px;
-      transition: all 0.3s ease;
-      position: relative;
-    }
-    .insta-visual {
-      aspect-ratio: 9/16;
-      background: linear-gradient(135deg, #00e5b8, #3d8ef0);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      color: white;
-      font-size: 12px;
-      margin-bottom: 10px;
-    }
+    /* ── CONTACT & FOOTER ── */
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-top: 40px; }
+    .clink { background: var(--surface); border: 1px solid var(--border); padding: 25px; border-radius: var(--radius); display: flex; align-items: center; gap: 15px; transition: 0.3s; }
+    .clink:hover { border-color: var(--accent); background: var(--accent-glow); }
+    footer { padding: 40px; border-top: 1px solid var(--border); text-align: center; color: var(--text-3); font-family: var(--font-mono); font-size: 12px; }
 
     /* ── CHAT BOT ── */
-    #chat-btn {
-      position: fixed; bottom: 30px; right: 30px;
-      width: 60px; height: 60px; border-radius: 50%;
-      background: var(--accent); color: var(--bg);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 24px; cursor: pointer; z-index: 1000;
-      box-shadow: 0 10px 30px rgba(0,229,184,0.3);
-      border: none;
-    }
-    #chat-panel {
-      position: fixed; bottom: 100px; right: 30px;
-      width: 350px; height: 500px; background: var(--bg-2);
-      border: 1px solid var(--border); border-radius: 20px;
-      display: none; flex-direction: column; z-index: 1000;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5); overflow: hidden;
-    }
-    #chat-panel.open { display: flex; }
-    .chat-header { padding: 20px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; }
-    .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-    .chat-input-row { padding: 15px; border-top: 1px solid var(--border); display: flex; gap: 10px; }
-    .chat-input-row textarea { flex: 1; background: var(--bg-3); border: 1px solid var(--border); border-radius: 10px; color: var(--text); padding: 10px; resize: none; }
-    .chat-input-row button { background: var(--accent); border: none; padding: 10px 15px; border-radius: 10px; cursor: pointer; }
-    .msg { max-width: 80%; padding: 10px; border-radius: 10px; font-size: 14px; }
-    .msg.bot { background: var(--surface); align-self: flex-start; }
-    .msg.user { background: var(--accent); color: var(--bg); align-self: flex-end; }
+    #chat-trigger { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; border-radius: 50%; background: var(--accent); color: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 28px; cursor: pointer; z-index: 1000; box-shadow: 0 10px 30px rgba(0,229,184,0.4); }
+    #chat-panel { position: fixed; bottom: 110px; right: 30px; width: 380px; height: 550px; background: var(--bg-2); border: 1px solid var(--border); border-radius: 24px; display: none; flex-direction: column; z-index: 1000; box-shadow: 0 20px 60px rgba(0,0,0,0.6); overflow: hidden; }
+    #chat-panel.active { display: flex; }
+    .chat-header { padding: 25px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+    .chat-messages { flex: 1; padding: 25px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
 
-    /* ── ANIMATIONS ── */
-    .sr { opacity: 0; transform: translateY(20px); transition: opacity 0.65s ease, transform 0.65s ease; }
-    .sr.vis { opacity: 1; transform: translateY(0); }
-
-    @media (max-width: 900px) {
-      .about-grid,.skills-grid,.proj-grid { grid-template-columns: 1fr; }
-      .hero-container { grid-template-columns: 1fr; text-align: center; }
-      .hamburger { display: flex; }
-      .nav-links { display: none; }
-    }
+    @media (max-width: 900px) { .hero-grid, .about-grid, .tl-item { grid-template-columns: 1fr; } .tl-date { margin-bottom: -30px; } .nav-links { display: none; } }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
+  <!-- NAVEGACIÓN -->
   <nav id="navbar">
     <div class="nav-logo">MVS</div>
     <ul class="nav-links">
-      <li><a href="#sobre-mi">Sobre mí</a></li>
-      <li><a href="#habilidades">Skills</a></li>
+      <li><a href="#sobre-mi">Estrategia</a></li>
       <li><a href="#experiencia">Experiencia</a></li>
       <li><a href="#proyectos">Proyectos</a></li>
-      <li><a href="#contacto" class="nav-cta">Contacto</a></li>
+      <li><a href="#contacto" class="nav-cta">Hablemos</a></li>
     </ul>
-    <button class="hamburger" id="hamburger">
-      <span></span><span></span><span></span>
-    </button>
   </nav>
-
-  <div class="mobile-menu" id="mobileMenu">
-    <ul>
-      <li><a href="#sobre-mi" onclick="closeMobile()">Sobre mí</a></li>
-      <li><a href="#habilidades" onclick="closeMobile()">Skills</a></li>
-      <li><a href="#experiencia" onclick="closeMobile()">Experiencia</a></li>
-      <li><a href="#proyectos" onclick="closeMobile()">Proyectos</a></li>
-      <li><a href="#contacto" onclick="closeMobile()">Contacto</a></li>
-    </ul>
-  </div>
 
   <!-- HERO -->
   <section id="hero">
     <canvas id="heroCanvas"></canvas>
-    <div class="hero-vignette"></div>
-    <div class="hero-container">
-      <div class="hero-content">
-        <div class="hero-badge">Disponible para nuevas oportunidades</div>
-        <h1 class="hero-name">
-          <span>Maria</span>
-          <span class="grad">Victoria</span>
-          <span>Sapelli</span>
-        </h1>
-        <div class="hero-roles">
-          <span>Estudiante DAM</span> · <span>IA & Automatización</span> · <span>HYBRYX</span>
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge">Architecting with AI · DAM Student · Product Vision</div>
+          <h1 class="hero-name">
+            No solo diseño código,<br/><span>guío a la IA</span> para crearlo.
+          </h1>
+          <p class="hero-desc">
+            Mi valor no reside en la ejecución manual, sino en la **dirección estratégica**. Como AI Orchestrator, transformo necesidades de negocio en directrices técnicas de alto nivel que la IA materializa.
+          </p>
+          <div style="display: flex; gap: 15px;">
+            <a href="#proyectos" class="pill" style="background: var(--accent); color: var(--bg); font-weight: 700;">Ver Proyectos</a>
+            <a href="#contacto" class="pill">Contactar</a>
+          </div>
         </div>
-        <p class="hero-desc">Estudiante de DAM con visión de negocio. Utilizo IA para construir soluciones digitales con valor estratégico.</p>
-        <div class="hero-btns">
-          <a href="#proyectos" class="btn-p">Ver proyectos</a>
-          <a href="#contacto" class="btn-s">Contactar</a>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <div class="hero-photo-wrap">
-          <div class="hero-photo-ring"></div>
-          <img class="hero-photo" src="assets/foto.jpg" alt="Victoria Sapelli" onerror="this.src='https://via.placeholder.com/320'">
+        <div style="display: flex; justify-content: center;">
+          <div class="hero-photo-wrap">
+            <div class="hero-photo-ring"></div>
+            <img src="assets/foto.jpg" alt="Victoria Sapelli" class="hero-photo" onerror="this.src='https://via.placeholder.com/320'">
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SOBRE MÍ -->
+  <!-- SOBRE MI -->
   <section id="sobre-mi">
     <div class="container">
-      <span class="sec-tag">01 — Sobre mí</span>
-      <h2 class="sec-title">Tecnología con<br/><em>visión de negocio</em></h2>
+      <span class="sec-tag">01 — La Mente Maestra</span>
+      <h2 class="sec-title">Visión de negocio aplicada a la<br/><em>ingeniería con IA</em></h2>
       <div class="about-grid">
         <div class="about-text">
-          <p>Soy estudiante de <strong>DAM</strong> con formación en Ciberseguridad. Mi valor reside en combinar la capacidad técnica en formación con una sólida visión de negocio internacional.</p>
-          <div class="langs">
-            <span class="lang-pill">Español</span><span class="lang-pill">Portugués</span><span class="lang-pill">Italiano</span>
+          <p style="font-size: 18px; color: var(--text-2); margin-bottom: 25px;">
+            Soy estudiante de **DAM y Ciberseguridad**, pero mi formación técnica es solo el lenguaje que utilizo para comunicarme con la tecnología. Mi verdadera especialidad es la **orquestación**. 
+          </p>
+          <p style="color: var(--text-3);">
+            No busco ser una programadora tradicional; busco ser la arquitecta que da las directrices exactas para que la Inteligencia Artificial construya soluciones escalables, seguras y orientadas a resultados reales de mercado.
+          </p>
+          <div class="lang-pills">
+            <span class="pill">🇪🇸 Español (Nativo)</span>
+            <span class="pill">🇧🇷 Portugués (Avanzado)</span>
+            <span class="pill">🇮🇹 Italiano (Intermedio)</span>
+            <span class="pill">🇬🇧 Inglés (Básico)</span>
           </div>
         </div>
         <div class="info-cards">
-          <div class="icard sr"><h4>Málaga, España</h4><p>Disponible remoto</p></div>
-          <div class="icard sr"><h4>Microsoft SC-900</h4><p>Security Fundamentals</p></div>
+          <div class="icard"><h4>Ubicación</h4><p>Málaga, España · Remoto</p></div>
+          <div class="icard"><h4>Formación</h4><p>DAM en UNIVERSAE</p></div>
+          <div class="icard"><h4>Certificación</h4><p>Microsoft SC-900 (Security)</p></div>
+          <div class="icard"><h4>Enfoque</h4><p>AI Agents & Automation</p></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- HABILIDADES -->
+  <!-- SKILLS -->
   <section id="habilidades">
     <div class="container">
-      <span class="sec-tag">02 — Habilidades</span>
-      <h2 class="sec-title">Stack &<br/><em>Competencias</em></h2>
+      <span class="sec-tag">02 — Stack Tecnológico</span>
+      <h2 class="sec-title">Capacidades de<br/><em>Arquitectura e IA</em></h2>
       <div class="skills-grid">
-        <div class="skill-cat sr">
-          <h3>Desarrollo</h3>
-          <div class="tags"><span class="tag">Lógica</span><span class="tag">APIs</span><span class="tag">Git</span></div>
+        <div class="skill-cat">
+          <h3>🤖 AI & Orquestación</h3>
+          <div class="tags">
+            <span class="tag">Prompt Engineering</span><span class="tag">AI Agents</span><span class="tag">n8n</span><span class="tag">Claude API</span>
+          </div>
         </div>
-        <div class="skill-cat sr">
-          <h3>IA</h3>
-          <div class="tags"><span class="tag blue">Prompting</span><span class="tag blue">Automatización</span></div>
+        <div class="skill-cat">
+          <h3>⚙️ Desarrollo Guíado</h3>
+          <div class="tags">
+            <span class="tag">Next.js</span><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Java/SQL</span>
+          </div>
+        </div>
+        <div class="skill-cat">
+          <h3>🔐 Ciberseguridad</h3>
+          <div class="tags">
+            <span class="tag">Compliance</span><span class="tag">KYC/GDPR</span><span class="tag">SC-900</span><span class="tag">Identity</span>
+          </div>
+        </div>
+        <div class="skill-cat">
+          <h3>📈 Estrategia</h3>
+          <div class="tags">
+            <span class="tag">Product Management</span><span class="tag">Tokenomics</span><span class="tag">Sales VIP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCIA -->
+  <section id="experiencia">
+    <div class="container">
+      <span class="sec-tag">03 — Trayectoria</span>
+      <h2 class="sec-title">Experiencia en el<br/><em>Ecosistema Digital</em></h2>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-date">2024 — HOY</div>
+          <div class="tl-content">
+            <h3>Software & Automation Management</h3>
+            <span class="tl-co">Grupo Oro · España</span>
+            <p style="color: var(--text-2);">Liderazgo técnico en la automatización de flujos de trabajo internos y mantenimiento de infraestructura digital mediante orquestación de IA.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2020 — 2024</div>
+          <div class="tl-content">
+            <h3>Directora de Producto & Operaciones</h3>
+            <span class="tl-co">Crypto Trade · Brasil</span>
+            <p style="color: var(--text-2);">Fui la mente creativa y estratégica detrás de una aplicación automatizada de intermediación financiera. Diseñé la lógica de conexión entre mercados y clientes finales.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2018 — 2020</div>
+          <div class="tl-content">
+            <h3>Asesora Estratégica</h3>
+            <span class="tl-co">B2com · España</span>
+            <p style="color: var(--text-2);">Asesoramiento en telecomunicaciones y soluciones de conectividad empresarial en el mercado español.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -389,18 +262,29 @@
   <!-- PROYECTOS -->
   <section id="proyectos">
     <div class="container">
-      <span class="sec-tag">03 — Proyectos</span>
-      <h2 class="sec-title">Lo que<br/><em>estoy construyendo</em></h2>
+      <span class="sec-tag">04 — Ecosistema AURA</span>
+      <h2 class="sec-title">Proyectos que demuestran<br/><em>mi capacidad</em></h2>
       <div class="proj-grid">
-        <div class="pcard featured sr">
-          <div class="ptop"><span class="pbadge">IA Engine</span></div>
+        <div class="pcard">
+          <div class="pbadge">PROTOTIPO INSIGNIA</div>
           <h3>Aura Orchestrator</h3>
-          <p>Motor de orquestación de agentes para tareas complejas.</p>
+          <p>Motor de razonamiento que desglosa peticiones complejas en sub-tareas ejecutadas por IAs especializadas. Mi visión de cómo debe ser la ingeniería de producto moderna.</p>
+          <div class="ptech"><span>Next.js</span><span>Anthropic API</span><span>IA Agents</span></div>
+          <a href="https://aura-orchestrator.vercel.app/" target="_blank" style="margin-top: 20px; color: var(--accent);">Explorar Demo ↗</a>
         </div>
-        <div class="pcard featured sr">
-          <div class="ptop"><span class="pbadge">App</span></div>
-          <h3>HYBRYX Training</h3>
-          <p>App de rendimiento deportivo para atletas híbridos.</p>
+        <div class="pcard">
+          <div class="pbadge">PERFORMANCE APP</div>
+          <h3>HYBRYX App</h3>
+          <p>Aplicación diseñada para atletas de Hyrox. Gestión de entrenamientos, rankings y comunidad. Una solución nacida de mi propia pasión por el deporte híbrido.</p>
+          <div class="ptech"><span>React Native</span><span>PostgreSQL</span><span>Athletic Tech</span></div>
+          <a href="https://antigravity-app-vert.vercel.app" target="_blank" style="margin-top: 20px; color: var(--accent);">Ver App ↗</a>
+        </div>
+        <div class="pcard">
+          <div class="pbadge">FINTECH & CRYPTO</div>
+          <h3>TAE Token</h3>
+          <p>Arquitectura y tokenomics de un proyecto criptográfico utilitario. Diseño de Smart Contracts y lógica de incentivos económicos.</p>
+          <div class="ptech"><span>Blockchain</span><span>Solidity</span><span>Tokenomics</span></div>
+          <a href="https://icoholder.com/es/crypto-tae-1004661" target="_blank" style="margin-top: 20px; color: var(--accent);">Ver en ICO Holder ↗</a>
         </div>
       </div>
     </div>
@@ -409,49 +293,47 @@
   <!-- CONTACTO -->
   <section id="contacto">
     <div class="container">
-      <span class="sec-tag">04 — Contacto</span>
-      <h2 class="sec-title">Hablemos<br/><em>¿empezamos?</em></h2>
+      <span class="sec-tag">05 — Conectividad</span>
+      <h2 class="sec-title">¿Listo para construir el<br/><em>futuro con IA?</em></h2>
       <div class="contact-grid">
-        <a href="mailto:vickysape@hotmail.com" class="clink sr">Email: vickysape@hotmail.com</a>
+        <a href="mailto:vickysape@hotmail.com" class="clink"><span>✉️</span><div><h4>Email</h4><p>vickysape@hotmail.com</p></div></a>
+        <a href="https://linkedin.com/in/sapelli-maria-victoria" target="_blank" class="clink"><span>💼</span><div><h4>LinkedIn</h4><p>Conecta conmigo</p></div></a>
+        <a href="https://github.com/vickysape" target="_blank" class="clink"><span>💻</span><div><h4>GitHub</h4><p>Mis repositorios</p></div></a>
       </div>
     </div>
   </section>
 
-  <!-- CHAT BOT -->
-  <button id="chat-btn">🤖</button>
-  <div id="chat-panel">
-    <div class="chat-header"><h4>Asistente de Victoria</h4><button id="chat-close">✕</button></div>
-    <div class="chat-messages" id="chat-msgs">
-      <div class="msg bot">¡Hola! Soy el asistente de Victoria. ¿En qué puedo ayudarte?</div>
+  <footer>
+    <div class="container">
+      © 2025 · Victoria Sapelli · AI Orchestrator & Business Strategist
     </div>
-    <div class="chat-input-row">
-      <textarea id="chat-input" placeholder="Escribe algo..."></textarea>
-      <button id="chat-send">➤</button>
+  </footer>
+
+  <!-- CHAT BOT -->
+  <div id="chat-trigger">🤖</div>
+  <div id="chat-panel">
+    <div class="chat-header"><h4>Aura Assistant</h4></div>
+    <div class="chat-messages" id="chat-msgs">
+      <div style="background:var(--surface); padding:15px; border-radius:15px; font-size:14px; max-width:90%;">
+        ¡Hola! Soy el asistente orquestado por **Victoria**. Ella me da las directrices para que yo pueda ayudarte a entender su perfil. ¿Quieres saber cómo gestiona sus proyectos con IA?
+      </div>
+    </div>
+    <div style="padding: 20px; border-top: 1px solid var(--border); display: flex; gap: 10px;">
+      <input type="text" id="chat-input" placeholder="Pregúntame..." style="flex:1; background:transparent; border:none; color:white; outline:none;">
+      <button id="chat-send" style="background:var(--accent); border:none; padding:10px 15px; border-radius:10px; cursor:pointer;">➤</button>
     </div>
   </div>
 
   <script>
-    // Navbar & Mobile
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    if(hamburger) hamburger.onclick = () => mobileMenu.classList.toggle('open');
-    function closeMobile() { mobileMenu.classList.remove('open'); }
-
-    // Scroll Reveal
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); }});
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.sr').forEach(el => observer.observe(el));
-
-    // Neural Canvas
+    // Neural Canvas (Animación de fondo)
     const canvas = document.getElementById('heroCanvas');
     const ctx = canvas.getContext('2d');
-    let W, H;
+    let W, H, nodes = [];
     function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
     window.onresize = resize; resize();
-    const nodes = Array.from({length: 50}, () => ({ x: Math.random()*W, y: Math.random()*H, vx: (Math.random()-0.5)*0.5, vy: (Math.random()-0.5)*0.5 }));
+    for(let i=0; i<50; i++) nodes.push({x:Math.random()*W, y:Math.random()*H, vx:(Math.random()-0.5)*0.5, vy:(Math.random()-0.5)*0.5});
     function draw() {
-      ctx.clearRect(0,0,W,H); ctx.fillStyle = "rgba(0, 229, 184, 0.2)";
+      ctx.clearRect(0,0,W,H); ctx.fillStyle = "rgba(0, 229, 184, 0.3)";
       nodes.forEach(n => {
         n.x += n.vx; n.y += n.vy;
         if(n.x<0 || n.x>W) n.vx *= -1; if(n.y<0 || n.y>H) n.vy *= -1;
@@ -461,30 +343,30 @@
     }
     draw();
 
-    // Chat Logic Corrected
-    const chatBtn = document.getElementById('chat-btn');
-    const chatPanel = document.getElementById('chat-panel');
-    const chatSend = document.getElementById('chat-send');
-    const chatInput = document.getElementById('chat-input');
-    const chatMsgs = document.getElementById('chat-msgs');
+    // Lógica del Chat
+    const trigger = document.getElementById('chat-trigger');
+    const panel = document.getElementById('chat-panel');
+    trigger.onclick = () => panel.classList.toggle('active');
 
-    chatBtn.onclick = () => chatPanel.classList.toggle('open');
-    document.getElementById('chat-close').onclick = () => chatPanel.classList.remove('open');
-
-    chatSend.onclick = () => {
-      if(chatInput.value.trim() !== "") {
+    document.getElementById('chat-send').onclick = () => {
+      const input = document.getElementById('chat-input');
+      const msgs = document.getElementById('chat-msgs');
+      if(input.value.trim()) {
         const userMsg = document.createElement('div');
-        userMsg.className = 'msg user';
-        userMsg.innerText = chatInput.value;
-        chatMsgs.appendChild(userMsg);
+        userMsg.style.cssText = 'background:var(--accent); color:var(--bg); padding:12px; border-radius:15px; font-size:14px; align-self:flex-end; margin-top:10px; max-width:90%;';
+        userMsg.innerText = input.value;
+        msgs.appendChild(userMsg);
         
-        const botMsg = document.createElement('div');
-        botMsg.className = 'msg bot';
-        botMsg.innerText = "¡Entendido! Victoria te responderá pronto.";
-        setTimeout(() => { chatMsgs.appendChild(botMsg); chatMsgs.scrollTop = chatMsgs.scrollHeight; }, 600);
+        setTimeout(() => {
+          const botMsg = document.createElement('div');
+          botMsg.style.cssText = 'background:var(--surface); padding:12px; border-radius:15px; font-size:14px; align-self:flex-start; margin-top:10px; max-width:90%;';
+          botMsg.innerHTML = "Como **AI Orchestrator**, Victoria utiliza herramientas como yo para acelerar el desarrollo. Ella define la lógica y yo ejecuto la parte técnica. ¡Es un equipo invencible!";
+          msgs.appendChild(botMsg);
+          msgs.scrollTop = msgs.scrollHeight;
+        }, 800);
         
-        chatInput.value = "";
-        chatMsgs.scrollTop = chatMsgs.scrollHeight;
+        input.value = '';
+        msgs.scrollTop = msgs.scrollHeight;
       }
     };
   </script>
