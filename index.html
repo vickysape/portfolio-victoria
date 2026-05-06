@@ -54,9 +54,9 @@
     .container { position: relative; z-index: 2; width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 44px; }
     .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; }
     .hero-badge { display: inline-flex; align-items: center; gap: 9px; background: rgba(0,229,184,0.07); border: 1px solid rgba(0,229,184,0.22); color: var(--accent); font-family: var(--font-mono); font-size: 11px; padding: 8px 18px; border-radius: 100px; margin-bottom: 24px; }
-    .hero-name { font-size: clamp(40px, 5.5vw, 75px); font-weight: 700; line-height: 1.0; margin-bottom: 20px; letter-spacing: -0.03em; }
-    .hero-name span { color: var(--accent); display: block; }
-    .hero-desc { max-width: 550px; color: var(--text-2); font-size: 18px; margin-bottom: 40px; }
+    .hero-name { font-size: clamp(40px, 5.5vw, 75px); font-weight: 700; line-height: 1.0; margin-bottom: 25px; letter-spacing: -0.03em; }
+    .hero-name .grad { color: var(--accent); }
+    .hero-desc { max-width: 580px; color: var(--text-2); font-size: 19px; margin-bottom: 40px; line-height: 1.6; }
     
     .hero-photo-wrap { position: relative; width: fit-content; }
     .hero-photo { width: clamp(220px, 25vw, 320px); height: clamp(220px, 25vw, 320px); border-radius: 50%; border: 3px solid rgba(0,229,184,0.35); object-fit: cover; box-shadow: 0 24px 64px rgba(0,0,0,0.6); }
@@ -89,12 +89,11 @@
 
     /* ── EXPERIENCE TIMELINE ── */
     .timeline { display: flex; flex-direction: column; gap: 40px; position: relative; }
-    .tl-item { display: grid; grid-template-columns: 150px 1fr; gap: 40px; }
-    .tl-date { font-family: var(--font-mono); color: var(--accent); font-size: 14px; padding-top: 5px; }
+    .tl-item { display: flex; flex-direction: column; }
     .tl-content { background: var(--surface); border: 1px solid var(--border); padding: 35px; border-radius: var(--radius-lg); position: relative; }
-    .tl-content::before { content: ''; position: absolute; left: -20px; top: 20px; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 15px var(--accent); }
-    .tl-content h3 { font-size: 22px; margin-bottom: 8px; }
-    .tl-co { color: var(--accent-2); font-weight: 600; display: block; margin-bottom: 15px; }
+    .tl-content::before { content: ''; position: absolute; left: -15px; top: 35px; width: 6px; height: 30px; background: var(--accent); border-radius: 3px; box-shadow: 0 0 15px var(--accent); }
+    .tl-content h3 { font-size: 22px; margin-bottom: 5px; }
+    .tl-co { color: var(--accent-2); font-weight: 600; display: block; margin-bottom: 15px; font-size: 15px; }
 
     /* ── PROJECTS ── */
     .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
@@ -117,19 +116,19 @@
     .chat-header { padding: 25px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
     .chat-messages { flex: 1; padding: 25px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
 
-    @media (max-width: 900px) { .hero-grid, .about-grid, .tl-item { grid-template-columns: 1fr; } .tl-date { margin-bottom: -30px; } .nav-links { display: none; } }
+    @media (max-width: 900px) { .hero-grid, .about-grid { grid-template-columns: 1fr; } .nav-links { display: none; } }
   </style>
 </head>
 <body>
 
   <!-- NAVEGACIÓN -->
   <nav id="navbar">
-    <div class="nav-logo">MVS</div>
+    <div class="nav-logo">VICTORIA SAPELLI</div>
     <ul class="nav-links">
-      <li><a href="#sobre-mi">Estrategia</a></li>
-      <li><a href="#experiencia">Experiencia</a></li>
+      <li><a href="#sobre-mi">Perfil</a></li>
+      <li><a href="#experiencia">Trayectoria</a></li>
       <li><a href="#proyectos">Proyectos</a></li>
-      <li><a href="#contacto" class="nav-cta">Hablemos</a></li>
+      <li><a href="#contacto" class="nav-cta">Contacto</a></li>
     </ul>
   </nav>
 
@@ -139,16 +138,16 @@
     <div class="container">
       <div class="hero-grid">
         <div class="hero-content">
-          <div class="hero-badge">Architecting with AI · DAM Student · Product Vision</div>
+          <div class="hero-badge">Architecting Digital Solutions with AI</div>
           <h1 class="hero-name">
-            No solo diseño código,<br/><span>guío a la IA</span> para crearlo.
+            Soy Victoria Sapelli.<br/>No solo diseño código, <span class="grad">guío a la IA</span> para crearlo.
           </h1>
           <p class="hero-desc">
-            Mi valor no reside en la ejecución manual, sino en la **dirección estratégica**. Como AI Orchestrator, transformo necesidades de negocio en directrices técnicas de alto nivel que la IA materializa.
+            Combino lógica técnica con visión de negocio para materializar productos digitales. Mi enfoque no es la programación tradicional, sino la dirección estratégica de herramientas de IA para construir soluciones que escalan.
           </p>
           <div style="display: flex; gap: 15px;">
             <a href="#proyectos" class="pill" style="background: var(--accent); color: var(--bg); font-weight: 700;">Ver Proyectos</a>
-            <a href="#contacto" class="pill">Contactar</a>
+            <a href="#contacto" class="pill">Hablemos</a>
           </div>
         </div>
         <div style="display: flex; justify-content: center;">
@@ -164,28 +163,28 @@
   <!-- SOBRE MI -->
   <section id="sobre-mi">
     <div class="container">
-      <span class="sec-tag">01 — La Mente Maestra</span>
-      <h2 class="sec-title">Visión de negocio aplicada a la<br/><em>ingeniería con IA</em></h2>
+      <span class="sec-tag">01 — Mi Enfoque</span>
+      <h2 class="sec-title">Estrategia aplicada al<br/><em>desarrollo tecnológico</em></h2>
       <div class="about-grid">
         <div class="about-text">
           <p style="font-size: 18px; color: var(--text-2); margin-bottom: 25px;">
-            Soy estudiante de **DAM y Ciberseguridad**, pero mi formación técnica es solo el lenguaje que utilizo para comunicarme con la tecnología. Mi verdadera especialidad es la **orquestación**. 
+            Estudio **DAM y Ciberseguridad**, pero entiendo la tecnología como un medio para un fin. Mi valor diferencial es saber **qué construir y cómo dirigir** las herramientas de IA para lograrlo con precisión.
           </p>
           <p style="color: var(--text-3);">
-            No busco ser una programadora tradicional; busco ser la arquitecta que da las directrices exactas para que la Inteligencia Artificial construya soluciones escalables, seguras y orientadas a resultados reales de mercado.
+            Vengo del sector comercial y la dirección de operaciones, lo que me permite hablar el lenguaje del negocio y traducirlo en directrices técnicas que la IA puede ejecutar.
           </p>
           <div class="lang-pills">
-            <span class="pill">🇪🇸 Español (Nativo)</span>
-            <span class="pill">🇧🇷 Portugués (Avanzado)</span>
-            <span class="pill">🇮🇹 Italiano (Intermedio)</span>
-            <span class="pill">🇬🇧 Inglés (Básico)</span>
+            <span class="pill">Español (Nativo)</span>
+            <span class="pill">Portugués (Avanzado)</span>
+            <span class="pill">Italiano (Intermedio)</span>
+            <span class="pill">Inglés (Básico)</span>
           </div>
         </div>
         <div class="info-cards">
           <div class="icard"><h4>Ubicación</h4><p>Málaga, España · Remoto</p></div>
           <div class="icard"><h4>Formación</h4><p>DAM en UNIVERSAE</p></div>
           <div class="icard"><h4>Certificación</h4><p>Microsoft SC-900 (Security)</p></div>
-          <div class="icard"><h4>Enfoque</h4><p>AI Agents & Automation</p></div>
+          <div class="icard"><h4>Especialidad</h4><p>AI Orchestration</p></div>
         </div>
       </div>
     </div>
@@ -194,31 +193,31 @@
   <!-- SKILLS -->
   <section id="habilidades">
     <div class="container">
-      <span class="sec-tag">02 — Stack Tecnológico</span>
-      <h2 class="sec-title">Capacidades de<br/><em>Arquitectura e IA</em></h2>
+      <span class="sec-tag">02 — Capacidades</span>
+      <h2 class="sec-title">Liderazgo técnico e<br/><em>Inteligencia Artificial</em></h2>
       <div class="skills-grid">
         <div class="skill-cat">
-          <h3>🤖 AI & Orquestación</h3>
+          <h3>🤖 AI Orchestration</h3>
           <div class="tags">
-            <span class="tag">Prompt Engineering</span><span class="tag">AI Agents</span><span class="tag">n8n</span><span class="tag">Claude API</span>
+            <span class="tag">Prompt Engineering</span><span class="tag">AI Agents</span><span class="tag">Automatización</span>
           </div>
         </div>
         <div class="skill-cat">
-          <h3>⚙️ Desarrollo Guíado</h3>
+          <h3>⚙️ Desarrollo Dirigido</h3>
           <div class="tags">
-            <span class="tag">Next.js</span><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Java/SQL</span>
+            <span class="tag">Next.js</span><span class="tag">React</span><span class="tag">Lógica de Backend</span>
           </div>
         </div>
         <div class="skill-cat">
-          <h3>🔐 Ciberseguridad</h3>
+          <h3>🔐 Seguridad & Compliance</h3>
           <div class="tags">
-            <span class="tag">Compliance</span><span class="tag">KYC/GDPR</span><span class="tag">SC-900</span><span class="tag">Identity</span>
+            <span class="tag">KYC/GDPR</span><span class="tag">Ciberseguridad</span><span class="tag">SC-900</span>
           </div>
         </div>
         <div class="skill-cat">
-          <h3>📈 Estrategia</h3>
+          <h3>📈 Negocio</h3>
           <div class="tags">
-            <span class="tag">Product Management</span><span class="tag">Tokenomics</span><span class="tag">Sales VIP</span>
+            <span class="tag">Ventas VIP</span><span class="tag">Tokenomics</span><span class="tag">Gestión de Producto</span>
           </div>
         </div>
       </div>
@@ -228,31 +227,28 @@
   <!-- EXPERIENCIA -->
   <section id="experiencia">
     <div class="container">
-      <span class="sec-tag">03 — Trayectoria</span>
-      <h2 class="sec-title">Experiencia en el<br/><em>Ecosistema Digital</em></h2>
+      <span class="sec-tag">03 — Experiencia Profesional</span>
+      <h2 class="sec-title">Resultados en el<br/><em>mundo real</em></h2>
       <div class="timeline">
         <div class="tl-item">
-          <div class="tl-date">2024 — HOY</div>
           <div class="tl-content">
             <h3>Software & Automation Management</h3>
-            <span class="tl-co">Grupo Oro · España</span>
-            <p style="color: var(--text-2);">Liderazgo técnico en la automatización de flujos de trabajo internos y mantenimiento de infraestructura digital mediante orquestación de IA.</p>
+            <span class="tl-co">Grupo Oro</span>
+            <p style="color: var(--text-2);">Gestión de infraestructura digital y automatización de procesos mediante el uso estratégico de IA.</p>
           </div>
         </div>
         <div class="tl-item">
-          <div class="tl-date">2020 — 2024</div>
           <div class="tl-content">
             <h3>Directora de Producto & Operaciones</h3>
-            <span class="tl-co">Crypto Trade · Brasil</span>
-            <p style="color: var(--text-2);">Fui la mente creativa y estratégica detrás de una aplicación automatizada de intermediación financiera. Diseñé la lógica de conexión entre mercados y clientes finales.</p>
+            <span class="tl-co">Crypto Trade Brasil</span>
+            <p style="color: var(--text-2);">Lideré la creación de una plataforma automatizada para intermediación de cripto. Diseñé la arquitectura funcional y la lógica operativa del sistema.</p>
           </div>
         </div>
         <div class="tl-item">
-          <div class="tl-date">2018 — 2020</div>
           <div class="tl-content">
-            <h3>Asesora Estratégica</h3>
-            <span class="tl-co">B2com · España</span>
-            <p style="color: var(--text-2);">Asesoramiento en telecomunicaciones y soluciones de conectividad empresarial en el mercado español.</p>
+            <h3>Asesor Comercial</h3>
+            <span class="tl-co">B2com Telecomunicaciones</span>
+            <p style="color: var(--text-2);">Gestión de cuentas y asesoramiento técnico en soluciones de conectividad para clientes corporativos.</p>
           </div>
         </div>
       </div>
@@ -262,29 +258,29 @@
   <!-- PROYECTOS -->
   <section id="proyectos">
     <div class="container">
-      <span class="sec-tag">04 — Ecosistema AURA</span>
-      <h2 class="sec-title">Proyectos que demuestran<br/><em>mi capacidad</em></h2>
+      <span class="sec-tag">04 — Proyectos Destacados</span>
+      <h2 class="sec-title">Construyendo el<br/><em>futuro digital</em></h2>
       <div class="proj-grid">
         <div class="pcard">
-          <div class="pbadge">PROTOTIPO INSIGNIA</div>
+          <div class="pbadge">ORQUESTRADOR IA</div>
           <h3>Aura Orchestrator</h3>
-          <p>Motor de razonamiento que desglosa peticiones complejas en sub-tareas ejecutadas por IAs especializadas. Mi visión de cómo debe ser la ingeniería de producto moderna.</p>
-          <div class="ptech"><span>Next.js</span><span>Anthropic API</span><span>IA Agents</span></div>
-          <a href="https://aura-orchestrator.vercel.app/" target="_blank" style="margin-top: 20px; color: var(--accent);">Explorar Demo ↗</a>
+          <p>Mi proyecto principal de investigación. Un sistema que organiza múltiples agentes de IA para resolver tareas de negocio de alta complejidad.</p>
+          <div class="ptech"><span>Anthropic SDK</span><span>Next.js</span><span>Prompt Architecture</span></div>
+          <a href="https://aura-orchestrator.vercel.app/" target="_blank" style="margin-top: 20px; color: var(--accent);">Demo del Proyecto ↗</a>
         </div>
         <div class="pcard">
-          <div class="pbadge">PERFORMANCE APP</div>
+          <div class="pbadge">SPORT TECH</div>
           <h3>HYBRYX App</h3>
-          <p>Aplicación diseñada para atletas de Hyrox. Gestión de entrenamientos, rankings y comunidad. Una solución nacida de mi propia pasión por el deporte híbrido.</p>
-          <div class="ptech"><span>React Native</span><span>PostgreSQL</span><span>Athletic Tech</span></div>
-          <a href="https://antigravity-app-vert.vercel.app" target="_blank" style="margin-top: 20px; color: var(--accent);">Ver App ↗</a>
+          <p>Aplicación de alto rendimiento para atletas híbridos. Gestión de comunidad y benchmarks en tiempo real.</p>
+          <div class="ptech"><span>Product Design</span><span>Firebase</span><span>Next.js</span></div>
+          <a href="https://antigravity-app-vert.vercel.app" target="_blank" style="margin-top: 20px; color: var(--accent);">Abrir App ↗</a>
         </div>
         <div class="pcard">
-          <div class="pbadge">FINTECH & CRYPTO</div>
+          <div class="pbadge">BLOCKCHAIN</div>
           <h3>TAE Token</h3>
-          <p>Arquitectura y tokenomics de un proyecto criptográfico utilitario. Diseño de Smart Contracts y lógica de incentivos económicos.</p>
-          <div class="ptech"><span>Blockchain</span><span>Solidity</span><span>Tokenomics</span></div>
-          <a href="https://icoholder.com/es/crypto-tae-1004661" target="_blank" style="margin-top: 20px; color: var(--accent);">Ver en ICO Holder ↗</a>
+          <p>Diseño de tokenomics y arquitectura de Smart Contracts para un ecosistema de inversión automatizado.</p>
+          <div class="ptech"><span>Solidity</span><span>Blockchain Strategy</span></div>
+          <a href="https://icoholder.com/es/crypto-tae-1004661" target="_blank" style="margin-top: 20px; color: var(--accent);">Ver Detalles ↗</a>
         </div>
       </div>
     </div>
@@ -293,47 +289,47 @@
   <!-- CONTACTO -->
   <section id="contacto">
     <div class="container">
-      <span class="sec-tag">05 — Conectividad</span>
-      <h2 class="sec-title">¿Listo para construir el<br/><em>futuro con IA?</em></h2>
+      <span class="sec-tag">05 — Conexión</span>
+      <h2 class="sec-title">Hablemos de tu<br/><em>próximo reto</em></h2>
       <div class="contact-grid">
         <a href="mailto:vickysape@hotmail.com" class="clink"><span>✉️</span><div><h4>Email</h4><p>vickysape@hotmail.com</p></div></a>
-        <a href="https://linkedin.com/in/sapelli-maria-victoria" target="_blank" class="clink"><span>💼</span><div><h4>LinkedIn</h4><p>Conecta conmigo</p></div></a>
-        <a href="https://github.com/vickysape" target="_blank" class="clink"><span>💻</span><div><h4>GitHub</h4><p>Mis repositorios</p></div></a>
+        <a href="https://linkedin.com/in/sapelli-maria-victoria" target="_blank" class="clink"><span>💼</span><div><h4>LinkedIn</h4><p>sapelli-maria-victoria</p></div></a>
+        <a href="https://github.com/vickysape" target="_blank" class="clink"><span>💻</span><div><h4>GitHub</h4><p>vickysape</p></div></a>
       </div>
     </div>
   </section>
 
   <footer>
     <div class="container">
-      © 2025 · Victoria Sapelli · AI Orchestrator & Business Strategist
+      © 2025 · Maria Victoria Sapelli · AI Orchestrator & Business Architect
     </div>
   </footer>
 
   <!-- CHAT BOT -->
   <div id="chat-trigger">🤖</div>
   <div id="chat-panel">
-    <div class="chat-header"><h4>Aura Assistant</h4></div>
+    <div class="chat-header"><h4>Asistente IA</h4></div>
     <div class="chat-messages" id="chat-msgs">
-      <div style="background:var(--surface); padding:15px; border-radius:15px; font-size:14px; max-width:90%;">
-        ¡Hola! Soy el asistente orquestado por **Victoria**. Ella me da las directrices para que yo pueda ayudarte a entender su perfil. ¿Quieres saber cómo gestiona sus proyectos con IA?
+      <div style="background:var(--surface); padding:15px; border-radius:15px; font-size:14px;">
+        ¡Hola! Soy la IA orquestada por Victoria. Ella me ha configurado para explicar cómo su visión estratégica nos permite construir proyectos de alto impacto. ¿Qué te interesa saber?
       </div>
     </div>
     <div style="padding: 20px; border-top: 1px solid var(--border); display: flex; gap: 10px;">
-      <input type="text" id="chat-input" placeholder="Pregúntame..." style="flex:1; background:transparent; border:none; color:white; outline:none;">
+      <input type="text" id="chat-input" placeholder="Escribe..." style="flex:1; background:transparent; border:none; color:white; outline:none;">
       <button id="chat-send" style="background:var(--accent); border:none; padding:10px 15px; border-radius:10px; cursor:pointer;">➤</button>
     </div>
   </div>
 
   <script>
-    // Neural Canvas (Animación de fondo)
+    // Fondo Neural
     const canvas = document.getElementById('heroCanvas');
     const ctx = canvas.getContext('2d');
     let W, H, nodes = [];
     function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
     window.onresize = resize; resize();
-    for(let i=0; i<50; i++) nodes.push({x:Math.random()*W, y:Math.random()*H, vx:(Math.random()-0.5)*0.5, vy:(Math.random()-0.5)*0.5});
+    for(let i=0; i<45; i++) nodes.push({x:Math.random()*W, y:Math.random()*H, vx:(Math.random()-0.5)*0.5, vy:(Math.random()-0.5)*0.5});
     function draw() {
-      ctx.clearRect(0,0,W,H); ctx.fillStyle = "rgba(0, 229, 184, 0.3)";
+      ctx.clearRect(0,0,W,H); ctx.fillStyle = "rgba(0, 229, 184, 0.25)";
       nodes.forEach(n => {
         n.x += n.vx; n.y += n.vy;
         if(n.x<0 || n.x>W) n.vx *= -1; if(n.y<0 || n.y>H) n.vy *= -1;
@@ -343,7 +339,7 @@
     }
     draw();
 
-    // Lógica del Chat
+    // Chat
     const trigger = document.getElementById('chat-trigger');
     const panel = document.getElementById('chat-panel');
     trigger.onclick = () => panel.classList.toggle('active');
@@ -360,7 +356,7 @@
         setTimeout(() => {
           const botMsg = document.createElement('div');
           botMsg.style.cssText = 'background:var(--surface); padding:12px; border-radius:15px; font-size:14px; align-self:flex-start; margin-top:10px; max-width:90%;';
-          botMsg.innerHTML = "Como **AI Orchestrator**, Victoria utiliza herramientas como yo para acelerar el desarrollo. Ella define la lógica y yo ejecuto la parte técnica. ¡Es un equipo invencible!";
+          botMsg.innerHTML = "Victoria no se limita a escribir código; ella lidera la arquitectura de sistemas donde IAs como yo somos los ejecutores. Es una forma mucho más eficiente de crear producto.";
           msgs.appendChild(botMsg);
           msgs.scrollTop = msgs.scrollHeight;
         }, 800);
