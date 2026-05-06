@@ -20,7 +20,6 @@
       --text-3: #5a6e7e;
       --accent: #00e5b8;
       --accent-2: #3d8ef0;
-      --accent-warn: #f5a623;
       --accent-glow: rgba(0,229,184,0.08);
       --font-display: 'Space Grotesk', system-ui, sans-serif;
       --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
@@ -70,166 +69,67 @@
     .sec-title { font-size: clamp(32px, 5vw, 54px); font-weight: 700; margin-bottom: 60px; line-height: 1.1; }
     .sec-title em { font-style: normal; color: var(--accent); }
 
-    /* ── SOBRE MI & CARDS ── */
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
-    .info-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .icard { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; transition: all 0.3s; }
-    .icard:hover { border-color: var(--accent); transform: translateY(-3px); }
-    .icard h4 { font-size: 14px; margin-bottom: 5px; color: var(--accent); }
-    .icard p { font-size: 12px; color: var(--text-2); font-family: var(--font-mono); }
-    .lang-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
-    .pill { background: var(--bg-3); border: 1px solid var(--border); padding: 6px 14px; border-radius: 100px; font-size: 12px; color: var(--text-2); }
-
-    /* ── SKILLS GRID ── */
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-    .skill-cat { background: var(--surface); border: 1px solid var(--border); padding: 30px; border-radius: var(--radius-lg); }
-    .skill-cat h3 { font-size: 16px; margin-bottom: 20px; color: var(--accent); display: flex; align-items: center; gap: 10px; }
-    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-    .tag { background: var(--bg-3); border: 1px solid var(--border); padding: 5px 12px; border-radius: 8px; font-size: 11px; font-family: var(--font-mono); color: var(--text-2); }
-
     /* ── EXPERIENCE TIMELINE ── */
-    .timeline { display: flex; flex-direction: column; gap: 40px; position: relative; }
-    .tl-item { display: flex; flex-direction: column; }
+    .timeline { display: flex; flex-direction: column; gap: 40px; }
     .tl-content { background: var(--surface); border: 1px solid var(--border); padding: 35px; border-radius: var(--radius-lg); position: relative; }
-    .tl-content::before { content: ''; position: absolute; left: -15px; top: 35px; width: 6px; height: 30px; background: var(--accent); border-radius: 3px; box-shadow: 0 0 15px var(--accent); }
+    .tl-content::before { content: ''; position: absolute; left: -15px; top: 35px; width: 6px; height: 30px; background: var(--accent); border-radius: 3px; }
     .tl-content h3 { font-size: 22px; margin-bottom: 5px; }
-    .tl-co { color: var(--accent-2); font-weight: 600; display: block; margin-bottom: 15px; font-size: 15px; }
+    .tl-co { color: var(--accent-2); font-weight: 600; display: block; margin-bottom: 15px; }
 
     /* ── PROJECTS ── */
     .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
     .pcard { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 35px; display: flex; flex-direction: column; transition: all 0.3s; height: 100%; }
     .pcard:hover { border-color: var(--accent); transform: translateY(-5px); }
-    .pbadge { font-family: var(--font-mono); font-size: 10px; padding: 4px 12px; border-radius: 100px; background: rgba(0,229,184,0.1); color: var(--accent); border: 1px solid var(--border); width: fit-content; margin-bottom: 20px; }
-    .pcard h3 { font-size: 24px; margin-bottom: 15px; }
-    .pcard p { color: var(--text-2); margin-bottom: 25px; flex-grow: 1; font-size: 15px; }
-
-    /* ── CONTACT & FOOTER ── */
-    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-top: 40px; }
-    .clink { background: var(--surface); border: 1px solid var(--border); padding: 25px; border-radius: var(--radius); display: flex; align-items: center; gap: 15px; transition: 0.3s; }
-    .clink:hover { border-color: var(--accent); background: var(--accent-glow); }
-    footer { padding: 40px; border-top: 1px solid var(--border); text-align: center; color: var(--text-3); font-family: var(--font-mono); font-size: 12px; }
+    .pbadge { font-family: var(--font-mono); font-size: 10px; padding: 4px 12px; border-radius: 100px; background: rgba(0,229,184,0.1); color: var(--accent); border: 1px solid var(--border); margin-bottom: 20px; width: fit-content; }
 
     /* ── CHAT BOT ── */
     #chat-trigger { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; border-radius: 50%; background: var(--accent); color: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 28px; cursor: pointer; z-index: 1000; box-shadow: 0 10px 30px rgba(0,229,184,0.4); }
     #chat-panel { position: fixed; bottom: 110px; right: 30px; width: 380px; height: 550px; background: var(--bg-2); border: 1px solid var(--border); border-radius: 24px; display: none; flex-direction: column; z-index: 1000; box-shadow: 0 20px 60px rgba(0,0,0,0.6); overflow: hidden; }
     #chat-panel.active { display: flex; }
-    .chat-header { padding: 25px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
     .chat-messages { flex: 1; padding: 25px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
 
-    @media (max-width: 900px) { .hero-grid, .about-grid { grid-template-columns: 1fr; } .nav-links { display: none; } }
+    @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } .nav-links { display: none; } }
   </style>
 </head>
 <body>
 
-  <!-- NAVEGACIÓN -->
   <nav id="navbar">
     <div class="nav-logo">VICTORIA SAPELLI</div>
     <ul class="nav-links">
       <li><a href="#sobre-mi">Perfil</a></li>
       <li><a href="#experiencia">Trayectoria</a></li>
       <li><a href="#proyectos">Proyectos</a></li>
-      <li><a href="#contacto" class="nav-cta">Contacto</a></li>
+      <li><a href="#contacto" class="nav-cta">Hablemos</a></li>
     </ul>
   </nav>
 
-  <!-- HERO -->
   <section id="hero">
     <canvas id="heroCanvas"></canvas>
     <div class="container">
       <div class="hero-grid">
         <div class="hero-content">
-          <div class="hero-badge">Architecting Digital Solutions with AI</div>
+          <div class="hero-badge">AI Orchestration & Product Vision</div>
           <h1 class="hero-name">
             Soy Victoria Sapelli.<br/>No solo diseño código, <span class="grad">guío a la IA</span> para crearlo.
           </h1>
           <p class="hero-desc">
-            Combino lógica técnica con visión de negocio para materializar productos digitales. Mi enfoque no es la programación tradicional, sino la dirección estratégica de herramientas de IA para construir soluciones que escalan.
+            Combino lógica técnica con visión de negocio para materializar productos digitales. Mi enfoque es la dirección estratégica de herramientas de IA para construir soluciones que escalan.
           </p>
-          <div style="display: flex; gap: 15px;">
-            <a href="#proyectos" class="pill" style="background: var(--accent); color: var(--bg); font-weight: 700;">Ver Proyectos</a>
-            <a href="#contacto" class="pill">Hablemos</a>
-          </div>
+          <a href="#proyectos" class="nav-cta">Ver Proyectos</a>
         </div>
         <div style="display: flex; justify-content: center;">
-                <div class="hero-visual">
-        <div class="hero-photo-wrap">
-          <div class="hero-photo-ring"></div>
-          <img src="https://github.com/vickysape.png" alt="Victoria Sapelli" class="hero-photo">
-        </div>
-      </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- SOBRE MI -->
-  <section id="sobre-mi">
-    <div class="container">
-      <span class="sec-tag">01 — Mi Enfoque</span>
-      <h2 class="sec-title">Estrategia aplicada al<br/><em>desarrollo tecnológico</em></h2>
-      <div class="about-grid">
-        <div class="about-text">
-          <p style="font-size: 18px; color: var(--text-2); margin-bottom: 25px;">
-            Estudio DAM, pero entiendo la tecnología como un medio para un fin. Mi valor diferencial es saber qué construir y cómo dirigir las herramientas de IA para lograrlo con precisión.
-          </p>
-          <p style="color: var(--text-3);">
-            Vengo del sector comercial y la dirección de operaciones, lo que me permite hablar el lenguaje del negocio y traducirlo en directrices técnicas que la IA puede ejecutar.
-          </p>
-          <div class="lang-pills">
-            <span class="pill">Español (Nativo)</span>
-            <span class="pill">Portugués (Avanzado)</span>
-            <span class="pill">Italiano (Intermedio)</span>
-            <span class="pill">Inglés (Básico)</span>
-          </div>
-        </div>
-        <div class="info-cards">
-          <div class="icard"><h4>Ubicación</h4><p>Málaga, España · Remoto</p></div>
-          <div class="icard"><h4>Formación</h4><p>DAM en UNIVERSAE</p></div>
-          <div class="icard"><h4>Certificación</h4><p>Microsoft SC-900 (Security)</p></div>
-          <div class="icard"><h4>Especialidad</h4><p>AI Orchestration</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SKILLS -->
-  <section id="habilidades">
-    <div class="container">
-      <span class="sec-tag">02 — Capacidades</span>
-      <h2 class="sec-title">Liderazgo técnico e<br/><em>Inteligencia Artificial</em></h2>
-      <div class="skills-grid">
-        <div class="skill-cat">
-          <h3>🤖 AI Orchestration</h3>
-          <div class="tags">
-            <span class="tag">Prompt Engineering</span><span class="tag">AI Agents</span><span class="tag">Automatización</span>
-          </div>
-        </div>
-        <div class="skill-cat">
-          <h3>⚙️ Desarrollo Dirigido</h3>
-          <div class="tags">
-            <span class="tag">Next.js</span><span class="tag">React</span><span class="tag">Lógica de Backend</span>
-          </div>
-        </div>
-        <div class="skill-cat">
-          <h3>🔐 Seguridad & Compliance</h3>
-          <div class="tags">
-            <span class="tag">KYC/GDPR</span><span class="tag">Ciberseguridad</span><span class="tag">SC-900</span>
-          </div>
-        </div>
-        <div class="skill-cat">
-          <h3>📈 Negocio</h3>
-          <div class="tags">
-            <span class="tag">Ventas VIP</span><span class="tag">Tokenomics</span><span class="tag">Gestión de Producto</span>
+          <div class="hero-photo-wrap">
+            <div class="hero-photo-ring"></div>
+            <img src="https://github.com/vickysape.png" alt="Victoria Sapelli" class="hero-photo">
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- EXPERIENCIA -->
   <section id="experiencia">
     <div class="container">
-      <span class="sec-tag">03 — Experiencia Profesional</span>
+      <span class="sec-tag">01 — Trayectoria Profesional</span>
       <h2 class="sec-title">Resultados en el<br/><em>mundo real</em></h2>
       <div class="timeline">
         <div class="tl-item">
@@ -257,65 +157,30 @@
     </div>
   </section>
 
-  <!-- PROYECTOS -->
   <section id="proyectos">
     <div class="container">
-      <span class="sec-tag">04 — Proyectos Destacados</span>
-      <h2 class="sec-title">Construyendo el<br/><em>futuro digital</em></h2>
+      <span class="sec-tag">02 — Proyectos</span>
       <div class="proj-grid">
         <div class="pcard">
           <div class="pbadge">ORQUESTRADOR IA</div>
           <h3>Aura Orchestrator</h3>
-          <p>Mi proyecto principal de investigación. Un sistema que organiza múltiples agentes de IA para resolver tareas de negocio de alta complejidad.</p>
-          <div class="ptech"><span>Anthropic SDK</span><span>Next.js</span><span>Prompt Architecture</span></div>
-          <a href="https://aura-orchestrator.vercel.app/" target="_blank" style="margin-top: 20px; color: var(--accent);">Demo del Proyecto ↗</a>
+          <p>Un sistema que organiza múltiples agentes de IA para resolver tareas de negocio de alta complejidad.</p>
+          <a href="https://aura-orchestrator.vercel.app/" target="_blank" style="color: var(--accent);">Ver Demo ↗</a>
         </div>
         <div class="pcard">
           <div class="pbadge">SPORT TECH</div>
           <h3>HYBRYX App</h3>
           <p>Aplicación de alto rendimiento para atletas híbridos. Gestión de comunidad y benchmarks en tiempo real.</p>
-          <div class="ptech"><span>Product Design</span><span>Firebase</span><span>Next.js</span></div>
-          <a href="https://antigravity-app-vert.vercel.app" target="_blank" style="margin-top: 20px; color: var(--accent);">Abrir App ↗</a>
-        </div>
-        <div class="pcard">
-          <div class="pbadge">BLOCKCHAIN</div>
-          <h3>TAE Token</h3>
-          <p>Diseño de tokenomics y arquitectura de Smart Contracts para un ecosistema de inversión automatizado.</p>
-          <div class="ptech"><span>Solidity</span><span>Blockchain Strategy</span></div>
-          <a href="https://icoholder.com/es/crypto-tae-1004661" target="_blank" style="margin-top: 20px; color: var(--accent);">Ver Detalles ↗</a>
+          <a href="https://antigravity-app-vert.vercel.app" target="_blank" style="color: var(--accent);">Ver App ↗</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CONTACTO -->
-  <section id="contacto">
-    <div class="container">
-      <span class="sec-tag">05 — Conexión</span>
-      <h2 class="sec-title">Hablemos de tu<br/><em>próximo reto</em></h2>
-      <div class="contact-grid">
-        <a href="mailto:vickysape@hotmail.com" class="clink"><span>✉️</span><div><h4>Email</h4><p>vickysape@hotmail.com</p></div></a>
-        <a href="https://linkedin.com/in/sapelli-maria-victoria" target="_blank" class="clink"><span>💼</span><div><h4>LinkedIn</h4><p>sapelli-maria-victoria</p></div></a>
-        <a href="https://github.com/vickysape" target="_blank" class="clink"><span>💻</span><div><h4>GitHub</h4><p>vickysape</p></div></a>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">
-      © 2025 · Maria Victoria Sapelli · AI Orchestrator & Business Architect
-    </div>
-  </footer>
-
-  <!-- CHAT BOT -->
   <div id="chat-trigger">🤖</div>
   <div id="chat-panel">
     <div class="chat-header"><h4>Asistente IA</h4></div>
-    <div class="chat-messages" id="chat-msgs">
-      <div style="background:var(--surface); padding:15px; border-radius:15px; font-size:14px;">
-        ¡Hola! Soy la IA orquestada por Victoria. Ella me ha configurado para explicar cómo su visión estratégica nos permite construir proyectos de alto impacto. ¿Qué te interesa saber?
-      </div>
-    </div>
+    <div class="chat-messages" id="chat-msgs"></div>
     <div style="padding: 20px; border-top: 1px solid var(--border); display: flex; gap: 10px;">
       <input type="text" id="chat-input" placeholder="Escribe..." style="flex:1; background:transparent; border:none; color:white; outline:none;">
       <button id="chat-send" style="background:var(--accent); border:none; padding:10px 15px; border-radius:10px; cursor:pointer;">➤</button>
@@ -323,7 +188,7 @@
   </div>
 
   <script>
-    // Fondo Neural
+    // Neural Background
     const canvas = document.getElementById('heroCanvas');
     const ctx = canvas.getContext('2d');
     let W, H, nodes = [];
@@ -341,31 +206,50 @@
     }
     draw();
 
-    // Chat
+    // Chat Logic
     const trigger = document.getElementById('chat-trigger');
     const panel = document.getElementById('chat-panel');
-    trigger.onclick = () => panel.classList.toggle('active');
+    const msgs = document.getElementById('chat-msgs');
+    const chatInput = document.getElementById('chat-input');
+    const chatSend = document.getElementById('chat-send');
 
-    document.getElementById('chat-send').onclick = () => {
-      const input = document.getElementById('chat-input');
-      const msgs = document.getElementById('chat-msgs');
-      if(input.value.trim()) {
-        const userMsg = document.createElement('div');
-        userMsg.style.cssText = 'background:var(--accent); color:var(--bg); padding:12px; border-radius:15px; font-size:14px; align-self:flex-end; margin-top:10px; max-width:90%;';
-        userMsg.innerText = input.value;
-        msgs.appendChild(userMsg);
-        
-        setTimeout(() => {
-          const botMsg = document.createElement('div');
-          botMsg.style.cssText = 'background:var(--surface); padding:12px; border-radius:15px; font-size:14px; align-self:flex-start; margin-top:10px; max-width:90%;';
-          botMsg.innerHTML = "Victoria no se limita a escribir código; ella lidera la arquitectura de sistemas donde IAs como yo somos los ejecutores. Es una forma mucho más eficiente de crear producto.";
-          msgs.appendChild(botMsg);
-          msgs.scrollTop = msgs.scrollHeight;
-        }, 800);
-        
-        input.value = '';
-        msgs.scrollTop = msgs.scrollHeight;
-      }
+    trigger.onclick = () => panel.classList.toggle('active');
+    let history = [];
+
+    chatSend.onclick = async () => {
+      const text = chatInput.value.trim();
+      if(!text) return;
+
+      const userDiv = document.createElement('div');
+      userDiv.style.cssText = 'background:var(--accent); color:var(--bg); padding:12px; border-radius:15px; font-size:14px; align-self:flex-end; margin-top:10px; max-width:90%;';
+      userDiv.innerText = text;
+      msgs.appendChild(userDiv);
+      chatInput.value = '';
+      msgs.scrollTop = msgs.scrollHeight;
+
+      const loading = document.createElement('div');
+      loading.innerText = 'Pensando...';
+      msgs.appendChild(loading);
+
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: text,
+            history: history,
+            system: "Eres el asistente de Victoria Sapelli. Victoria es AI Orchestrator. Sé profesional."
+          })
+        });
+        const data = await res.json();
+        msgs.removeChild(loading);
+        const botDiv = document.createElement('div');
+        botDiv.style.cssText = 'background:var(--surface); padding:12px; border-radius:15px; font-size:14px; align-self:flex-start; margin-top:10px; max-width:90%;';
+        botDiv.innerHTML = data.reply;
+        msgs.appendChild(botDiv);
+        history.push({role: "user", content: text}, {role: "assistant", content: data.reply});
+      } catch (e) { msgs.removeChild(loading); }
+      msgs.scrollTop = msgs.scrollHeight;
     };
   </script>
 </body>
