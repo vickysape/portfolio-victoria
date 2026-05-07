@@ -117,51 +117,50 @@
     .chat-messages { flex: 1; padding: 25px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
 
     @media (max-width: 900px) { .hero-grid, .about-grid { grid-template-columns: 1fr; } .nav-links { display: none; } }
+
+    /* VERSIÓN MINI Y DISCRETA */
 .spotify-card {
-  max-width: 300px;
+  max-width: 220px !important;
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(8px);
-  border-radius: 12px;
-  padding: 10px 15px;
+  border-radius: 10px;
+  padding: 6px 12px !important;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px !important;
   border: 1px solid rgba(255, 255, 255, 0.08);
   margin-top: 20px;
-  text-align: left;
   transition: all 0.3s ease;
 }
-  .spotify-card:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: var(--accent); /* Se ilumina con tu color verde */
 
 #spotify-img {
-  width: 45px !important;
-  height: 45px !important;
-  border-radius: 6px;
-  object-fit: contain; /* 'contain' es mejor para el logo */
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 4px;
+  object-fit: contain;
 }
 
 .spotify-info p { 
   margin: 0; 
-  font-size: 10px; /* Texto más sutil */
+  font-size: 8px !important;
   color: var(--text-3);
   text-transform: uppercase;
-  letter-spacing: 1px;
 }
+
 .spotify-info a { 
   color: var(--text); 
   text-decoration: none; 
-  font-size: 13px; 
+  font-size: 11px !important; 
   font-weight: 500;
   display: block;
+  line-height: 1.2;
 }
+
 #spotify-artist {
-  color: var(--accent); /* El artista en tu color verde */
-  font-size: 11px !important;
-  text-transform: none !important;
-  letter-spacing: 0 !important;
+  color: var(--accent) !important;
+  font-size: 10px !important;
 }
+
      </style>
 </head>
 <body>
