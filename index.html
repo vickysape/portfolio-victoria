@@ -117,7 +117,30 @@
     .chat-messages { flex: 1; padding: 25px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
 
     @media (max-width: 900px) { .hero-grid, .about-grid { grid-template-columns: 1fr; } .nav-links { display: none; } }
-  </style>
+.spotify-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  max-width: 350px;
+  color: white;
+}
+
+#spotify-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.spotify-info p { margin: 0; font-size: 0.9rem; }
+.spotify-info a { color: #1DB954; text-decoration: none; font-size: 1.1rem; }
+
+     </style>
 </head>
 <body>
 
@@ -274,6 +297,15 @@
 
   <footer>
     <div class="container">© 2025 · Maria Victoria Sapelli</div>
+    <div class="spotify-card">
+  <img id="spotify-img" src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_CMYK_Green.png" alt="Spotify">
+  <div class="spotify-info">
+    <p id="spotify-status">Cargando...</p>
+    <a id="spotify-song" href="#" target="_blank">Esperando música</a>
+    <p id="spotify-artist">Artista</p>
+  </div>
+</div>
+
   </footer>
 
   <div id="chat-trigger">🤖</div>
@@ -365,6 +397,39 @@
       }
       msgs.scrollTop = msgs.scrollHeight;
     };
+  
+  async function checkSpotify() {
+    try {
+      // Llamamos a la API que creamos antes en Vercel
+      const response = await fetch('/api/now-playing');
+      const data = await response.json();
+      
+      const img = document.getElementById('spotify-img');
+      const status = document.getElementById('spotify-status');
+      const song = document.getElementById('spotify-song');
+      const artist = document.getElementById('spotify-artist');
+
+      if (data.isPlaying) {
+        img.src = data.albumImageUrl;
+        status.innerText = "Escuchando ahora 🎧";
+        song.innerText = data.title;
+        song.href = data.songUrl;
+        artist.innerText = data.artist;
+      } else {
+        // Si no hay nada sonando, mostramos el logo de Spotify
+        img.src = "https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_CMYK_Green.png";
+        status.innerText = "Desconectado";
+        song.innerText = "Spotify en pausa";
+        artist.innerText = "Dale al play para ver qué escucho";
+      }
+    } catch (err) {
+      console.error("Error en la API de Spotify", err);
+    }
+  }
+
+  // Comprobar cada 30 segundos para que no gaste mucha batería
+  setInterval(checkSpotify, 30000);
+  checkSpotify(); // Ejecutar nada más cargar la página
   </script>
 </body>
 </html>
