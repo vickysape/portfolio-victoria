@@ -118,28 +118,49 @@
 
     @media (max-width: 900px) { .hero-grid, .about-grid { grid-template-columns: 1fr; } .nav-links { display: none; } }
 .spotify-card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 15px;
-  padding: 20px;
-  display: flex;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  padding: 10px 15px;
+  display: inline-flex;
   align-items: center;
-  gap: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  max-width: 350px;
-  color: white;
+  gap: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 20px;
+  text-align: left;
+  transition: all 0.3s ease;
 }
+  .spotify-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--accent); /* Se ilumina con tu color verde */
 
 #spotify-img {
-  width: 60px;
-  height: 60px;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  object-fit: cover;
 }
 
-.spotify-info p { margin: 0; font-size: 0.9rem; }
-.spotify-info a { color: #1DB954; text-decoration: none; font-size: 1.1rem; }
-
+.spotify-info p { 
+  margin: 0; 
+  font-size: 10px; /* Texto más sutil */
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.spotify-info a { 
+  color: var(--text); 
+  text-decoration: none; 
+  font-size: 13px; 
+  font-weight: 500;
+  display: block;
+}
+#spotify-artist {
+  color: var(--accent); /* El artista en tu color verde */
+  font-size: 11px !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+}
      </style>
 </head>
 <body>
